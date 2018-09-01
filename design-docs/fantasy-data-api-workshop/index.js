@@ -9,7 +9,7 @@
 function setHeader(xhr) {
   // Establish API authorization
   
-  xhr.setRequestHeader('Ocp-Apim-Subscription-Key','FD_API_KEY');
+  xhr.setRequestHeader('Ocp-Apim-Subscription-Key',FD_API_KEY);
 }
 
 function outputAjaxData(data) {
