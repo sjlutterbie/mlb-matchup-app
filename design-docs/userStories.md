@@ -22,6 +22,13 @@
   * On large screens:
     * View the `drawer nav` to the left of the `main display`.
   * View and interact with a `display card`.
+* When the user clicks the `floating button`:
+  * The `floating button` disappears.
+  * The `drawer nav` appears.
+* When the user submits the `matchup comparison form`:
+  * On smaller screens, the `drawer nav` transitions away
+  * A `loading wheel` is displayed in the `main display`
+  * The `display cards` are generated and displaye din the `main display`
 * When a user clicks a `display card`:
   * If the card is NOT expanded:
     * The `display card` expands to display additional information, such as:
@@ -32,23 +39,28 @@
 
 ### Components and their descriptions
 
-* The `close drawer nav link`
-  * TODO
-* The `drawer icon`
-  * TODO
-* The `drawer nav`...
+* The `close drawer nav link`:
+  * Is:
+    * A link/icon that appears on the `drawer nav`
+* The `drawer icon`:
+  * Is:
+    * On smaller screens: A link/icon that appears on the `title bar`, to the left of the site title.
+* The `drawer nav`:
   * Is:
     * On small screens, a slide in/out hover layer on the left side of the screen
     * On large screens, a panel adjacent to the `main display` on the left side of the screen
   * Contains:
     * The `matchup selection form`
     * On small screens, a `close drawer nav link` (w/ icon)
-* The `get started button`...
+* The `floating button`:
+  * Is:
+    * A button that floats above the `main display`, in the lower right-hand corner.
+* The `get started button`:
   * Is a button that:
       * Makes the `landing card` disappear
       * On small screens: Makes the `drawer nav` appear
       * On large screens: Makes the `drawer nav` and `main display` appear.
-* The `landing card`...
+* The `landing card`:
   * Is:
     * A full-screen, floating card
   * Contains:
@@ -56,53 +68,35 @@
     * Instructions on how to use the app
     * A disclaimer stating the app currently uses fake data.
     * A `get started` button.
-* The `main display`
-  * TODO
+* The `main display`:
+  * Is:
+    * The central content area in the app.
+  * Contains the following `display cards`:
+    * When the user first launches the app:
+      * The `landing card`
+    * Once the user has submitted the `matchup comparison form`:
+      * Head-to-head W-L
+      * Includes a table with the box score for each matchup
+      * How many games the two teams have remaining in the season
+      * Combined box score across all head-to-head games
+      * Side-by-side comparison of their overall season stats.
+      * A 'win tracker' charting their relative progress over the course of the season.
+        * The win tracker highlights the winner of head-to-head match-ups, with tooltips that display the score.
 * The `matchup comparison form`:
-  * TODO
-* The `title bar`
-  * TODO
-
-
-
-
-### Unsorted stories
-
-* When they user visits they site, they arrive at a `landing page`.
-  * The `landing page` explains the purpose of the app, and how to use it.
-    * *The `landing page` specifies that the app is currently using fake data.*
-  * The `landing page` has a clear `get started` action point.
-    * The `get started` action point is a button that:
-      * Closes the `get started` display.
-      * Opens the `drawer nav`, which includes the `matchup selection form`.
-
-* The `matchup selection form` contains three fields:
-  * `Team1` - A dropdown list of all active MLB teams.
-  * `Team2` - A dropdown list of all active MLB teams.
-  * `Season` - A dropdown list of all MLB seasons for which statistics are available via the API.
-  * `Submit` - A button that submits the form and generates the `matchup analysis`.
-
-* When the user submits the `matchup selection form`:
-  * The `drawer nav` transitions away
-  * A `loading wheel` is displayed (if necessary)
-  * The `matchup analysis` is displayed in the `main display`
-
-* The `main display` contains the `matchup analysis`, which consists of:
-  * Head-to-head W-L
-    * Includes a table with the box score for each matchup
-  * How many games the two teams have remaining in the season
-  * Combined box score across all head-to-head games
-  * Side-by-side comparison of their overall season stats.
-  * A 'win tracker' charting their relative progress over the course of the season.
-    * The win tracker highlights the winner of head-to-head match-ups, with tooltips that display the score.
-
-* The `title bar` displays:
-  * Before the user has chosen a matchup: 'MLB Matchup Comparison'
-  * After the user has chosen a matchup: `XXX vs. YYY, ZZZZ season'
-  * On small screens, a `drawer icon` that opens up the `drawer nav`
-
-* A `hover button` sits above the `main display`, in the lower right-hand corner.
-  * When the user clicks the `hover button`:
-    * The `hover button` disappears
-    * The `drawer nav` appears
-  * Either the `drawer nav` XOR the `hover button` are visible at any one time.
+  * Is:
+    * The form that allows the user to select a new matchup comparison.
+  * Contains the following inputs:
+    * `Team1` - A dropdown list of all active MLB teams.
+    * `Team2` - A dropdown list of all active MLB teams.
+    * `Season` - A dropdown list of all MLB seasons for which statistics are available via the API.
+    * `Submit` - A button that submits the form and generates the `matchup analysis`.
+* The `title bar`:
+  * Is:
+    * A fixed-position bar at the top of the app
+  * Contains:
+    * On small screens: The `drawer nav` button
+    * On all screens: The site title, which is either:
+      * Before the user has submitted the `matchup comparison form`:
+        * *MLB Matchup Comparison App*
+      * After the user has submitted the `matchup comparison form`:
+        * *XXX vs. YYY, ZZZZ season*
