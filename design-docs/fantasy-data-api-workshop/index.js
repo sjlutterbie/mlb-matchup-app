@@ -6,39 +6,34 @@
   3. Build additional API queries using the connector function
 */
 
-function setHeader(xhr) {
-  // Establish API authorization
+function fantasyDataAPIQuery(searchType, season) {
+  // Makes a FantasyData API call, returning a JSON object in response
   
-  xhr.setRequestHeader('Ocp-Apim-Subscription-Key',FD_API_KEY);
-}
-
-function outputAjaxData(data) {
+  // Set the search endpoint
+  const searchURL = `https://api.fantasydata.net/v3/mlb/stats/json/${searchType}/${season}`;
   
-  console.table(data);
-}
-
-function getMLBTeamList() {
-  // Gets a JSON of all MLB Teams, with description data
-  
-  
-  // Set endpoint (will need to be customized for future calls)
-  const searchURL = "https://api.fantasydata.net/v3/mlb/stats/json/teams";
-  
-  // Set paramaters for search query
-  const query = {
-    format: 'jsonp'
-  };
+  // Execute query
   
   // Execute query
   $.ajax({
     url: searchURL,
-    data: query,
     success: outputAjaxData,
     beforeSend: setHeader,
     type: "GET"
   });
   
-  
 }
+  
+  // fantasyDataAPIQuery Helper functions
+  
+  function setHeader(xhr) {
+    // Establish API authorization
+    xhr.setRequestHeader('Ocp-Apim-Subscription-Key',FD_API_KEY);
+  }
 
-$(getMLBTeamList)
+  function outputAjaxData(data) {
+    // Temporary helper function for outputting API response data
+    console.table(data);
+  }
+
+$(fantasyDataAPIQuery('Standings', '2018'));
