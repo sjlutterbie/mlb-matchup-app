@@ -6,7 +6,7 @@
   3. Build additional API queries using the connector function
 */
 
-function fantasyDataAPIQuery(searchType, season) {
+function fantasyDataAPIQuery(searchType, season, successCallback) {
   // Makes a FantasyData API call, returning a JSON object in response
   
   // Set the search endpoint
@@ -17,7 +17,7 @@ function fantasyDataAPIQuery(searchType, season) {
   // Execute query
   $.ajax({
     url: searchURL,
-    success: outputAjaxData,
+    success: successCallback,
     beforeSend: setHeader,
     type: "GET"
   });
@@ -36,4 +36,4 @@ function fantasyDataAPIQuery(searchType, season) {
     console.table(data);
   }
 
-$(fantasyDataAPIQuery('Standings', '2018'));
+$(fantasyDataAPIQuery('Standings', '2018', outputAjaxData));
