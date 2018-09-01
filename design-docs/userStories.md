@@ -2,6 +2,72 @@
 
 ## User-story drafting
 
+### User interaction flow
+
+* When a user loads the app, they arrive at the `landing card`.
+  * From the `landing card`, the user can:
+    * Click the `get started button`, which...
+      * Makes the `landing card` disappear
+      * Makes the `drawer nav` appear
+* From the `drawer nav`, the user can:
+  * Complete and submit the `matchup comparison form`
+  * On small screens, click the `close drawer nav link` to make the `drawer nav` disappear.
+* When the user clicks the `close drawer nav link`:
+  * The `drawer nav` disappears.
+  * The user can view the `main display`.
+* When the user is at the `main display`, they can:
+  * On small screens:
+    * Click the `drawer icon` in the `title bar` to open the `drawer nav`.
+    * Click the `floating button` in the lower-right corner to open the `drawer nav`.
+  * On large screens:
+    * View the `drawer nav` to the left of the `main display`.
+  * View and interact with a `display card`.
+* When a user clicks a `display card`:
+  * If the card is NOT expanded:
+    * The `display card` expands to display additional information, such as:
+      * A text summary of the statistics/visualizations presented.
+      * Additional statistics or details.
+  * If the card IS expanded:
+    * The card contracts, hiding any additional information it contained.
+
+### Components and their descriptions
+
+* The `close drawer nav link`
+  * TODO
+* The `drawer icon`
+  * TODO
+* The `drawer nav`...
+  * Is:
+    * On small screens, a slide in/out hover layer on the left side of the screen
+    * On large screens, a panel adjacent to the `main display` on the left side of the screen
+  * Contains:
+    * The `matchup selection form`
+    * On small screens, a `close drawer nav link` (w/ icon)
+* The `get started button`...
+  * Is a button that:
+      * Makes the `landing card` disappear
+      * On small screens: Makes the `drawer nav` appear
+      * On large screens: Makes the `drawer nav` and `main display` appear.
+* The `landing card`...
+  * Is:
+    * A full-screen, floating card
+  * Contains:
+    * A welcome statement, introducing the purpose of the app
+    * Instructions on how to use the app
+    * A disclaimer stating the app currently uses fake data.
+    * A `get started` button.
+* The `main display`
+  * TODO
+* The `matchup comparison form`:
+  * TODO
+* The `title bar`
+  * TODO
+
+
+
+
+### Unsorted stories
+
 * When they user visits they site, they arrive at a `landing page`.
   * The `landing page` explains the purpose of the app, and how to use it.
     * *The `landing page` specifies that the app is currently using fake data.*
