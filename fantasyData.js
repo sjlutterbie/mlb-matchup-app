@@ -23,6 +23,12 @@ function fantasyDataAPIQuery(searchType, successCallback, season = null) {
     type: "GET"
   });
   
+  if(TESTING) {
+    
+    console.log(`"fantasyDataAPIQuery" was called`);
+    
+  }
+  
 }
   
   /* === fantasyDataAPIQuery helper functions === */
@@ -34,19 +40,12 @@ function fantasyDataAPIQuery(searchType, successCallback, season = null) {
 
   function outputAjaxData(data) {
     // Temporary helper function for outputting API response data
-    console.table(data);
+    
+    console.log(data);
+    
+    if (TESTING) {
+      
+      console.log(`"outputAjazData" was called`);
+    }
+    
   }
-  
-/* ==============================
-   = FANTASYDATA API CALL TYPES =
-   ============================== */
-   
-function getTeamList() {
-  // Queries the fantasyData API for a list of active MLB Teams
-  
-  fantasyDataAPIQuery('teams', console.log);
-  
-  
-}
-
-$(getTeamList);
