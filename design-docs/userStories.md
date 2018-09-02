@@ -109,8 +109,11 @@
   * **TBD:** Is the list of available seasons queryable via API, or should it be statically coded?
 * When a user submits the `matchup comparison form`:
   * The system checks whether the requested season's data exists as the object, `seasonData.{season}`
+  * If the data DOES exist:
+    * The `matchup analysis process` is initiated.
   * If the data does NOT exist:
     * A fantasyData API Call collects:
       * Team stats for the requested season
       * Game schedule for the requested season
     * The data are stored as objects within `seasonData.{season}.teamStats` and `seasonData.{season}.games`, respectively.
+    * The `matchup analysis process` is initiated.
