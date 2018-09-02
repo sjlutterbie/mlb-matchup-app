@@ -100,3 +100,17 @@
         * *MLB Matchup Comparison App*
       * After the user has submitted the `matchup comparison form`:
         * *XXX vs. YYY, ZZZZ season*
+
+### Data flow
+
+* When a user loads the app:
+  * A fantasyData API Call collects the list of team details
+  * These details populate the `matchup comparison form` dropdown fields.
+  * **TBD:** Is the list of available seasons queryable via API, or should it be statically coded?
+* When a user submits the `matchup comparison form`:
+  * The system checks whether the requested season's data exists as the object, `seasonData.{season}`
+  * If the data does NOT exist:
+    * A fantasyData API Call collects:
+      * Team stats for the requested season
+      * Game schedule for the requested season
+    * The data are stored as objects within `seasonData.{season}.teamStats` and `seasonData.{season}.games`, respectively.
