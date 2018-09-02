@@ -4,13 +4,16 @@
    = CORE FANTASYDATA API FUNCTIONS =
    ================================== */
    
-function fantasyDataAPIQuery(searchType, season, successCallback) {
+function fantasyDataAPIQuery(searchType, successCallback, season = null) {
   // Makes a FantasyData API call, returning a JSON object in response
   
-  // Set the search endpoint
-  const searchURL = `https://api.fantasydata.net/v3/mlb/stats/json/${searchType}/${season}`;
+  // Set the search endpoint to include a season
+  let searchURL = `https://api.fantasydata.net/v3/mlb/stats/json/${searchType}`;    
   
-  // Execute query
+  // Append the season, if required for the call
+  if (season != null) {
+    searchURL += `/${season}`;
+  }
   
   // Execute query
   $.ajax({
@@ -41,7 +44,7 @@ function fantasyDataAPIQuery(searchType, season, successCallback) {
 function getTeamList() {
   // Queries the fantasyData API for a list of active MLB Teams
   
-  fantasyDataAPIQuery('teams', '2018', console.log);
+  fantasyDataAPIQuery('teams', console.log);
   
   
 }
