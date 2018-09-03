@@ -110,10 +110,23 @@ function handleMatchupFormSubmission() {
 }
 
   function storeSeasonData(data, dataType, season) {
+    // Stores data from API Query in seasonDataGlobal[season] object.
     
     seasonDataGlobal[season][dataType] = data;
     
+  }
+  
+  function generateMatchupComparison(data, team1, team2, season) {
+    
+    //TODO: Make this function actually do something.
+    
+    //TODO: Need to refactor fantasyDataAPIQuery to handle multiple optional arguments.
+    //  - Build the ajax query object separately, then place it in the .ajax() call.
+    
+    console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
+    
     console.log(seasonDataGlobal);
+    
     
   }
 
