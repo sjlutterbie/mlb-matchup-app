@@ -48,47 +48,51 @@ function handleMatchupFormSubmission() {
     // Collect data from form
     let team1 = this[0].value;
     let team2 = this[1].value;
-    let season = this[2].value;
+    let season = String(this[2].value);
 
     // If one or both teams missing...
     if (team1 === "" || team2 === "") {
-      
       // ...Show the "two teams alert" and exit the function
       $('.js-form-alert-two-teams').show()
       return; 
-    
     }
     
     // If the two teams are the same...
     if (team1 === team2) {
-      
       // ... Show the "distinct teams alert" and exit the function
       $('.js-form-alert-dist-teams').show()
       return;
     }
 
+    // The form submission looks good, so clear alerts and move forward:
+    $('.js-form-alert-two-teams').hide();
+    $('.js-form-alert-dist-teams').hide();
+    
+    console.log(season);
+    
+    // Check for season data in memory:
+    if (seasonDataGlobal[season]) {
+      // If it exsists...
 
+      // TODO
+        console.log("Season data exists!");
+        // Proceed to generating matchup analysis
+
+    } else {
+      // If it doesn't...
+      
+      //TODO
+        console.log("Season data doesn't exist!");
+        // Call the API to load the data into memory
+        // Once data is loaded into memory, proceed to generating matchup analysis
+    }
   });
-  
-  
 }
 
-// When the user clicks the "Compare" button...
-  // Check if two teams have been selected.
-    // If two teams have NOT been selected:
-      // Throw an alert and require two teams be selected.
-    // If two teams HAVE been selected:
-      // Hide the .js-form-alert element
-      // Check if the relevant season's data is in memory
-        // If the data IS in memory:
-          // Proceed to generating matchup analysis
-        // If the data is NOT in memory:
-          // Call the API to load the data into memory
-          // Once data is loaded into memory, proceed to generating matchup analysis
 
-
-
-// Launch codes!
+/* ================
+   = LAUNCH CODES =
+   ================ */
 
 function initFunctions() {
   
