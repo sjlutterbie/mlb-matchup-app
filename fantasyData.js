@@ -17,10 +17,11 @@ function fantasyDataAPIQuery(searchType, successCallback, season = null) {
   
   // Execute query
   $.ajax({
-    url: searchURL,
-    success: successCallback,
     beforeSend: setHeader,
-    type: "GET"
+    url: searchURL,
+    type: "GET",
+    error: fantasyDataAPIErrorCallback,
+    success: successCallback
   });
   
   if(TESTING) {
@@ -36,6 +37,16 @@ function fantasyDataAPIQuery(searchType, successCallback, season = null) {
   function setHeader(xhr) {
     // Establish API authorization
     xhr.setRequestHeader('Ocp-Apim-Subscription-Key',FD_API_KEY);
+  }
+
+  function fantasyDataAPIErrorCallback(xhrObj,err,exObj) {
+    
+    //TODO: Extend this to provide actionable user feedback.
+    
+    console.log(`The following error occured: ${err}`);
+    console.log('Details:');
+    console.log(exObj);
+    
   }
 
   function outputAjaxData(data) {
