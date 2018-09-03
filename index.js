@@ -85,15 +85,14 @@ function handleMatchupFormSubmission() {
         console.log("Season data doesn't exist!");
         // Call the API to load the data into memory
         // Once data is loaded into memory, proceed to generating matchup analysis
-
     }
-
   });
-  
-  
 }
 
-// Launch codes!
+
+/* ================
+   = LAUNCH CODES =
+   ================ */
 
 function initFunctions() {
   
