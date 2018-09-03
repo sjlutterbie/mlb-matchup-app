@@ -83,11 +83,39 @@ function handleMatchupFormSubmission() {
       
       //TODO
         console.log("Season data doesn't exist!");
+        
+        // Initialize seasonDataGLobal[season] object
+        seasonDataGlobal[season] = {};
+        
+        // Load Games data
+        fantasyDataAPIQuery('Games',
+          function(data) {
+            storeSeasonData(data, 'Games', season);
+          },
+          season);
+          
+        // Load Team Stats data
+        fantasyDataAPIQuery('TeamSeasonStats',
+          function(data) {
+            storeSeasonData(data, 'TeamSeasonStats', season);
+          },
+          season);
+        
         // Call the API to load the data into memory
         // Once data is loaded into memory, proceed to generating matchup analysis
     }
+    
   });
+  
 }
+
+  function storeSeasonData(data, dataType, season) {
+    
+    seasonDataGlobal[season][dataType] = data;
+    
+    console.log(seasonDataGlobal);
+    
+  }
 
 
 /* ================
