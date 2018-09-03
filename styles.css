@@ -37,6 +37,13 @@ nav {
   padding: 16px; /* Temp for functional wireframe */
 }
 
+  .js-form-alert-two-teams, .js-form-alert-dist-teams {
+    display: none; /* Default until alert triggered */
+    color: #fff; /* Temp for functional wireframe */
+    background: #f00; /* Temp for functional wireframe */
+    
+  }
+
 footer {
   border: 1px solid #ff0; /* Temp for functional wireframe */
   padding: 16px; /* Temp for functional wireframe */
