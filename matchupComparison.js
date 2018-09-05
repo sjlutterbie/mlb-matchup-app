@@ -254,28 +254,50 @@ function generateSeasonComparisonCard(team1, team2, season) {
   
   // Initiate stats object
   const teamStats = {};
-    teamStats[team1] = {};
-    teamStats[team2] = {};
-
-  // Get Team stats (.raw will be manipulated into .output)
-  teamStats[team1].raw = getTeamStats(team1, season);
-  teamStats[team2].raw = getTeamStats(team2, season);
-
-  //Clean/calculate the following statistics:
-    // Wins - Losses
-      // Winning Percentage
-    // Batting average (hits / atBats)
-    // ERA 
-      // PitchingRuns / (InningsPitchedDecimal / 9)
-    // OBP
-    // SLG
-    // WHIP
-    // Hits
-    // Doubles
-    // Triples
-    // HRs
-    // Errors
-
+  
+  //For each team...
+  [team1, team2].forEach(team => {
+    
+    // Initialize team stats object
+    teamStats[team] = {};
+    
+    // Get raw stats
+    teamStats[team].raw = getTeamStats(team1, season);
+    
+    // Shorter var names, for convenience
+    const rawStats = teamStats[team].raw;
+    const output = {};
+    
+    // Clean calculate the relevant Team Stats
+    output.wins = Math.floor(rawStats.Wins);
+    output.losses = Math.floor(rawStats.Losses);
+    output.winPerc = (output.wins / (output.wins + output.losses)).toFixed(3);
+    output.runsFor = Math.floor(rawStats.Runs);
+    output.runsAgainst = Math.floor(rawStats.PitchingRuns);
+    output.avg = (rawStats.Hits / rawStats.AtBats).toFixed(3);
+    output.obp = ((rawStats.Hits + rawStats.Walks + rawStats.HitByPitch) 
+                  / (rawStats.Hits + rawStats.Walks
+                     + rawStats.HitByPitch + rawStats.AtBats)).toFixed(3);
+    output.slg = ((rawStats.Singles
+                  + (2 * rawStats.Doubles)
+                  + (3 * rawStats.Triples)
+                  + (4 * rawStats.HomeRuns)
+                 ) / (rawStats.AtBats)).toFixed(3);
+    output.hits = Math.floor(rawStats.Hits);
+    output.doubles = Math.floor(rawStats.Doubles);
+    output.triples = Math.floor(rawStats.Triples);
+    output.homeRuns = Math.floor(rawStats.HomeRuns);
+    output.era = (rawStats.PitchingEarnedRuns
+                 / (rawStats.InningsPitchedDecimal / 9)).toFixed(3);
+    output.whip = ((rawStats.PitchingHits + rawStats.PitchingWalks)
+                  / rawStats.InningsPitchedDecimal).toFixed(3);
+    output.errors = Math.floor(rawStats.Errors);
+    
+    // Insert data into original object
+    teamStats[team].output = output;
+    
+  });
+  
   console.log(teamStats);  
   
   //TODO: Generate content
