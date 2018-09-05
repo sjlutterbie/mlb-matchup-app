@@ -47,12 +47,16 @@
     // Filter only the games between team1 and team2
     games = getTeamGames(team2, games);
 
-    // Initiate gameCounts and output strings
+    // Initiate gameCounts
     
     const gameCounts = {};
       gameCounts[team1] = 0;
       gameCounts[team2] = 0;
       gameCounts['scheduled'] = 0;
+      
+    // Initiate the gameResults table content string
+    
+    let gameResults = "";
     
     // Loop through games, increasing counts & building output
     
@@ -61,9 +65,23 @@
       // Extract the current game
       const game = games[key];
 
+      // Format the game date string
+      let gameDate = new Date(game.Day);
+      const dateOptions = {month: 'long', day: 'numeric' };
+      let gameDateString = gameDate.toLocaleDateString("en-US", dateOptions);
+
+      // Initiate gameResult string
+      let gameResult = "";
+
       // If the game was completed...
       // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
       if (game.Status === "Final") {
+        
+        // Build a complete game result
+        gameResult = `<tr><td>${gameDateString}</td>
+                      <td>${game.AwayTeam} ${game.AwayTeamRuns}
+                      - ${game.HomeTeamRuns} ${game.HomeTeam}</td></tr>`;
+        
         // If the home team won...
         if (game.HomeTeamRuns > game.AwayTeamRuns) {
           // Give the home team a win
@@ -73,14 +91,24 @@
           gameCounts[game.AwayTeam] += 1;
         }
       } else if (game.Status === "Scheduled") {
+        
+        // Build a TBD game result
+        gameResult = `<tr><td>${gameDateString}</td>
+                      <td>TBD (at ${game.HomeTeam})</td></tr>`;
+        
         // Increase the scheduled count
         gameCounts.scheduled += 1;
       }
+      
+      // Add game to the gameResults table
+      gameResults += gameResult;
     
-      // TODO: Create game details table
-
     }
 
+    // Build the full game results table
+    const gameResultsTable = `<table><tr><th>Date</th><th>Score</th></tr>
+                              ${gameResults}</table>`;
+    
     // Build the summary paragraph
       let summaryHTML = "";
       
@@ -123,14 +151,13 @@
                         split the head-to-head series
                         ${gameCounts[team1]} games apiece.`;
         }
-
       }
       
     // Create the card
     generateMatchupComparisonCard(cardID);
 
     // Output summary paragraph
-    $(`#${cardID}`).append(summaryHTML);
+    $(`#${cardID}`).append(summaryHTML).append(gameResultsTable);
     
   }
     
