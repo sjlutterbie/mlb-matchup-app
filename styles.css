@@ -44,7 +44,7 @@ main {
     border: 1px solid #00c; /* Temp for functional wireframe */
   }
   
-  td {
+  th, td {
     padding: 5px; /* Temp for functional wireframe */
   }
 

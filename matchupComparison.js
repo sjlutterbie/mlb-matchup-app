@@ -41,11 +41,8 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   // Initiate cardID and content string
   const cardID = 'HeadtoHead';
 
-  // Get team1's games
-  let games = getTeamGames(team1, seasonDataGlobal[season].Games);
-  
-  // Filter only the games between team1 and team2
-  games = getTeamGames(team2, games);
+  // Get head-to-head games
+  let games = getHeadtoHeadGames(team1, team2, seasonDataGlobal[season].Games);
 
   // Initiate gameCounts
   
@@ -153,12 +150,16 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
       }
     }
     
+  // Create card header
+  const cardHeader = '<h2>Series summary</h2>';
+    
   // Create the card
   generateMatchupComparisonCard(cardID);
 
   // Output summary paragraph
-  $(`#${cardID}`).append(summaryHTML).append(gameResultsTable);
-  
+  $(`#${cardID}`).append(cardHeader)
+                 .append(summaryHTML)
+                 .append(gameResultsTable);
 }
   
 /* === COMBINED BOX SCORE === */  
@@ -168,15 +169,80 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
   
   // Initiate cardID and content string
   const cardID = 'CombinedBoxScore';
-  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+
+  // Get head-to-head games
+  let games = getHeadtoHeadGames(team1, team2, seasonDataGlobal[season].Games);
   
-  //TODO: Generate content
+  console.log(games);
+  
+  // Initiate output boxScore
+  const boxScore = {};
+    boxScore[team1] = {};
+    boxScore[team2] = {};
+    
+    boxScore[team1].runs = 0;
+    boxScore[team2].runs = 0;
+    
+    boxScore[team1].hits = 0;
+    boxScore[team2].hits = 0;
+    
+    boxScore[team1].errors = 0;
+    boxScore[team2].errors = 0;
+    
+  // Loop through games, compiling Box Score
+  for (let key in games) {
+    
+    // Extract the current game
+    const game = games[key];
+    
+    // Set home and away teams (for clarity)
+    const homeTeam = game.HomeTeam;
+    const awayTeam = game.AwayTeam;
+    
+    // Update box score
+    boxScore[awayTeam].runs += game.AwayTeamRuns;
+    boxScore[homeTeam].runs += game.HomeTeamRuns;
+    
+    boxScore[awayTeam].hits += game.AwayTeamHits;
+    boxScore[homeTeam].hits += game.HomeTeamHits;
+    
+    boxScore[awayTeam].errors += game.AwayTeamErrors;
+    boxScore[homeTeam].errors += game.HomeTeamErrors;
+
+  }
+  
+  // Generate combined box score HTML
+  const combinedBoxScoreTable = `
+    <table>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Runs</th>
+        <th>Hits</th>
+        <th>Errors</th>
+      </tr>
+      <tr>
+        <td>${team1}</td>
+        <td>${boxScore[team1].runs}</td>
+        <td>${boxScore[team1].hits}</td>
+        <td>${boxScore[team1].errors}</td>
+      </tr>
+      <tr>
+        <td>${team2}</td>
+        <td>${boxScore[team2].runs}</td>
+        <td>${boxScore[team2].hits}</td>
+        <td>${boxScore[team2].errors}</td>
+      </tr>
+    </table>
+  `;
+  
+  // Create card Header
+  const cardHeader = '<h2>Combined box score</h2>';
   
   // Create the card
   generateMatchupComparisonCard(cardID);
 
   // Insert content into card
-  $(`#${cardID}`).html(cardHTML);
+  $(`#${cardID}`).append(cardHeader).append(combinedBoxScoreTable);
   
 }
 
@@ -278,6 +344,17 @@ function getTeamGames(team, gameSet) {
   
 }
   
+function getHeadtoHeadGames(team1, team2, gameSet) {
+  // Daisy-chain getTeamGames() to get all games between two teams
+  
+  // Get team1's games
+  let games = getTeamGames(team1, gameSet);
+  
+  // Filter only the games between team1 and team2
+  games = getTeamGames(team2, games);
+
+  return games;
+}
 
   
   
