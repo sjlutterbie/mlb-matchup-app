@@ -3,6 +3,8 @@
 /* =====================
    = ON LOAD FUNCTIONS =
    ===================== */
+
+  // NOTE: fantasyData API functions can be found in fantasyData.js
    
 function populateMatchupForm() {
   // Populates the Matchup Comparison Form with a list of all active MLB Teams
@@ -122,32 +124,7 @@ function handleMatchupFormSubmission() {
     
   }
   
-/* ======================
-   = MATCHUP COMPARISON =
-   ====================== */
-  
-  function generateMatchupComparison(team1, team2, season) {
-    
-    //TODO: Make this function actually do something.
-    
-    /*
-    Mathup Cards to generate:
-      * Head-to-head W-L
-      * Includes a table with the box score for each matchup
-      * How many games the two teams have remaining in the season
-      * Combined box score across all head-to-head games
-      * Side-by-side comparison of their overall season stats.
-      * A 'win tracker' charting their relative progress over the course of the season.
-      * The win tracker highlights the winner of head-to-head match-ups, with tooltips that display the score.
-    */
-    
-    console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
-    
-    console.log(seasonDataGlobal);
-    
-  
-  }
-
+  // NOTE: Matchup Comparison functions can be found in matchupComparison.js
 
 /* ================
    = LAUNCH CODES =
