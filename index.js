@@ -75,6 +75,7 @@ function handleMatchupFormSubmission() {
       // TODO
         console.log("Season data exists!");
         // Proceed to generating matchup analysis
+        generateMatchupComparison(team1, team2, season);
 
     } else {
       // If it doesn't...
@@ -86,6 +87,8 @@ function handleMatchupFormSubmission() {
         seasonDataGlobal[season] = {};
         
         console.log("Loading season data...");
+        
+        //TODO: Display "Loading..." animation
         
         // Begin "Data loading chain":
           // Load Game data...
@@ -103,7 +106,7 @@ function handleMatchupFormSubmission() {
                   season,
                   // ...On complete, generate Matchup Comparison
                   function() {
-                    generateMatchupComparison(seasonDataGlobal, team1, team2, season);
+                    generateMatchupComparison(team1, team2, season);
                   }
               );
             }
@@ -119,7 +122,7 @@ function handleMatchupFormSubmission() {
     
   }
   
-  function generateMatchupComparison(data, team1, team2, season) {
+  function generateMatchupComparison(team1, team2, season) {
     
     //TODO: Make this function actually do something.
     
