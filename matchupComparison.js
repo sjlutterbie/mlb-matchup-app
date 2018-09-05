@@ -254,10 +254,27 @@ function generateSeasonComparisonCard(team1, team2, season) {
   
   // Initiate stats object
   const teamStats = {};
-  
-  // Get Team stats
-  teamStats[team1] = getTeamStats(team1, season);
-  teamStats[team2] = getTeamStats(team2, season);
+    teamStats[team1] = {};
+    teamStats[team2] = {};
+
+  // Get Team stats (.raw will be manipulated into .output)
+  teamStats[team1].raw = getTeamStats(team1, season);
+  teamStats[team2].raw = getTeamStats(team2, season);
+
+  //Clean/calculate the following statistics:
+    // Wins - Losses
+      // Winning Percentage
+    // Batting average (hits / atBats)
+    // ERA 
+      // PitchingRuns / (InningsPitchedDecimal / 9)
+    // OBP
+    // SLG
+    // WHIP
+    // Hits
+    // Doubles
+    // Triples
+    // HRs
+    // Errors
 
   console.log(teamStats);  
   
