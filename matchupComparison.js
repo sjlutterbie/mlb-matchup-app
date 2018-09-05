@@ -8,7 +8,6 @@
     // Central function that calls the individual matchup comparison analyses
     
     console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
-    console.log(seasonDataGlobal[season].Games);
 
     // Clear any previous analysis
     $('main').html('');
@@ -34,201 +33,215 @@
    = MATCHUP CARD GENERATOR FUNCTIONS =
    ==================================== */
 
-  function generateHeadtoHeadSummaryCard(team1, team2, season) {
-    // Generate the Head-to-Head W-L Card, including table of individual box scores
+/* === HEAD-TO-HEAD SUMMARY === */
+
+function generateHeadtoHeadSummaryCard(team1, team2, season) {
+  // Generate the Head-to-Head W-L Card, including table of individual box scores
+
+  // Initiate cardID and content string
+  const cardID = 'HeadtoHead';
+
+  // Get team1's games
+  let games = getTeamGames(team1, seasonDataGlobal[season].Games);
   
-    // Initiate cardID and content string
-    const cardID = 'HeadtoHead';
-//    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  // Filter only the games between team1 and team2
+  games = getTeamGames(team2, games);
+
+  // Initiate gameCounts
   
-    // Get team1's games
-    let games = getTeamGames(team1, seasonDataGlobal[season].Games);
+  const gameCounts = {};
+    gameCounts[team1] = 0;
+    gameCounts[team2] = 0;
+    gameCounts['scheduled'] = 0;
     
-    // Filter only the games between team1 and team2
-    games = getTeamGames(team2, games);
+  // Initiate the gameResults table content string
+  
+  let gameResults = "";
+  
+  // Loop through games, increasing counts & building output
+  
+  for (let key in games) {
+    
+    // Extract the current game
+    const game = games[key];
 
-    // Initiate gameCounts
-    
-    const gameCounts = {};
-      gameCounts[team1] = 0;
-      gameCounts[team2] = 0;
-      gameCounts['scheduled'] = 0;
+    // Format the game date string
+    let gameDate = new Date(game.Day);
+    const dateOptions = {month: 'long', day: 'numeric' };
+    let gameDateString = gameDate.toLocaleDateString("en-US", dateOptions);
+
+    // Initiate gameResult string
+    let gameResult = "";
+
+    // If the game was completed...
+    // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
+    if (game.Status === "Final") {
       
-    // Initiate the gameResults table content string
-    
-    let gameResults = "";
-    
-    // Loop through games, increasing counts & building output
-    
-    for (let key in games) {
+      // Build a complete game result
+      gameResult = `<tr><td>${gameDateString}</td>
+                    <td>${game.AwayTeam} ${game.AwayTeamRuns}
+                    - ${game.HomeTeamRuns} ${game.HomeTeam}</td></tr>`;
       
-      // Extract the current game
-      const game = games[key];
-
-      // Format the game date string
-      let gameDate = new Date(game.Day);
-      const dateOptions = {month: 'long', day: 'numeric' };
-      let gameDateString = gameDate.toLocaleDateString("en-US", dateOptions);
-
-      // Initiate gameResult string
-      let gameResult = "";
-
-      // If the game was completed...
-      // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
-      if (game.Status === "Final") {
-        
-        // Build a complete game result
-        gameResult = `<tr><td>${gameDateString}</td>
-                      <td>${game.AwayTeam} ${game.AwayTeamRuns}
-                      - ${game.HomeTeamRuns} ${game.HomeTeam}</td></tr>`;
-        
-        // If the home team won...
-        if (game.HomeTeamRuns > game.AwayTeamRuns) {
-          // Give the home team a win
-          gameCounts[game.HomeTeam] += 1;
-        } else {
-          // Or give the away team a win
-          gameCounts[game.AwayTeam] += 1;
-        }
-      } else if (game.Status === "Scheduled") {
-        
-        // Build a TBD game result
-        gameResult = `<tr><td>${gameDateString}</td>
-                      <td>TBD (at ${game.HomeTeam})</td></tr>`;
-        
-        // Increase the scheduled count
-        gameCounts.scheduled += 1;
-      }
-      
-      // Add game to the gameResults table
-      gameResults += gameResult;
-    
-    }
-
-    // Build the full game results table
-    const gameResultsTable = `<table><tr><th>Date</th><th>Score</th></tr>
-                              ${gameResults}</table>`;
-    
-    // Build the summary paragraph
-      let summaryHTML = "";
-      
-      // If there are games remaining...
-      if (gameCounts.scheduled > 0 ) {
-        // If team1 leads the series...
-        if (gameCounts[team1] > gameCounts[team2]) {
-          summaryHTML = `<p>In the ${season} season, ${team1} have a
-                         ${gameCounts[team1]} games to ${gameCounts[team2]}
-                         series lead over ${team2}, with
-                         ${gameCounts.scheduled} games remaining.`;
-        // If team2 leads the series...
-        } else if (gameCounts[team2] > gameCounts[team1]) {
-          summaryHTML = `<p>In the ${season} season, ${team2} have a
-                         ${gameCounts[team2]} games to ${gameCounts[team1]}
-                         series lead over ${team1}, with
-                         ${gameCounts.scheduled} games remaining.`;
-        // If the series is tied...
-        } else {
-          summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
-                         have split the head-to-head series ${gameCounts[team1]}
-                         games apiece, with ${gameCounts.scheduled}
-                         games remaining.`;
-        }
-      // If the series is complete
+      // If the home team won...
+      if (game.HomeTeamRuns > game.AwayTeamRuns) {
+        // Give the home team a win
+        gameCounts[game.HomeTeam] += 1;
       } else {
-        // If team1 won the series...
-        if (gameCounts[team1] > gameCounts[team2]) {
-          summaryHTML = `<p>In the ${season} season, ${team1} won the
-                         head-to-head series against ${team2},
-                         ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
-        // If team2 leads the series...
-        } else if (gameCounts[team2] > gameCounts[team1]) {
-          summaryHTML = `<p>In the ${season} season, ${team2} won the
-                         head-to-head series against ${team1},
-                         ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
-        // If the series is tied...
-        } else {
-          summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
-                        split the head-to-head series
-                        ${gameCounts[team1]} games apiece.`;
-        }
+        // Or give the away team a win
+        gameCounts[game.AwayTeam] += 1;
       }
+    } else if (game.Status === "Scheduled") {
       
-    // Create the card
-    generateMatchupComparisonCard(cardID);
-
-    // Output summary paragraph
-    $(`#${cardID}`).append(summaryHTML).append(gameResultsTable);
+      // Build a TBD game result
+      gameResult = `<tr><td>${gameDateString}</td>
+                    <td>TBD (at ${game.HomeTeam})</td></tr>`;
+      
+      // Increase the scheduled count
+      gameCounts.scheduled += 1;
+    }
     
-  }
-    
-  function generateCombinedBoxScoreCard(team1, team2, season) {
-    // Combined box score summary, plus other comparisons, if available
-    
-    // Initiate cardID and content string
-    const cardID = 'CombinedBoxScore';
-    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-    
-    //TODO: Generate content
-    
-    // Create the card
-    generateMatchupComparisonCard(cardID);
-
-    // Insert content into card
-    $(`#${cardID}`).html(cardHTML);
-    
-  }
+    // Add game to the gameResults table
+    gameResults += gameResult;
   
-  function generateUpcomingGamesCard(team1, team2, season) {
-    // A summary of upcoming games, if they have any.
-    
-    // Initiate cardID and content string
-    const cardID = 'UpcomingGames';
-    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-    
-    //TODO: Generate content
-    
-    // Create the card
-    generateMatchupComparisonCard(cardID);
-
-    // Insert content into card
-    $(`#${cardID}`).html(cardHTML);
-    
   }
+
+  // Build the full game results table
+  const gameResultsTable = `<table><tr><th>Date</th><th>Score</th></tr>
+                            ${gameResults}</table>`;
   
-  function generateSeasonComparisonCard(team1, team2, season) {
-    // Side-by-side comparison of overall season stats
+  // Build the summary paragraph
+    let summaryHTML = "";
+    
+    // If there are games remaining...
+    if (gameCounts.scheduled > 0 ) {
+      // If team1 leads the series...
+      if (gameCounts[team1] > gameCounts[team2]) {
+        summaryHTML = `<p>In the ${season} season, ${team1} have a
+                       ${gameCounts[team1]} games to ${gameCounts[team2]}
+                       series lead over ${team2}, with
+                       ${gameCounts.scheduled} games remaining.`;
+      // If team2 leads the series...
+      } else if (gameCounts[team2] > gameCounts[team1]) {
+        summaryHTML = `<p>In the ${season} season, ${team2} have a
+                       ${gameCounts[team2]} games to ${gameCounts[team1]}
+                       series lead over ${team1}, with
+                       ${gameCounts.scheduled} games remaining.`;
+      // If the series is tied...
+      } else {
+        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+                       have split the head-to-head series ${gameCounts[team1]}
+                       games apiece, with ${gameCounts.scheduled}
+                       games remaining.`;
+      }
+    // If the series is complete
+    } else {
+      // If team1 won the series...
+      if (gameCounts[team1] > gameCounts[team2]) {
+        summaryHTML = `<p>In the ${season} season, ${team1} won the
+                       head-to-head series against ${team2},
+                       ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
+      // If team2 leads the series...
+      } else if (gameCounts[team2] > gameCounts[team1]) {
+        summaryHTML = `<p>In the ${season} season, ${team2} won the
+                       head-to-head series against ${team1},
+                       ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
+      // If the series is tied...
+      } else {
+        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+                      split the head-to-head series
+                      ${gameCounts[team1]} games apiece.`;
+      }
+    }
+    
+  // Create the card
+  generateMatchupComparisonCard(cardID);
 
-    // Initiate cardID and content string
-    const cardID = 'SeasonComparison';
-    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-    
-    //TODO: Generate content
-    
-    // Create the card
-    generateMatchupComparisonCard(cardID);
-
-    // Insert content into card
-    $(`#${cardID}`).html(cardHTML);
-    
-  }
+  // Output summary paragraph
+  $(`#${cardID}`).append(summaryHTML).append(gameResultsTable);
   
-  function generateWinTrackerCard(team1, team2, season) {
-    // A "win tracker" charting their relative progress over the course of the season
-    
-    // Initiate cardID and content string
-    const cardID = 'WinTracker';
-    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-    
-    //TODO: Generate content
-    
-    // Create the card
-    generateMatchupComparisonCard(cardID);
-
-    // Insert content into card
-    $(`#${cardID}`).html(cardHTML);
-
-  }
+}
   
+/* === COMBINED BOX SCORE === */  
+
+function generateCombinedBoxScoreCard(team1, team2, season) {
+  // Combined box score summary, plus other comparisons, if available
+  
+  // Initiate cardID and content string
+  const cardID = 'CombinedBoxScore';
+  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  
+  //TODO: Generate content
+  
+  // Create the card
+  generateMatchupComparisonCard(cardID);
+
+  // Insert content into card
+  $(`#${cardID}`).html(cardHTML);
+  
+}
+
+/* === UPCOMING GAMES CARD === */ 
+
+// NOTE: Is this necessary, given the series summary includes upcoming games?
+
+function generateUpcomingGamesCard(team1, team2, season) {
+  // A summary of upcoming games, if they have any.
+  
+  // Initiate cardID and content string
+  const cardID = 'UpcomingGames';
+  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  
+  //TODO: Generate content
+  
+  // Create the card
+  generateMatchupComparisonCard(cardID);
+
+  // Insert content into card
+  $(`#${cardID}`).html(cardHTML);
+  
+}
+
+/* === SEASON STATS COMPARISON === */
+
+function generateSeasonComparisonCard(team1, team2, season) {
+  // Side-by-side comparison of overall season stats
+
+  // Initiate cardID and content string
+  const cardID = 'SeasonComparison';
+  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  
+  //TODO: Generate content
+  
+  // Create the card
+  generateMatchupComparisonCard(cardID);
+
+  // Insert content into card
+  $(`#${cardID}`).html(cardHTML);
+  
+}
+
+/* === WIN TRACKER === */
+
+function generateWinTrackerCard(team1, team2, season) {
+  // A "win tracker" charting their relative progress over the course of the season
+  
+  // Initiate cardID and content string
+  const cardID = 'WinTracker';
+  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  
+  //TODO: Generate content
+  
+  // Create the card
+  generateMatchupComparisonCard(cardID);
+
+  // Insert content into card
+  $(`#${cardID}`).html(cardHTML);
+
+}
+
+
+
+
 /* =======================================
    = MATCHUP COMPARISON HELPER FUNCTIONS =
    ======================================= */

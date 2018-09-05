@@ -70,21 +70,15 @@ function handleMatchupFormSubmission() {
     $('.js-form-alert-two-teams').hide();
     $('.js-form-alert-dist-teams').hide();
     
-    // Check for season data in memory:
+    // If the season data already exists in seasonDataGobal...
     if (seasonDataGlobal[season]) {
-      // If it exsists...
 
-      // TODO
-        console.log("Season data exists!");
         // Proceed to generating matchup analysis
         generateMatchupComparison(team1, team2, season);
 
+    // If it doesn't already exist...
     } else {
-      // If it doesn't...
-      
-      //TODO
-        console.log("Season data doesn't exist!");
-        
+
         // Initialize seasonDataGLobal[season] object
         seasonDataGlobal[season] = {};
         
