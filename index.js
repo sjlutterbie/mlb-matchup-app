@@ -68,8 +68,6 @@ function handleMatchupFormSubmission() {
     $('.js-form-alert-two-teams').hide();
     $('.js-form-alert-dist-teams').hide();
     
-    console.log(season);
-    
     // Check for season data in memory:
     if (seasonDataGlobal[season]) {
       // If it exsists...

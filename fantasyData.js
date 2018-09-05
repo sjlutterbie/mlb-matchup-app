@@ -4,31 +4,36 @@
    = CORE FANTASYDATA API FUNCTIONS =
    ================================== */
    
-function fantasyDataAPIQuery(searchType, successCallback, season = null) {
+function fantasyDataAPIQuery(searchType, successCallback,
+                             season = null, completeCallback = null) {
   // Makes a FantasyData API call, returning a JSON object in response
+  // Required arguments: searchType, successCallback
+  // Optional arguments: season, completeCallback
   
-  // Set the search endpoint to include a season
-  let searchURL = `https://api.fantasydata.net/v3/mlb/stats/json/${searchType}`;    
+  // Initialize the ajax settings object
   
-  // Append the season, if required for the call
+  const ajaxSettings = {};
+  
+  // Implement the required settings
+  
+  ajaxSettings.beforeSend = setHeader;
+  ajaxSettings.error = fantasyDataAPIErrorCallback;
+  ajaxSettings.method = 'GET';
+  ajaxSettings.success = successCallback;
+  ajaxSettings.url = `https://api.fantasydata.net/v3/mlb/stats/json/${searchType}`;
+  
+  // Implement optional settings
+  
   if (season != null) {
-    searchURL += `/${season}`;
+    ajaxSettings.url += `/${season}`;
   }
   
-  // Execute query
-  $.ajax({
-    beforeSend: setHeader,
-    url: searchURL,
-    type: "GET",
-    error: fantasyDataAPIErrorCallback,
-    success: successCallback
-  });
-  
-  if(TESTING) {
-    
-    console.log(`"fantasyDataAPIQuery" was called`);
-    
+  if (completeCallback != null) {
+    ajaxSettings.complete = completeCallback;
   }
+  
+  // Execute the query
+  $.ajax(ajaxSettings);
   
 }
   
