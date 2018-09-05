@@ -38,24 +38,14 @@
     // Initiate cardID and content string
     const cardID = 'HeadtoHead';
     let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-    
-    // Extract team1's games
-      // NOTES: AwayTeam & HomeTEam
-      
-      // Initiate data object
-      let data = {};
-      
-      // Select games involving team 1
-      seasonDataGlobal[season].Games.forEach(game => {
-        
-          if ([game.HomeTeam, game.AwayTeam].includes(team1)) {
-            data[game.GameID] = game;
-          }
-      });
-      
-      console.table(data);
+  
+    // Get team1's games
+    let data = getTeamGames(team1, seasonDataGlobal[season].Games);
     
     // Filter only the games between team1 and team2
+    data = getTeamGames(team2, data);
+
+    console.table(data);
     
     // Filter only complete and not-yet-played games
     
@@ -80,7 +70,6 @@
     // Combined box score summary, plus other comparisons, if available
     
     // Initiate cardID and content string
-    
     const cardID = 'CombinedBoxScore';
     let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
@@ -149,18 +138,38 @@
    = MATCHUP COMPARISON HELPER FUNCTIONS =
    ======================================= */
 
-  function generateMatchupComparisonCard(cardID) {
-    // Generates the wrapper HTML for a matchup comparison card
+function generateMatchupComparisonCard(cardID) {
+  // Generates the wrapper HTML for a matchup comparison card
+  
+  // Build HTML
+  const cardHTML = `<section class="card js-card" data-highlight="false"
+                      id="${cardID}"></section>`;
+                    
+  // Create card
+  $('main').append(cardHTML);
+  
+}
+  
+function getTeamGames(team, gameSet) {
+  // From {gameSet}, select all the games in which {team} played
+  
+  // Create data object
+  const data = {};
+  
+  // Select games involving team
+  Object.keys(gameSet).forEach(key => {
+    const game = gameSet[key];
     
-    // Build HTML
-    const cardHTML = `<section class="card js-card"
-                               data-highlight="false"
-                               id="${cardID}">
-                      </section>`
-                      
-    // Create card
+    if ([game.HomeTeam, game.AwayTeam].includes(team)) {
+      data[key] = game;
+    }
     
-    $('main').append(cardHTML);
-    
-  }
+  });
+  
+  return data;
+  
+}
+  
+
+  
   
