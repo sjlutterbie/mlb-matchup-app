@@ -1,10 +1,14 @@
 'use strict';
 
+/* ================================
+   = MATCHUP COMPARISON GENERATOR =
+   ================================ */
+
   function generateMatchupComparison(team1, team2, season) {
     // Central function that calls the individual matchup comparison analyses
     
     console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
-    console.log(seasonDataGlobal);
+    console.log(seasonDataGlobal[season].Games);
 
     
     // Head-to-Head W-L, including table of individual box scores
@@ -24,23 +28,10 @@
   
   }
   
-  /* === Matchup Comparison Card functions === */
-  
-  function generateMatchupComparisonCard(cardID) {
-    // Generates the wrapper HTML for a matchup comparison card
-    
-    // Build HTML
-    const cardHTML = `<section class="card js-card"
-                               data-highlight="false"
-                               id="${cardID}">
-                      </section>`
-                      
-    // Create card
-    
-    $('main').append(cardHTML);
-    
-  }
-  
+/* ====================================
+   = MATCHUP CARD GENERATOR FUNCTIONS =
+   ==================================== */
+
   function generateHeadtoHeadSummaryCard(team1, team2, season) {
     // Generate the Head-to-Head W-L Card, including table of individual box scores
   
@@ -48,7 +39,34 @@
     const cardID = 'HeadtoHead';
     let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
-    //TODO: Generate content
+    // Extract team1's games
+      // NOTES: AwayTeam & HomeTEam
+      
+      // Initiate data object
+      let data = {};
+      
+      // Select games involving team 1
+      seasonDataGlobal[season].Games.forEach(game => {
+        
+          if ([game.HomeTeam, game.AwayTeam].includes(team1)) {
+            data[game.GameID] = game;
+          }
+      });
+      
+      console.table(data);
+    
+    // Filter only the games between team1 and team2
+    
+    // Filter only complete and not-yet-played games
+    
+    // From complete games, calculate W-L
+    
+    // Count not-yet-played games
+    
+    // Create summary paragraph
+    
+    // Create game details table
+
     
     // Create the card
     generateMatchupComparisonCard(cardID);
@@ -126,3 +144,23 @@
     $(`#${cardID}`).html(cardHTML);
 
   }
+  
+/* =======================================
+   = MATCHUP COMPARISON HELPER FUNCTIONS =
+   ======================================= */
+
+  function generateMatchupComparisonCard(cardID) {
+    // Generates the wrapper HTML for a matchup comparison card
+    
+    // Build HTML
+    const cardHTML = `<section class="card js-card"
+                               data-highlight="false"
+                               id="${cardID}">
+                      </section>`
+                      
+    // Create card
+    
+    $('main').append(cardHTML);
+    
+  }
+  
