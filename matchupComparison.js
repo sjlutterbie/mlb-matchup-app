@@ -18,9 +18,6 @@
     // Combined box score summary, plus other comparisons, if available
     generateCombinedBoxScoreCard(team1, team2, season);
     
-    // A summary of upcoming matches, if they have any.
-    generateUpcomingGamesCard(team1, team2, season);
-
     // Side-by-side comparison of overall season stats
     generateSeasonComparisonCard(team1, team2, season);
     
@@ -173,8 +170,6 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
   // Get head-to-head games
   let games = getHeadtoHeadGames(team1, team2, seasonDataGlobal[season].Games);
   
-  console.log(games);
-  
   // Initiate output boxScore
   const boxScore = {};
     boxScore[team1] = {};
@@ -246,27 +241,6 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
   
 }
 
-/* === UPCOMING GAMES CARD === */ 
-
-// NOTE: Is this necessary, given the series summary includes upcoming games?
-
-function generateUpcomingGamesCard(team1, team2, season) {
-  // A summary of upcoming games, if they have any.
-  
-  // Initiate cardID and content string
-  const cardID = 'UpcomingGames';
-  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-  
-  //TODO: Generate content
-  
-  // Create the card
-  generateMatchupComparisonCard(cardID);
-
-  // Insert content into card
-  $(`#${cardID}`).html(cardHTML);
-  
-}
-
 /* === SEASON STATS COMPARISON === */
 
 function generateSeasonComparisonCard(team1, team2, season) {
@@ -275,6 +249,17 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Initiate cardID and content string
   const cardID = 'SeasonComparison';
   let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  
+  console.log(seasonDataGlobal[season].TeamSeasonStats);
+  
+  // Initiate stats object
+  const teamStats = {};
+  
+  // Get Team stats
+  teamStats[team1] = getTeamStats(team1, season);
+  teamStats[team2] = getTeamStats(team2, season);
+
+  console.log(teamStats);  
   
   //TODO: Generate content
   
@@ -356,5 +341,13 @@ function getHeadtoHeadGames(team1, team2, gameSet) {
   return games;
 }
 
+function getTeamStats(team, season) {
+  // Get {team}'s stats for a given {season}
   
+  const stats = seasonDataGlobal[season].TeamSeasonStats.find(statLine => {
+    return statLine.Team === team;
+  });
   
+  return stats;
+  
+}
