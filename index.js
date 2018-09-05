@@ -68,8 +68,6 @@ function handleMatchupFormSubmission() {
     $('.js-form-alert-two-teams').hide();
     $('.js-form-alert-dist-teams').hide();
     
-    console.log(season);
-    
     // Check for season data in memory:
     if (seasonDataGlobal[season]) {
       // If it exsists...
@@ -77,17 +75,66 @@ function handleMatchupFormSubmission() {
       // TODO
         console.log("Season data exists!");
         // Proceed to generating matchup analysis
+        generateMatchupComparison(team1, team2, season);
 
     } else {
       // If it doesn't...
       
       //TODO
         console.log("Season data doesn't exist!");
-        // Call the API to load the data into memory
-        // Once data is loaded into memory, proceed to generating matchup analysis
+        
+        // Initialize seasonDataGLobal[season] object
+        seasonDataGlobal[season] = {};
+        
+        console.log("Loading season data...");
+        
+        //TODO: Display "Loading..." animation
+        
+        // Begin "Data loading chain":
+          // Load Game data...
+          fantasyDataAPIQuery('Games',
+            function(data) {
+              storeSeasonData(data, 'Games', season);
+            },
+            season,
+            // ...On complete, load Team Season Stats data
+            function() {
+              fantasyDataAPIQuery('TeamSeasonStats',
+                  function(data) {
+                    storeSeasonData(data, 'TeamSeasonStats', season);
+                  },
+                  season,
+                  // ...On complete, generate Matchup Comparison
+                  function() {
+                    generateMatchupComparison(team1, team2, season);
+                  }
+              );
+            }
+          );
     }
   });
 }
+
+  function storeSeasonData(data, dataType, season) {
+    // Stores data from API Query in seasonDataGlobal[season] object.
+    
+    seasonDataGlobal[season][dataType] = data;
+    
+  }
+  
+  function generateMatchupComparison(team1, team2, season) {
+    
+    //TODO: Make this function actually do something.
+    
+    //TODO: Need to refactor fantasyDataAPIQuery to handle multiple optional arguments.
+    //  - Build the ajax query object separately, then place it in the .ajax() call.
+    
+    console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
+    
+    console.log(seasonDataGlobal);
+    
+    
+  }
 
 
 /* ================
