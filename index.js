@@ -85,26 +85,31 @@ function handleMatchupFormSubmission() {
         // Initialize seasonDataGLobal[season] object
         seasonDataGlobal[season] = {};
         
-        // Load Games data
-        fantasyDataAPIQuery('Games',
-          function(data) {
-            storeSeasonData(data, 'Games', season);
-          },
-          season);
-          
-        // Load Team Stats data
-        fantasyDataAPIQuery('TeamSeasonStats',
-          function(data) {
-            storeSeasonData(data, 'TeamSeasonStats', season);
-          },
-          season);
+        console.log("Loading season data...");
         
-        // Call the API to load the data into memory
-        // Once data is loaded into memory, proceed to generating matchup analysis
+        // Begin "Data loading chain":
+          // Load Game data...
+          fantasyDataAPIQuery('Games',
+            function(data) {
+              storeSeasonData(data, 'Games', season);
+            },
+            season,
+            // ...On complete, load Team Season Stats data
+            function() {
+              fantasyDataAPIQuery('TeamSeasonStats',
+                  function(data) {
+                    storeSeasonData(data, 'TeamSeasonStats', season);
+                  },
+                  season,
+                  // ...On complete, generate Matchup Comparison
+                  function() {
+                    generateMatchupComparison(seasonDataGlobal, team1, team2, season);
+                  }
+              );
+            }
+          );
     }
-    
   });
-  
 }
 
   function storeSeasonData(data, dataType, season) {
