@@ -32,6 +32,12 @@ main {
   padding: 16px; /* Temp for functional wireframe */
 }
 
+  .card {
+    border: 1px solid #ccc; /* Temp for functional wireframe */
+    padding: 5px; /* Temp for functional wireframe */
+    margin: 5px; /* Temp for functional wireframe */
+  }
+
 nav {
   border: 1px solid #00f; /* Temp for functional wireframe */
   padding: 16px; /* Temp for functional wireframe */

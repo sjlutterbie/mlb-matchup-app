@@ -14,7 +14,7 @@
     generateCombinedBoxScoreCard(team1, team2, season);
     
     // A summary of upcoming matches, if they have any.
-    generateUpcomingMatchesCard(team1, team2, season);
+    generateUpcomingGamesCard(team1, team2, season);
 
     // Side-by-side comparison of overall season stats
     generateSeasonComparisonCard(team1, team2, season);
@@ -26,56 +26,103 @@
   
   /* === Matchup Comparison Card functions === */
   
-  function generateMatchupComparisonCard() {
+  function generateMatchupComparisonCard(cardID) {
     // Generates the wrapper HTML for a matchup comparison card
     
-    //TODO
+    // Build HTML
+    const cardHTML = `<section class="card js-card"
+                               data-highlight="false"
+                               id="${cardID}">
+                      </section>`
+                      
+    // Create card
     
-    console.log("Generating Matchup Comparison Card... somdeday.");
+    $('main').append(cardHTML);
     
   }
   
   function generateHeadtoHeadSummaryCard(team1, team2, season) {
     // Generate the Head-to-Head W-L Card, including table of individual box scores
-      
-    //TODO
+  
+    // Initiate cardID and content string
+    const cardID = 'HeadtoHead';
+    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
-    console.log("Generating Head to Head Summary Card... somdeday.");
-      
+    //TODO: Generate content
+    
+    // Create the card
+    generateMatchupComparisonCard(cardID);
+
+    // Insert content into card
+    $(`#${cardID}`).html(cardHTML);
+    
   }
     
   function generateCombinedBoxScoreCard(team1, team2, season) {
     // Combined box score summary, plus other comparisons, if available
     
-    //TODO
+    // Initiate cardID and content string
     
-    console.log("Generating Upcoming Matches Card... somdeday.");
+    const cardID = 'CombinedBoxScore';
+    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+    
+    //TODO: Generate content
+    
+    // Create the card
+    generateMatchupComparisonCard(cardID);
+
+    // Insert content into card
+    $(`#${cardID}`).html(cardHTML);
     
   }
   
-  function generateUpcomingMatchesCard(team1, team2, season) {
-    // A summary of upcoming matches, if they have any.
+  function generateUpcomingGamesCard(team1, team2, season) {
+    // A summary of upcoming games, if they have any.
     
-    //TODO
+    // Initiate cardID and content string
+    const cardID = 'UpcomingGames';
+    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
-    console.log("Generating Upcoming Matches Card... somdeday.");
+    //TODO: Generate content
+    
+    // Create the card
+    generateMatchupComparisonCard(cardID);
+
+    // Insert content into card
+    $(`#${cardID}`).html(cardHTML);
     
   }
   
   function generateSeasonComparisonCard(team1, team2, season) {
     // Side-by-side comparison of overall season stats
 
-    //TODO
+    // Initiate cardID and content string
+    const cardID = 'SeasonComparison';
+    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
-    console.log("Generating Season Comparison Card... someday");
+    //TODO: Generate content
+    
+    // Create the card
+    generateMatchupComparisonCard(cardID);
+
+    // Insert content into card
+    $(`#${cardID}`).html(cardHTML);
     
   }
   
   function generateWinTrackerCard(team1, team2, season) {
     // A "win tracker" charting their relative progress over the course of the season
     
-    //TODO
+    // Initiate cardID and content string
+    const cardID = 'WinTracker';
+    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
     
-    console.log("Generating Win Tracker Card... someday");
+    //TODO: Generate content
+    
+    // Create the card
+    generateMatchupComparisonCard(cardID);
+
+    // Insert content into card
+    $(`#${cardID}`).html(cardHTML);
 
   }
