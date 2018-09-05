@@ -10,6 +10,8 @@
     console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
     console.log(seasonDataGlobal[season].Games);
 
+    // Clear any previous analysis
+    $('main').html('');
     
     // Head-to-Head W-L, including table of individual box scores
     generateHeadtoHeadSummaryCard(team1, team2, season);
@@ -37,32 +39,98 @@
   
     // Initiate cardID and content string
     const cardID = 'HeadtoHead';
-    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+//    let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
   
     // Get team1's games
-    let data = getTeamGames(team1, seasonDataGlobal[season].Games);
+    let games = getTeamGames(team1, seasonDataGlobal[season].Games);
     
     // Filter only the games between team1 and team2
-    data = getTeamGames(team2, data);
+    games = getTeamGames(team2, games);
 
-    console.table(data);
+    // Initiate gameCounts and output strings
     
-    // Filter only complete and not-yet-played games
+    const gameCounts = {};
+      gameCounts[team1] = 0;
+      gameCounts[team2] = 0;
+      gameCounts['scheduled'] = 0;
     
-    // From complete games, calculate W-L
+    // Loop through games, increasing counts & building output
     
-    // Count not-yet-played games
-    
-    // Create summary paragraph
-    
-    // Create game details table
+    for (let key in games) {
+      
+      // Extract the current game
+      const game = games[key];
 
+      // If the game was completed...
+      // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
+      if (game.Status === "Final") {
+        // If the home team won...
+        if (game.HomeTeamRuns > game.AwayTeamRuns) {
+          // Give the home team a win
+          gameCounts[game.HomeTeam] += 1;
+        } else {
+          // Or give the away team a win
+          gameCounts[game.AwayTeam] += 1;
+        }
+      } else if (game.Status === "Scheduled") {
+        // Increase the scheduled count
+        gameCounts.scheduled += 1;
+      }
     
+      // TODO: Create game details table
+
+    }
+
+    // Build the summary paragraph
+      let summaryHTML = "";
+      
+      // If there are games remaining...
+      if (gameCounts.scheduled > 0 ) {
+        // If team1 leads the series...
+        if (gameCounts[team1] > gameCounts[team2]) {
+          summaryHTML = `<p>In the ${season} season, ${team1} have a
+                         ${gameCounts[team1]} games to ${gameCounts[team2]}
+                         series lead over ${team2}, with
+                         ${gameCounts.scheduled} games remaining.`;
+        // If team2 leads the series...
+        } else if (gameCounts[team2] > gameCounts[team1]) {
+          summaryHTML = `<p>In the ${season} season, ${team2} have a
+                         ${gameCounts[team2]} games to ${gameCounts[team1]}
+                         series lead over ${team1}, with
+                         ${gameCounts.scheduled} games remaining.`;
+        // If the series is tied...
+        } else {
+          summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+                         have split the head-to-head series ${gameCounts[team1]}
+                         games apiece, with ${gameCounts.scheduled}
+                         games remaining.`;
+        }
+      // If the series is complete
+      } else {
+        // If team1 won the series...
+        if (gameCounts[team1] > gameCounts[team2]) {
+          summaryHTML = `<p>In the ${season} season, ${team1} won the
+                         head-to-head series against ${team2},
+                         ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
+        // If team2 leads the series...
+        } else if (gameCounts[team2] > gameCounts[team1]) {
+          summaryHTML = `<p>In the ${season} season, ${team2} won the
+                         head-to-head series against ${team1},
+                         ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
+        // If the series is tied...
+        } else {
+          summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+                        split the head-to-head series
+                        ${gameCounts[team1]} games apiece.`;
+        }
+
+      }
+      
     // Create the card
     generateMatchupComparisonCard(cardID);
 
-    // Insert content into card
-    $(`#${cardID}`).html(cardHTML);
+    // Output summary paragraph
+    $(`#${cardID}`).append(summaryHTML);
     
   }
     
