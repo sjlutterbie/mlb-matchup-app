@@ -371,9 +371,58 @@ function generateWinTrackerCard(team1, team2, season) {
   
   // Initiate cardID and content string
   const cardID = 'WinTracker';
-  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
+  let cardHTML = `This is the ${cardID} Card. Data for this card is currently output to the console log.`; // TEMP DESIGN STRING
   
-  //TODO: Generate content
+  // Initialize Team Wins object
+  const teamWins = {};
+    teamWins[team1] = [];
+    teamWins[team2] = [];
+    
+  // For each team...
+  [team1, team2].forEach(team => {
+
+    // Get the games they've played in the season.
+    const games = getTeamGames(team, seasonDataGlobal[season].Games);
+    
+    // Initialize win counter
+    let winCount = 0;
+  
+    // Loop through the games
+    for (let key in games) {
+      
+      // Convenience variable
+      let game = games[key];
+          
+      // Only use complete games
+      if (game.Status === "Final") {
+        
+        // Account for whether team is home or away
+        if (game.HomeTeam === team) {
+          // Team is home...
+          if (game.HomeTeamRuns > game.AwayTeamRuns) {
+            // It's a win!
+            winCount += 1;
+            // Store the date and win count in the teamWin array
+            teamWins[team].push([game.Day, winCount,
+                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
+                                game.AwayTeam]);
+          }
+       } else {
+          //Team is away...
+          if (game.HomeTeamRuns < game.AwayTeamRuns) {
+            // It's a win!
+            winCount += 1;
+            // Store the date and win count in the teamWin array
+            teamWins[team].push([game.Day, winCount,
+                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
+                                game.HomeTeam]);
+          }
+        }
+      }
+    }
+  });
+  
+  console.table(teamWins);
   
   // Create the card
   generateMatchupComparisonCard(cardID);
@@ -382,9 +431,6 @@ function generateWinTrackerCard(team1, team2, season) {
   $(`#${cardID}`).html(cardHTML);
 
 }
-
-
-
 
 /* =======================================
    = MATCHUP COMPARISON HELPER FUNCTIONS =
