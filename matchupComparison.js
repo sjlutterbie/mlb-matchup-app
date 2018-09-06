@@ -72,10 +72,27 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (game.Status === "Final") {
       
       // Build a complete game result
-      gameResult = `<tr><td>${gameDateString}</td>
-                    <td>${game.AwayTeam} ${game.AwayTeamRuns}
-                    - ${game.HomeTeamRuns} ${game.HomeTeam}</td></tr>`;
-      
+      gameResult = `<p>${gameDateString}</p>
+      <table>
+        <tr>
+          <th>&nbsp;</th>
+          <th>R</th>
+          <th>H</th>
+          <th>E</th>
+        </tr>
+        <tr>
+          <td>${game.AwayTeam}</td>
+          <td>${Math.floor(game.AwayTeamRuns)}</td>
+          <td>${Math.floor(game.AwayTeamHits)}</td>
+          <td>${Math.floor(game.AwayTeamErrors)}</td>
+        </tr>
+        <tr>
+          <td>${game.HomeTeam}</td>
+          <td>${Math.floor(game.HomeTeamRuns)}</td>
+          <td>${Math.floor(game.HomeTeamHits)}</td>
+          <td>${Math.floor(game.HomeTeamErrors)}</td>
+        </tr>
+      </table>`;
       // If the home team won...
       if (game.HomeTeamRuns > game.AwayTeamRuns) {
         // Give the home team a win
@@ -87,22 +104,17 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else if (game.Status === "Scheduled") {
       
       // Build a TBD game result
-      gameResult = `<tr><td>${gameDateString}</td>
-                    <td>TBD (at ${game.HomeTeam})</td></tr>`;
+      gameResult = `<p>${gameDateString} TBD (at ${game.HomeTeam})</p>`;
       
       // Increase the scheduled count
       gameCounts.scheduled += 1;
     }
     
-    // Add game to the gameResults table
+    // Add game to the gameResults HTML
     gameResults += gameResult;
   
   }
 
-  // Build the full game results table
-  const gameResultsTable = `<table><tr><th>Date</th><th>Score</th></tr>
-                            ${gameResults}</table>`;
-  
   // Build the summary paragraph
     let summaryHTML = "";
     
@@ -156,7 +168,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   // Output summary paragraph
   $(`#${cardID}`).append(cardHeader)
                  .append(summaryHTML)
-                 .append(gameResultsTable);
+                 .append(gameResults);
 }
   
 /* === COMBINED BOX SCORE === */  
@@ -422,6 +434,7 @@ function generateWinTrackerCard(team1, team2, season) {
     }
   });
   
+  // Output data to console log, until Google Visualization is in place.
   console.table(teamWins);
   
   // Create the card
