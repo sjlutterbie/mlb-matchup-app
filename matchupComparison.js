@@ -248,10 +248,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
   // Initiate cardID and content string
   const cardID = 'SeasonComparison';
-  let cardHTML = `This is the ${cardID} Card`; // TEMP DESIGN STRING
-  
-  console.log(seasonDataGlobal[season].TeamSeasonStats);
-  
+
   // Initiate stats object
   const teamStats = {};
   
@@ -262,7 +259,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
     teamStats[team] = {};
     
     // Get raw stats
-    teamStats[team].raw = getTeamStats(team1, season);
+    teamStats[team].raw = getTeamStats(team, season);
     
     // Shorter var names, for convenience
     const rawStats = teamStats[team].raw;
@@ -297,11 +294,68 @@ function generateSeasonComparisonCard(team1, team2, season) {
     teamStats[team].output = output;
     
   });
+
+  // Generate HTML output
   
-  console.log(teamStats);  
-  
-  //TODO: Generate content
-  
+  const cardHTML = `
+  <table>
+    <tr>
+      <th>Team</th>
+      <th>W</th>
+      <th>L</th>
+      <th>Pct.</th>
+      <th>R for</th>
+      <th>R against</th>
+      <th>Avg.</th>
+      <th>Obp.</th>
+      <th>Slg.</th>
+      <th>H</th>
+      <th>2B</th>
+      <th>3B</th>
+      <th>HR</th>
+      <th>Era.</th>
+      <th>Whip</th>
+      <th>E</th>
+    </tr>
+    <tr>
+      <td>${team1}</td>
+      <td>${teamStats[team1].output.wins}</td>
+      <td>${teamStats[team1].output.losses}</td>
+      <td>${teamStats[team1].output.winPerc}</td>
+      <td>${teamStats[team1].output.runsFor}</td>
+      <td>${teamStats[team1].output.runsAgainst}</td>
+      <td>${teamStats[team1].output.avg}</td>
+      <td>${teamStats[team1].output.obp}</td>
+      <td>${teamStats[team1].output.slg}</td>
+      <td>${teamStats[team1].output.hits}</td>
+      <td>${teamStats[team1].output.doubles}</td>
+      <td>${teamStats[team1].output.triples}</td>
+      <td>${teamStats[team1].output.homeRuns}</td>
+      <td>${teamStats[team1].output.era}</td>
+      <td>${teamStats[team1].output.whip}</td>
+      <td>${teamStats[team1].output.errors}</td>
+    </tr>
+    <tr>
+      <td>${team2}</td>
+      <td>${teamStats[team2].output.wins}</td>
+      <td>${teamStats[team2].output.losses}</td>
+      <td>${teamStats[team2].output.winPerc}</td>
+      <td>${teamStats[team2].output.runsFor}</td>
+      <td>${teamStats[team2].output.runsAgainst}</td>
+      <td>${teamStats[team2].output.avg}</td>
+      <td>${teamStats[team2].output.obp}</td>
+      <td>${teamStats[team2].output.slg}</td>
+      <td>${teamStats[team2].output.hits}</td>
+      <td>${teamStats[team2].output.doubles}</td>
+      <td>${teamStats[team2].output.triples}</td>
+      <td>${teamStats[team2].output.homeRuns}</td>
+      <td>${teamStats[team2].output.era}</td>
+      <td>${teamStats[team2].output.whip}</td>
+      <td>${teamStats[team2].output.errors}</td>
+    </tr>
+  </table>
+  `;
+
   // Create the card
   generateMatchupComparisonCard(cardID);
 
