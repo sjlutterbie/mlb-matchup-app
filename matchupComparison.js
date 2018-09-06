@@ -16,7 +16,8 @@
     generateHeadtoHeadSummaryCard(team1, team2, season);
     
     // Combined box score summary, plus other comparisons, if available
-    generateCombinedBoxScoreCard(team1, team2, season);
+    // NOTE: Currently turned off; code commented out, below
+    //  generateCombinedBoxScoreCard(team1, team2, season); 
     
     // Side-by-side comparison of overall season stats
     generateSeasonComparisonCard(team1, team2, season);
@@ -173,6 +174,8 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   
 /* === COMBINED BOX SCORE === */  
 
+/*
+
 function generateCombinedBoxScoreCard(team1, team2, season) {
   // Combined box score summary, plus other comparisons, if available
   
@@ -252,6 +255,8 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
   $(`#${cardID}`).append(cardHeader).append(combinedBoxScoreTable);
   
 }
+
+*/
 
 /* === SEASON STATS COMPARISON === */
 
@@ -371,8 +376,10 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Create the card
   generateMatchupComparisonCard(cardID);
 
+  const cardHeader = '<h2>Team Season Stats Comparison</h2>';
+
   // Insert content into card
-  $(`#${cardID}`).html(cardHTML);
+  $(`#${cardID}`).append(cardHeader).append(cardHTML);
   
 }
 
@@ -383,7 +390,7 @@ function generateWinTrackerCard(team1, team2, season) {
   
   // Initiate cardID and content string
   const cardID = 'WinTracker';
-  let cardHTML = `This is the ${cardID} Card. Data for this card is currently output to the console log.`; // TEMP DESIGN STRING
+  let cardHTML = `Data for this card is currently output to the console log.`; // TEMP DESIGN STRING
   
   // Initialize Team Wins object
   const teamWins = {};
@@ -440,8 +447,10 @@ function generateWinTrackerCard(team1, team2, season) {
   // Create the card
   generateMatchupComparisonCard(cardID);
 
+  const cardHeader = '<h2>Team Wins Tracker</h2>';
+
   // Insert content into card
-  $(`#${cardID}`).html(cardHTML);
+  $(`#${cardID}`).append(cardHeader).append(cardHTML);
 
 }
 
