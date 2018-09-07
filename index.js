@@ -3,6 +3,8 @@
 /* =====================
    = ON LOAD FUNCTIONS =
    ===================== */
+
+  // NOTE: fantasyData API functions can be found in fantasyData.js
    
 function populateMatchupForm() {
   // Populates the Matchup Comparison Form with a list of all active MLB Teams
@@ -68,21 +70,15 @@ function handleMatchupFormSubmission() {
     $('.js-form-alert-two-teams').hide();
     $('.js-form-alert-dist-teams').hide();
     
-    // Check for season data in memory:
+    // If the season data already exists in seasonDataGobal...
     if (seasonDataGlobal[season]) {
-      // If it exsists...
 
-      // TODO
-        console.log("Season data exists!");
         // Proceed to generating matchup analysis
         generateMatchupComparison(team1, team2, season);
 
+    // If it doesn't already exist...
     } else {
-      // If it doesn't...
-      
-      //TODO
-        console.log("Season data doesn't exist!");
-        
+
         // Initialize seasonDataGLobal[season] object
         seasonDataGlobal[season] = {};
         
@@ -122,20 +118,7 @@ function handleMatchupFormSubmission() {
     
   }
   
-  function generateMatchupComparison(team1, team2, season) {
-    
-    //TODO: Make this function actually do something.
-    
-    //TODO: Need to refactor fantasyDataAPIQuery to handle multiple optional arguments.
-    //  - Build the ajax query object separately, then place it in the .ajax() call.
-    
-    console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
-    
-    console.log(seasonDataGlobal);
-    
-    
-  }
-
+  // NOTE: Matchup Comparison functions can be found in matchupComparison.js
 
 /* ================
    = LAUNCH CODES =

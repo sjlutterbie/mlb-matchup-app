@@ -10,7 +10,7 @@
       * Makes the `landing card` disappear
       * Makes the `drawer nav` appear
 * From the `drawer nav`, the user can:
-  * Complete and submit the `matchup comparison form`
+  * ~~Complete and submit the `matchup comparison form`~~
   * On small screens, click the `close drawer nav link` to make the `drawer nav` disappear.
 * When the user clicks the `close drawer nav link`:
   * The `drawer nav` disappears.
@@ -28,7 +28,7 @@
 * When the user submits the `matchup comparison form`:
   * On smaller screens, the `drawer nav` transitions away
   * A `loading wheel` is displayed in the `main display`
-  * The `display cards` are generated and displaye din the `main display`
+  * The `display cards` are generated and displayed in the `main display`
 * When a user clicks a `display card`:
   * If the card is NOT expanded:
     * The `display card` expands to display additional information, such as:
@@ -82,38 +82,40 @@
       * Side-by-side comparison of their overall season stats.
       * A 'win tracker' charting their relative progress over the course of the season.
         * The win tracker highlights the winner of head-to-head match-ups, with tooltips that display the score.
-* The `matchup comparison form`:
-  * Is:
-    * The form that allows the user to select a new matchup comparison.
-  * Contains the following inputs:
-    * `Team1` - A dropdown list of all active MLB teams.
-    * `Team2` - A dropdown list of all active MLB teams.
-    * `Season` - A dropdown list of all MLB seasons for which statistics are available via the API.
-    * `Submit` - A button that submits the form and generates the `matchup analysis`.
+* ~~The `matchup comparison form`~~
+  * ~~Is:~~
+    * ~~The form that allows the user to select a new matchup comparison.~~
+  * ~~Contains the following inputs:~~
+    * ~~`Team1` - A dropdown list of all active MLB teams.~~
+    * ~~`Team2` - A dropdown list of all active MLB teams.~~
+    * ~~`Season` - A dropdown list of all MLB seasons for which statistics are available via the API.~~
+    * ~~`Submit` - A button that submits the form and generates the `matchup analysis`.~~
 * The `title bar`:
   * Is:
     * A fixed-position bar at the top of the app
   * Contains:
     * On small screens: The `drawer nav` button
     * On all screens: The site title, which is either:
-      * Before the user has submitted the `matchup comparison form`:
-        * *MLB Matchup Comparison App*
+      * ~~Before the user has submitted the `matchup comparison form`:~~
+        * ~~*MLB Matchup Comparison App*~~
       * After the user has submitted the `matchup comparison form`:
         * *XXX vs. YYY, ZZZZ season*
 
 ### Data flow
 
-* When a user loads the app:
-  * A fantasyData API Call collects the list of team details
-  * These details populate the `matchup comparison form` dropdown fields.
-  * **TBD:** Is the list of available seasons queryable via API, or should it be statically coded?
+* ~~When a user loads the app:~~
+  * ~~A fantasyData API Call collects the list of team details~~
+  * ~~These details populate the `matchup comparison form` dropdown fields.~~
+  * ~~Is the list of available seasons queryable via API, or should it be statically coded?~~
 * When a user submits the `matchup comparison form`:
-  * The system checks whether the requested season's data exists as the object, `seasonData.{season}`
-  * If the data DOES exist:
-    * The `matchup analysis process` is initiated.
-  * If the data does NOT exist:
-    * A fantasyData API Call collects:
-      * Team stats for the requested season
-      * Game schedule for the requested season
-    * The data are stored as objects within `seasonData.{season}.teamStats` and `seasonData.{season}.games`, respectively.
-    * The `matchup analysis process` is initiated.
+  * ~~The system checks whether the requested season's data exists as the object, `seasonDataGlobal.{season}`~~
+  * ~~If the data DOES exist:~~
+    * ~~The `matchup analysis process` is initiated.~~
+  * ~~If the data does NOT exist:~~
+    * ~~A fantasyData API Call collects:~~
+      * ~~Team stats for the requested season~~
+      * ~~Game schedule for the requested season~~
+    * ~~The data are stored as objects within `seasonDataGlobal.{season}.teamStats`
+        and `seasonData.{season}.games`, respectively.~~
+    * ~~The `matchup analysis process` is initiated.~~
+
