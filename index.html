@@ -33,27 +33,29 @@
     <main role="main">
       <p>Hello, World! This is the Main element.</p>  
     </main>
-
-    <nav class="nav-drawer">
-      <form class="js-matchup-form">
-        <select name="team1" class="js-team-select" required>
-          <option value="">--Select One--</option>
-        </select>
-        <select name="team2" class="js-team-select" required>
-          <option value="">--Select One--</option>
-        </select>
-        <select name="season" required>
-          <option value="2018">2018</option>
-          <option value="2017">2017</option>
-          <option value="2016">2016</option>
-        </select>
-        <div class="js-form-alert-two-teams">Please select two teams</div>
-        <div class="js-form-alert-dist-teams">Please select two distinct teams</div>
-        <input type="submit" class="js-mcf-submit" value="Compare">
-      </form>
-    </nav>
+      
+    <div class="nav-shim js-nav-shim">
+      <nav class="nav-drawer">
+        <form class="js-matchup-form">
+          <select name="team1" class="js-team-select" required>
+            <option value="">--Select One--</option>
+          </select>
+          <select name="team2" class="js-team-select" required>
+            <option value="">--Select One--</option>
+          </select>
+          <select name="season" required>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+          </select>
+          <div class="js-form-alert-two-teams">Please select two teams</div>
+          <div class="js-form-alert-dist-teams">Please select two distinct teams</div>
+          <input type="submit" class="js-mcf-submit" value="Compare">
+        </form>
+      </nav>
+    </div>
     
-    <footer>
+    <footer role="contentinfo">
       &copy; 2018 Simon Lutterbie
     </footer>    
     
