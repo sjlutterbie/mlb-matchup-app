@@ -52,6 +52,9 @@ function handleMatchupFormSubmission() {
           hideNavDrawer();
     }
 
+    //Load processing image
+    
+    loadProcessingIcon('loading-spinner.gif');
     
     // Collect data from form
     let team1 = this[0].value;
@@ -130,6 +133,13 @@ function handleMatchupFormSubmission() {
   function loadProcessingIcon(img) {
     // Replace the main content with a processing icon
     
+    console.log('loadProccessingIcon called');
+    
+    const processingHTML = `
+    <img src="${img}" class="loading-spinner js-loading-spinner"
+      alt="Data loading spinner">`;
+      
+    $('main').html(processingHTML);
     
   }
 
