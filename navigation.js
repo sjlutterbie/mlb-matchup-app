@@ -2,6 +2,22 @@
 
 /* === HANLDER FUNCTIONS === */
 
+// When the page loads...
+function showNavDrawerWideScreen() {
+  
+  // If the window is wider than the 660px responsive threshold...
+  if (window.innerWidth >= 660) {
+    
+    // Show the nav drawer
+    $('.js-nav-shim').removeClass('nav-shim-hidden');
+    $('.js-nav-shim').addClass('nav-shim-shown');
+    
+    // Hide the nav toggle buttons
+    $('.js-nav-toggle').hide();
+  }
+  
+}
+
 // Ways to make the navigation drawer appear:
 function handleNavDrawerShow() {
   
@@ -13,6 +29,20 @@ function handleNavDrawerShow() {
     
   });
   
+  // Handle responsive design transitions  
+  $(window).on('resize', function(e) {
+    
+    // As long as window is wider than 660px responsive threshold...
+    if (window.innerWidth >= 660) {
+      
+      // Make sure the nav drawer is visible
+      if (!$('.js-nav-shim').hasClass('nav-shim-shown')) {
+        $('.js-nav-shim').removeClass('nav-shim-hidden');
+        $('.js-nav-shim').addClass('nav-shim-shown');
+        $('.js-nav-toggle').hide();
+      }
+    }
+  });
 
 }
 
@@ -27,7 +57,6 @@ function handleNavDrawerHide() {
 
   });
 
-
   // NOTE: User submitting the matchup form handled in index.js
 
 }    
@@ -39,9 +68,10 @@ function handleNavDrawerHide() {
     $('.js-nav-toggle').show().css('transform', 'scale(1)');
     
     // Make the nav drawer slide out
+    $('.js-nav-shim').removeClass('nav-shim-shown');
+    $('.js-nav-shim').addClass('nav-shim-hidden');
 
-    $('.js-nav-shim').css('transform', 'translateX(-100%').css('background', 'rgba(0,0,0,0)');
-      
+
   }
   
   function showNavDrawer() {
@@ -49,11 +79,14 @@ function handleNavDrawerHide() {
     $('.js-nav-toggle').css('transform', 'scale(0)').hide();
     
     // Make the nav drawer slide in
-    $('.js-nav-shim').css('transform', 'translateX(0%').css('background', 'rgba(0,0,0,.3)');
+    $('.js-nav-shim').removeClass('nav-shim-hidden');
+    $('.js-nav-shim').addClass('nav-shim-shown');
+
   }
 
   
 /* === LAUNCH CODES === */
 
+$(showNavDrawerWideScreen());
 $(handleNavDrawerShow);
 $(handleNavDrawerHide);
