@@ -31,25 +31,37 @@
     </header>
 
     <main role="main">
-      <p>Hello, World! This is the Main element.</p>  
+      <section class="card">
+        <p>Hello, World! This is the Main element.</p>
+      </section>
     </main>
       
     <div class="nav-shim js-nav-shim">
       <nav class="nav-drawer">
         <form class="js-matchup-form">
+          <label>Team 1:
           <select name="team1" class="js-team-select" required>
             <option value="">--Select One--</option>
           </select>
+          </label>
+          <label>Team 2:
           <select name="team2" class="js-team-select" required>
             <option value="">--Select One--</option>
           </select>
+          </label>
+          <label>Season:
           <select name="season" required>
             <option value="2018">2018</option>
             <option value="2017">2017</option>
             <option value="2016">2016</option>
           </select>
-          <div class="js-form-alert-two-teams">Please select two teams</div>
-          <div class="js-form-alert-dist-teams">Please select two distinct teams</div>
+          </label>
+          <div class="md-whiteframe-2dp form-alert-two-teams js-form-alert-two-teams" hidden>
+            <p>Please select two teams</p>
+          </div>
+          <div class="md-whiteframe-2dp form-alert-dist-teams js-form-alert-dist-teams" hidden>
+            <p>Please select two distinct teams</p>
+          </div>
           <input type="submit" class="js-mcf-submit" value="Compare">
         </form>
       </nav>
