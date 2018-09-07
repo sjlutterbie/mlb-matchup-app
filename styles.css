@@ -71,12 +71,12 @@ main {
   /* As an element of body*/
   flex: 1;
   overflow: auto;
-  
+
   /*As a container */
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
   .card {
@@ -91,7 +91,6 @@ main {
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
       0px 4px 5px 0px rgba(0, 0, 0, 0.14),
       0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-
   }
 
 /* SIDE NAV */
@@ -142,6 +141,9 @@ main {
     color: var(--primary-dark);
   }
   
+    form {
+      width: 100%;
+    }
     
     form label {
       display: block;
@@ -158,6 +160,7 @@ main {
       padding: 8px;
       border-color: #ccc;
       background: #fff;
+      border-radius: 2px;
       color: var(--primary-color);
     }
     
@@ -165,7 +168,8 @@ main {
       padding: 8px;
       margin-bottom: 8px;
       border-radius: 2px;
-      
+      width: 100%;
+
       background: var(--secondary-color);
       color: var(--on-secondary-color);
       text-align: center;
@@ -253,6 +257,10 @@ footer {
   }
   
   /* Hide the nav shim */
+
+  .nav-shim {
+    max-width: 256px;
+  }
 
   .nav-shim-shown {
     display: flex;

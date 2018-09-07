@@ -48,7 +48,9 @@ function handleMatchupFormSubmission() {
   $('.js-matchup-form').submit(function(e) {
     e.preventDefault();
     
-    hideNavDrawer();
+    if (window.innerWidth < 660) {
+          hideNavDrawer();
+    }
 
     
     // Collect data from form
