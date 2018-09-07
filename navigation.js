@@ -34,19 +34,21 @@ function handleNavDrawerHide() {
   
   function hideNavDrawer() {
     // Show the drawer icon and float button
-    $('.js-nav-toggle').show();
+    $('.js-nav-toggle').show().css('transform', 'scale(1)');
     
     // Make the nav drawer slide out
     $('.js-nav-shim').css('transform', 'translateX(-100%');
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,0)');
     
   }
   
   function showNavDrawer() {
     // Hide the drawer icon and float button
-    $('.js-nav-toggle').hide();
-      
+    $('.js-nav-toggle').css('transform', 'scale(0)').hide();
+    
     // Make the nav drawer slide in
     $('.js-nav-shim').css('transform', 'translateX(0%');
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
   }
  
   
