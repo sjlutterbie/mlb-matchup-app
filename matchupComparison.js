@@ -315,6 +315,8 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Generate HTML output
   
   const cardHTML = `
+  <div id="season-comp-table"></div>`;
+  /*
   <table>
     <tr>
       <th>Team</th>
@@ -372,6 +374,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
     </tr>
   </table>
   `;
+*/
 
   // Create the card
   generateMatchupComparisonCard(cardID);
@@ -380,6 +383,9 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
   // Insert content into card
   $(`#${cardID}`).append(cardHeader).append(cardHTML);
+  
+  //Google Viz call
+  drawSeasonCompTable(team1, team2, teamStats);
   
 }
 
@@ -442,7 +448,7 @@ function generateWinTrackerCard(team1, team2, season) {
   });
   
   // Output data to console log, until Google Visualization is in place.
-  console.table(teamWins);
+  //console.table(teamWins);
   
   // Create the card
   generateMatchupComparisonCard(cardID);
