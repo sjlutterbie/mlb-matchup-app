@@ -73,25 +73,25 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (game.Status === "Final") {
       
       // Build a complete game result
-      gameResult = `<p>${gameDateString}</p>
-      <table>
+      gameResult = `<p class="game-date">${gameDateString}</p>
+      <table class="box-score">
         <tr>
           <th>&nbsp;</th>
-          <th>R</th>
-          <th>H</th>
-          <th>E</th>
+          <th class="box-score-stat">R</th>
+          <th class="box-score-stat">H</th>
+          <th class="box-score-stat">E</th>
         </tr>
         <tr>
           <td>${game.AwayTeam}</td>
-          <td>${Math.floor(game.AwayTeamRuns)}</td>
-          <td>${Math.floor(game.AwayTeamHits)}</td>
-          <td>${Math.floor(game.AwayTeamErrors)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
           <td>${game.HomeTeam}</td>
-          <td>${Math.floor(game.HomeTeamRuns)}</td>
-          <td>${Math.floor(game.HomeTeamHits)}</td>
-          <td>${Math.floor(game.HomeTeamErrors)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
         </tr>
       </table>`;
       // If the home team won...
@@ -105,7 +105,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else if (game.Status === "Scheduled") {
       
       // Build a TBD game result
-      gameResult = `<p>${gameDateString} TBD (at ${game.HomeTeam})</p>`;
+      gameResult = `<p class="game-date">${gameDateString} TBD (at ${game.HomeTeam})</p>`;
       
       // Increase the scheduled count
       gameCounts.scheduled += 1;
@@ -123,19 +123,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (gameCounts.scheduled > 0 ) {
       // If team1 leads the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p>In the ${season} season, ${team1} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} have a
                        ${gameCounts[team1]} games to ${gameCounts[team2]}
                        series lead over ${team2}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p>In the ${season} season, ${team2} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} have a
                        ${gameCounts[team2]} games to ${gameCounts[team1]}
                        series lead over ${team1}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
                        have split the head-to-head series ${gameCounts[team1]}
                        games apiece, with ${gameCounts.scheduled}
                        games remaining.`;
@@ -144,17 +144,17 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else {
       // If team1 won the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p>In the ${season} season, ${team1} won the
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} won the
                        head-to-head series against ${team2},
                        ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p>In the ${season} season, ${team2} won the
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} won the
                        head-to-head series against ${team1},
                        ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
                       split the head-to-head series
                       ${gameCounts[team1]} games apiece.`;
       }

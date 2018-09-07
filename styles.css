@@ -78,6 +78,12 @@ main {
   align-items: flex-start;
   justify-content: center;
 }
+  .loading-spinner {
+    justify-self: center;
+    align-self: center;
+    max-width: 100px;
+    max-height: 100px;
+  }
 
   .card {
     z-index: 12;
@@ -94,13 +100,54 @@ main {
       0px 1px 10px 0px rgba(0, 0, 0, 0.12);
   }
   
-  .loading-spinner {
-    justify-self: center;
-    align-self: center;
-    max-width: 100px;
-    max-height: 100px;
-  }
-
+    h2 {
+      padding-bottom: 8px;
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .card p {
+      padding: 4px;
+      
+    }
+    
+    .card .head-to-head-summary {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .game-date {
+      text-align: center;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    table.box-score {
+    width: 100%;
+    max-width: 256px;
+    margin: auto;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    }
+    
+    .box-score th {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .box-score td {
+      border: 1px solid var(--primary-light);
+      padding: 8px;
+      text-align: center;
+      color: var(--primary-color);
+    }
+    
+    .box-score-stat {
+      width: 65px;
+    }
+  
 /* SIDE NAV */
 
 .nav-shim {
