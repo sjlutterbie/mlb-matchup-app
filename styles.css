@@ -260,6 +260,7 @@ footer {
 
   .nav-shim {
     max-width: 256px;
+    z-index: 5;
   }
 
   .nav-shim-shown {
