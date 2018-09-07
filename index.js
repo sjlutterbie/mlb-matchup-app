@@ -127,6 +127,12 @@ function handleMatchupFormSubmission() {
   
   // NOTE: Matchup Comparison functions can be found in matchupComparison.js
 
+  function loadProcessingIcon(img) {
+    // Replace the main content with a processing icon
+    
+    
+  }
+
 /* ================
    = LAUNCH CODES =
    ================ */
