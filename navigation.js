@@ -8,10 +8,12 @@ function handleNavDrawerShow() {
   // When the user clicks on the "drawer icon" or the "float button" in the page header
   $('html').on('click', '.js-nav-toggle', function(e) {
     e.preventDefault();
-
+    
     showNavDrawer();
     
   });
+  
+
 }
 
 // Ways to make the navigation drawer disappear:
@@ -22,7 +24,7 @@ function handleNavDrawerHide() {
     e.preventDefault();
     
     hideNavDrawer();
-        
+
   });
 
 
@@ -37,9 +39,9 @@ function handleNavDrawerHide() {
     $('.js-nav-toggle').show().css('transform', 'scale(1)');
     
     // Make the nav drawer slide out
-    $('.js-nav-shim').css('transform', 'translateX(-100%');
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,0)');
-    
+
+    $('.js-nav-shim').css('transform', 'translateX(-100%').css('background', 'rgba(0,0,0,0)');
+      
   }
   
   function showNavDrawer() {
@@ -47,10 +49,9 @@ function handleNavDrawerHide() {
     $('.js-nav-toggle').css('transform', 'scale(0)').hide();
     
     // Make the nav drawer slide in
-    $('.js-nav-shim').css('transform', 'translateX(0%');
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
+    $('.js-nav-shim').css('transform', 'translateX(0%').css('background', 'rgba(0,0,0,.3)');
   }
- 
+
   
 /* === LAUNCH CODES === */
 
