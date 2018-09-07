@@ -10,26 +10,12 @@ function drawSeasonCompTable(team1, team2, teamStats) {
   function drawTable(team1, team2, teamStats) {
   
   console.log("drawTable called");
-  console.log(team1)
-  
+
     // Set up the data table variables
     const dataTableColumns = [
-      ['string', 'Team'],
-      ['number', 'W'],
-      ['number', 'L'],
-      ['number', 'PCT'],
-      ['number', 'R for'],
-      ['number', 'R against'],
-      ['number', 'AVG'],
-      ['number', 'OBP.'],
-      ['number', 'SLG'],
-      ['number', 'H'],
-      ['number', '2B'],
-      ['number', '3B'],
-      ['number', 'HR'],
-      ['number', 'ERA'],
-      ['number', 'WHIP'],
-      ['number', 'E']
+      ['string', 'stat'],
+      ['number', team1],
+      ['number', team2]
     ];
     
     const data = new google.visualization.DataTable();
@@ -40,29 +26,32 @@ function drawSeasonCompTable(team1, team2, teamStats) {
       // Create data rows
       let dataRows = [];
       
-      console.log(teamStats);
+      const dataKey = [
+        ['W', 'wins'],
+        ['L', 'losses'],
+        ['Pct.', 'winPerc'],
+        ['R for','runsFor'],
+        ['R against','runsAgainst'],
+        ['Avg.','avg'],
+        ['Obp.','obp'],
+        ['Slg.','slg'],
+        ['H','hits'],
+        ['2B','doubles'],
+        ['3B','triples'],
+        ['HR','homeRuns'],
+        ['Era.','era'],
+        ['Whip.','whip'],
+        ['E','errors']
+      ];
       
-      [team1, team2].forEach(team => {
-        dataRows.push(
-          [
-            team,
-            teamStats[team].output.wins,
-            teamStats[team].output.losses,
-            Number(teamStats[team].output.winPerc),
-            teamStats[team].output.runsFor,
-            teamStats[team].output.runsAgainst,
-            Number(teamStats[team].output.avg),
-            Number(teamStats[team].output.obp),
-            Number(teamStats[team].output.slg),
-            teamStats[team].output.hits,
-            teamStats[team].output.doubles,
-            teamStats[team].output.triples,
-            teamStats[team].output.homeRuns,
-            Number(teamStats[team].output.era),
-            Number(teamStats[team].output.whip),
-            teamStats[team].output.errors
-          ]
-        );
+      console.log(dataKey);
+      
+      dataKey.forEach(key => {
+        dataRows.push([
+          key[0],
+          Number(teamStats[team1].output[key[1]]),
+          Number(teamStats[team2].output[key[1]])
+          ]);
       });
       
       // Add rows to GoogleViz data object
@@ -71,8 +60,6 @@ function drawSeasonCompTable(team1, team2, teamStats) {
       
     // Set chart options
     const options = {
-      width: '100%',
-      alternatingRowStyle: false,
       showRowNUmber: false,
       cssClassNames: {},
     };

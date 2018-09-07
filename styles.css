@@ -147,7 +147,31 @@ main {
     .box-score-stat {
       width: 65px;
     }
-  
+
+    .season-comparison-container {
+      overflow-x: scroll;  
+    }
+    
+    table.season-comparison {
+      width: 90%;
+      margin: 8px auto 16px auto;
+      border-collapse: collapse;
+    }
+    
+      .season-comparison th {
+        padding: 8px;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+      
+      .season-comparison td {
+        border: 1px solid var(--primary-light);
+        padding: 8px;
+        text-align: left;
+        color: var(--primary-color);
+      }
+      
+
 /* SIDE NAV */
 
 .nav-shim {
