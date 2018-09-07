@@ -44,8 +44,12 @@ function populateMatchupForm() {
 function handleMatchupFormSubmission() {
   
   // When the user submits MatchupForm:
+    // NOTE: Form submission hides nav drawer in navigation.js
   $('.js-matchup-form').submit(function(e) {
     e.preventDefault();
+    
+    hideNavDrawer();
+
     
     // Collect data from form
     let team1 = this[0].value;
@@ -108,6 +112,7 @@ function handleMatchupFormSubmission() {
             }
           );
     }
+    
   });
 }
 

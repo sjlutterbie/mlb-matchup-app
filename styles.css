@@ -126,7 +126,7 @@ nav {
     top: 0;
     width: 100%;
     height: 100%;
-    transform: translateX(0%);
+    transform: translateX(-100%);
   }
   
   form label {
@@ -170,16 +170,42 @@ nav {
   }
   
   .hide-nav-button {
-    margin: 4px auto;
-    padding: 8px;
-    border-radius: 2px;
-    border: none;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 56px;
     background: var(--secondary-color);
     color: var(--on-secondary-color);
-    font-weight: bold;
+    border-radius: 100%;
+    border: none;
+    align-self: flex-end;
   }
   
+    .hide-nav-button i {
+      font-size: 16px;
+    }
+    
+/* FLOAT BUTTON */
+
+.float-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  width: 56px;
+  z-index: 170;
+  background-color: var(--secondary-color);
+  color: var(--on-secondary-color);
+  border-radius: 100%;
+  position: fixed;
+  left: calc(100% - (56px + 16px));
+  top: calc(100% - (56px + 48px));
+}
+
+  .float-button i {
+    font-size: 16px;
+  }
 
 /* FOOTER */
 
