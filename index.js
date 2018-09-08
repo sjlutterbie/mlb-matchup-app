@@ -151,7 +151,6 @@ function initFunctions() {
   
   handleMatchupFormSubmission();
   populateMatchupForm();
-  
 }
 
 

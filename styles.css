@@ -109,8 +109,36 @@ main {
     }
     
     .card p {
-      padding: 4px;
+      padding: 4px 4px 8px 4px;
       
+    }
+    
+    .small-screen-intro{
+      text-align: justify;
+    }
+    
+    .large-screen-intro{
+      text-align: justify;
+      display: none;
+    }
+    
+    .fake-data-alert {
+      text-align: center;
+      font-weight: bold;
+      font-style: italic;
+    }
+    
+    .get-started-button {
+      display: block;
+      margin: 4px auto;
+      padding: 8px;
+      border-radius: 2px;
+      border: none;
+      font-size: 16px;
+      
+      background: var(--secondary-color);
+      color: var(--on-secondary-color);
+      font-weight: bold;
     }
     
     .card .head-to-head-summary {
@@ -302,6 +330,7 @@ main {
   position: fixed;
   left: calc(100% - (56px + 16px));
   top: calc(100% - (56px + 48px));
+  transform: scale(0);
   transition:
     transform 200ms cubic-bezier(0.4,0.0,0.2,1);
 }
@@ -333,6 +362,19 @@ footer {
 
 
 @media only screen and (min-width: 660px) {
+  
+  /* Toggle the intro paragraphs and get started button */
+  .small-screen-intro{
+    display: none;
+  }
+  
+  .large-screen-intro{
+    display: block;
+  }
+  
+  .get-started-button {
+    display: none;
+  }
   
   /* Hide the nav drawer toggles */
   .header-icon, .hide-nav-button, .float-button {
