@@ -29,6 +29,16 @@ function handleNavDrawerShow() {
     
   });
   
+  // When the user clicks on the "Get started" button
+  $('html').on('click', '.js-get-started-button', function(e) {
+    e.preventDefault();
+    
+    showNavDrawer();
+    
+    $('#get-started-card').hide();
+    
+  });
+  
   // Handle responsive design transitions  
   $(window).on('resize', function(e) {
     

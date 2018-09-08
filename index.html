@@ -37,8 +37,18 @@
     </header>
 
     <main role="main">
-      <section class="card">
-        <p>Hello, World! This is the Main element.</p>
+      <section class="card" id="get-started-card">
+        <h2>MLB Matchup Comparison App</h2>
+        <p>This app compares the head-to-head and season-wide performance of
+            any two MLB teams, during the 2016, 2017, or 2018 season.</p>
+        <p class="small-screen-intro">To get started, click the 'Get Started'
+          button below. Select your two teams and season on the form displayed,
+          and you're up and running.</p>
+        <p class="large-screen-intro">To get started, select your two teams
+          and season on the form displayed,and you're up and running.</p>
+        <p class="fake-data-alert">NOTE: This app uses a trial API, and therefore
+          the data has been altered from real-world results.</p>
+        <button class="md-whiteframe-2dp get-started-button js-get-started-button">Get started</button>
       </section>
     </main>
       
@@ -68,7 +78,7 @@
           <div class="md-whiteframe-2dp form-alert-dist-teams js-form-alert-dist-teams" hidden>
             <p>Please select two distinct teams</p>
           </div>
-          <input type="submit" class="js-mcf-submit" value="Compare">
+          <input type="submit" class="md-whiteframe-2dp js-mcf-submit" value="Compare">
         </form>
         <button class="hide-nav-button js-hide-nav-button"><i class="fas fa-arrow-left"></i></button>
       </nav>
