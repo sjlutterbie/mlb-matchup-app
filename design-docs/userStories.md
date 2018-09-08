@@ -9,26 +9,26 @@
     * Click the `get started button`, which...
       * Makes the `landing card` disappear
       * Makes the `drawer nav` appear
-* From the `drawer nav`, the user can:
+* ~~From the `drawer nav`, the user can:~~
   * ~~Complete and submit the `matchup comparison form`~~
-  * On small screens, click the `close drawer nav link` to make the `drawer nav` disappear.
-* When the user clicks the `close drawer nav link`:
-  * The `drawer nav` disappears.
-  * The user can view the `main display`.
-* When the user is at the `main display`, they can:
-  * On small screens:
-    * Click the `drawer icon` in the `title bar` to open the `drawer nav`.
-    * Click the `floating button` in the lower-right corner to open the `drawer nav`.
-  * On large screens:
-    * View the `drawer nav` to the left of the `main display`.
-  * View and interact with a `display card`.
-* When the user clicks the `floating button`:
-  * The `floating button` disappears.
-  * The `drawer nav` appears.
-* When the user submits the `matchup comparison form`:
-  * On smaller screens, the `drawer nav` transitions away
-  * A `loading wheel` is displayed in the `main display`
-  * The `display cards` are generated and displayed in the `main display`
+  * ~~On small screens, click the `close drawer nav link` to make the `drawer nav` disappear.~~
+* ~~When the user clicks the `close drawer nav link`:~~
+  * ~~The `drawer nav` disappears.~~
+  * ~~The user can view the `main display`.~~
+* ~~When the user is at the `main display`, they can:~~
+  * ~~On small screens:~~
+    * ~~Click the `drawer icon` in the `title bar` to open the `drawer nav`.~~
+    * ~~Click the `floating button` in the lower-right corner to open the `drawer nav`.~~
+  * ~~On large screens:~~
+    * ~~View the `drawer nav` to the left of the `main display`.~~
+  * ~~View and interact with a `display card`.~~
+* ~~When the user clicks the `floating button`:~~
+  * ~~The `floating button` disappears.~~
+  * ~~The `drawer nav` appears.~~
+* ~~When the user submits the `matchup comparison form`:~~
+  * ~~On smaller screens, the `drawer nav` transitions away~~
+  * ~~A `loading wheel` is displayed in the `main display`~~
+  * ~~The `display cards` are generated and displayed in the `main display`~~
 * When a user clicks a `display card`:
   * If the card is NOT expanded:
     * The `display card` expands to display additional information, such as:
@@ -39,22 +39,22 @@
 
 ### Components and their descriptions
 
-* The `close drawer nav link`:
-  * Is:
-    * A link/icon that appears on the `drawer nav`
-* The `drawer icon`:
-  * Is:
-    * On smaller screens: A link/icon that appears on the `title bar`, to the left of the site title.
-* The `drawer nav`:
-  * Is:
-    * On small screens, a slide in/out hover layer on the left side of the screen
-    * On large screens, a panel adjacent to the `main display` on the left side of the screen
-  * Contains:
-    * The `matchup selection form`
-    * On small screens, a `close drawer nav link` (w/ icon)
-* The `floating button`:
-  * Is:
-    * A button that floats above the `main display`, in the lower right-hand corner.
+* ~~The `close drawer nav link`:~~
+  * ~~Is:~~
+    * ~~A link/icon that appears on the `drawer nav`~~
+* ~~The `drawer icon`:~~
+  * ~~Is:~~
+    * ~~On smaller screens: A link/icon that appears on the `title bar`, to the left of the site title.~~
+* ~~The `drawer nav`:~~
+  * ~~Is:~~
+    * ~~On small screens, a slide in/out hover layer on the left side of the screen~~
+    * ~~On large screens, a panel adjacent to the `main display` on the left side of the screen~~
+  * ~~Contains:~~
+    * ~~The `matchup selection form`~~
+    * ~~On small screens, a `close drawer nav link` (w/ icon)~~
+* ~~The `floating button`:~~
+  * ~~Is:~~
+    * ~~A button that floats above the `main display`, in the lower right-hand corner.~~
 * The `get started button`:
   * Is a button that:
       * Makes the `landing card` disappear
@@ -69,18 +69,17 @@
     * A disclaimer stating the app currently uses fake data.
     * A `get started` button.
 * The `main display`:
-  * Is:
-    * The central content area in the app.
+  * ~~Is:~~
+    * ~~The central content area in the app.~~
   * Contains the following `display cards`:
     * When the user first launches the app:
       * The `landing card`
     * Once the user has submitted the `matchup comparison form`:
-      * Head-to-head W-L
-      * Includes a table with the box score for each matchup
-      * How many games the two teams have remaining in the season
-      * Combined box score across all head-to-head games
-      * Side-by-side comparison of their overall season stats.
-      * A 'win tracker' charting their relative progress over the course of the season.
+      * ~~Head-to-head W-L~~
+        * ~~Includes a table with the box score for each matchup~~
+        * ~~How many games the two teams have remaining in the season~~
+      * ~~Side-by-side comparison of their overall season stats.~~
+      * ~~A 'win tracker' charting their relative progress over the course of the season.~~
         * The win tracker highlights the winner of head-to-head match-ups, with tooltips that display the score.
 * ~~The `matchup comparison form`~~
   * ~~Is:~~
