@@ -147,8 +147,9 @@ main {
     .box-score-stat {
       width: 65px;
     }
-
+    
     table.season-comparison {
+      font-size: 14px;
       display: block;
       width: 90%;
       margin: 8px auto 8px auto;

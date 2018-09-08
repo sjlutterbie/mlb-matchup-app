@@ -263,6 +263,8 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
 function generateSeasonComparisonCard(team1, team2, season) {
   // Side-by-side comparison of overall season stats
 
+  console.log(seasonDataGlobal[season].TeamSeasonStats);
+
   // Initiate cardID and content string
   const cardID = 'SeasonComparison';
 
@@ -305,6 +307,9 @@ function generateSeasonComparisonCard(team1, team2, season) {
                  / (rawStats.InningsPitchedDecimal / 9)).toFixed(3);
     output.whip = ((rawStats.PitchingHits + rawStats.PitchingWalks)
                   / rawStats.InningsPitchedDecimal).toFixed(3);
+    output.strikeouts = Math.floor(rawStats.PitchingStrikeouts);
+    output.walks = Math.floor(rawStats.PitchingWalks);
+    output.saves = Math.floor(rawStats.PitchingSaves);
     output.errors = Math.floor(rawStats.Errors);
     
     // Insert data into original object
@@ -320,22 +325,15 @@ function generateSeasonComparisonCard(team1, team2, season) {
   const cardHTML = `
     <table class="season-comparison">
       <tr>
+        <th colspan="6"><h3>Overall Stats</h3></th>
+      </tr>
+      <tr>
         <th>&nbsp;</th>
         <th>W</th>
         <th>L</th>
         <th>Pct.</th>
         <th>Rf</th>
         <th>Ra</th>
-        <th>Avg.</th>
-        <th>Obp.</th>
-        <th>Slg.</th>
-        <th>H</th>
-        <th>2B</th>
-        <th>3B</th>
-        <th>HR</th>
-        <th>Era.</th>
-        <th>Whip</th>
-        <th>E</th>
       </tr>
       <tr>
         <th>${team1}</th>
@@ -344,16 +342,6 @@ function generateSeasonComparisonCard(team1, team2, season) {
         <td>${teamStats[team1].output.winPerc}</td>
         <td>${teamStats[team1].output.runsFor}</td>
         <td>${teamStats[team1].output.runsAgainst}</td>
-        <td>${teamStats[team1].output.avg}</td>
-        <td>${teamStats[team1].output.obp}</td>
-        <td>${teamStats[team1].output.slg}</td>
-        <td>${teamStats[team1].output.hits}</td>
-        <td>${teamStats[team1].output.doubles}</td>
-        <td>${teamStats[team1].output.triples}</td>
-        <td>${teamStats[team1].output.homeRuns}</td>
-        <td>${teamStats[team1].output.era}</td>
-        <td>${teamStats[team1].output.whip}</td>
-        <td>${teamStats[team1].output.errors}</td>
       </tr>
       <tr>
         <th>${team2}</th>
@@ -362,19 +350,66 @@ function generateSeasonComparisonCard(team1, team2, season) {
         <td>${teamStats[team2].output.winPerc}</td>
         <td>${teamStats[team2].output.runsFor}</td>
         <td>${teamStats[team2].output.runsAgainst}</td>
+      </tr>
+    </table>
+    <table class="season-comparison">
+      <tr>
+        <th colspan="6"><h3>Batting Stats</h3></th>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Avg.</th>
+        <th>Obp.</th>
+        <th>Slg.</th>
+        <th>H</th>
+        <th>HR</th>
+      </tr>
+      <tr>
+        <th>${team1}</th>
+        <td>${teamStats[team1].output.avg}</td>
+        <td>${teamStats[team1].output.obp}</td>
+        <td>${teamStats[team1].output.slg}</td>
+        <td>${teamStats[team1].output.hits}</td>
+        <td>${teamStats[team1].output.homeRuns}</td>
+      </tr>
+      <tr>
+        <th>${team2}</th>
         <td>${teamStats[team2].output.avg}</td>
         <td>${teamStats[team2].output.obp}</td>
         <td>${teamStats[team2].output.slg}</td>
         <td>${teamStats[team2].output.hits}</td>
-        <td>${teamStats[team2].output.doubles}</td>
-        <td>${teamStats[team2].output.triples}</td>
         <td>${teamStats[team2].output.homeRuns}</td>
-        <td>${teamStats[team2].output.era}</td>
-        <td>${teamStats[team2].output.whip}</td>
-        <td>${teamStats[team2].output.errors}</td>
       </tr>
     </table>
-  `;
+    <table class="season-comparison">
+      <tr>
+        <th colspan="6"><h3>Pitching Stats</h3></th>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Era.</th>
+        <th>Whip</th>
+        <th>S</th>
+        <th>K</th>
+        <th>BB</th>
+      </tr>
+      <tr>
+        <th>${team1}</th>
+        <td>${teamStats[team1].output.era}</td>
+        <td>${teamStats[team1].output.whip}</td>
+        <td>${teamStats[team1].output.saves}</td>
+        <td>${teamStats[team1].output.strikeouts}</td>
+        <td>${teamStats[team1].output.walks}</td>
+      </tr>
+      <tr>
+        <th>${team2}</th>
+        <td>${teamStats[team2].output.era}</td>
+        <td>${teamStats[team2].output.whip}</td>
+        <td>${teamStats[team2].output.saves}</td>
+        <td>${teamStats[team2].output.strikeouts}</td>
+        <td>${teamStats[team2].output.walks}</td>
+      </tr>
+    </table>`;
   
 
   // Create the card
