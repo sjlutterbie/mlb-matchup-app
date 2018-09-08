@@ -36,6 +36,17 @@ body {
   color: #000;
 }
 
+/* Text only intended only for screen readers */
+.reader-only {
+  
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+
 /* PAGE HEADER */
 
 header {
@@ -356,6 +367,11 @@ footer {
   line-height: 12px;
   text-align: center;
 }
+
+  footer a, footer a:active, footer a:visited {
+    color: var(--on-primary-color);
+    text-decoration: none;
+  }
 
 
 /* === RESPONSIVE DESIGN === */
