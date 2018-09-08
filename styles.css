@@ -73,6 +73,11 @@ header {
     transition:
       transform 200ms cubic-bezier(0.4,0.0,0.2,1);
   }
+  
+  header a, header a:active, header a:visited {
+    color: var(--on-primary-color);
+    text-decoration: none;
+  }
 
 /* MAIN CONTENT */
 
