@@ -73,25 +73,25 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (game.Status === "Final") {
       
       // Build a complete game result
-      gameResult = `<p>${gameDateString}</p>
-      <table>
+      gameResult = `<p class="game-date">${gameDateString}</p>
+      <table class="box-score">
         <tr>
           <th>&nbsp;</th>
-          <th>R</th>
-          <th>H</th>
-          <th>E</th>
+          <th class="box-score-stat">R</th>
+          <th class="box-score-stat">H</th>
+          <th class="box-score-stat">E</th>
         </tr>
         <tr>
           <td>${game.AwayTeam}</td>
-          <td>${Math.floor(game.AwayTeamRuns)}</td>
-          <td>${Math.floor(game.AwayTeamHits)}</td>
-          <td>${Math.floor(game.AwayTeamErrors)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
           <td>${game.HomeTeam}</td>
-          <td>${Math.floor(game.HomeTeamRuns)}</td>
-          <td>${Math.floor(game.HomeTeamHits)}</td>
-          <td>${Math.floor(game.HomeTeamErrors)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
         </tr>
       </table>`;
       // If the home team won...
@@ -105,7 +105,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else if (game.Status === "Scheduled") {
       
       // Build a TBD game result
-      gameResult = `<p>${gameDateString} TBD (at ${game.HomeTeam})</p>`;
+      gameResult = `<p class="game-date">${gameDateString} TBD (at ${game.HomeTeam})</p>`;
       
       // Increase the scheduled count
       gameCounts.scheduled += 1;
@@ -123,19 +123,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (gameCounts.scheduled > 0 ) {
       // If team1 leads the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p>In the ${season} season, ${team1} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} have a
                        ${gameCounts[team1]} games to ${gameCounts[team2]}
                        series lead over ${team2}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p>In the ${season} season, ${team2} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} have a
                        ${gameCounts[team2]} games to ${gameCounts[team1]}
                        series lead over ${team1}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
                        have split the head-to-head series ${gameCounts[team1]}
                        games apiece, with ${gameCounts.scheduled}
                        games remaining.`;
@@ -144,17 +144,17 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else {
       // If team1 won the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p>In the ${season} season, ${team1} won the
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} won the
                        head-to-head series against ${team2},
                        ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p>In the ${season} season, ${team2} won the
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} won the
                        head-to-head series against ${team1},
                        ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p>In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
                       split the head-to-head series
                       ${gameCounts[team1]} games apiece.`;
       }
@@ -263,6 +263,8 @@ function generateCombinedBoxScoreCard(team1, team2, season) {
 function generateSeasonComparisonCard(team1, team2, season) {
   // Side-by-side comparison of overall season stats
 
+  console.log(seasonDataGlobal[season].TeamSeasonStats);
+
   // Initiate cardID and content string
   const cardID = 'SeasonComparison';
 
@@ -305,6 +307,9 @@ function generateSeasonComparisonCard(team1, team2, season) {
                  / (rawStats.InningsPitchedDecimal / 9)).toFixed(3);
     output.whip = ((rawStats.PitchingHits + rawStats.PitchingWalks)
                   / rawStats.InningsPitchedDecimal).toFixed(3);
+    output.strikeouts = Math.floor(rawStats.PitchingStrikeouts);
+    output.walks = Math.floor(rawStats.PitchingWalks);
+    output.saves = Math.floor(rawStats.PitchingSaves);
     output.errors = Math.floor(rawStats.Errors);
     
     // Insert data into original object
@@ -313,65 +318,99 @@ function generateSeasonComparisonCard(team1, team2, season) {
   });
 
   // Generate HTML output
+
+
+  // <div id="season-comp-table"></div>`;
   
   const cardHTML = `
-  <table>
-    <tr>
-      <th>Team</th>
-      <th>W</th>
-      <th>L</th>
-      <th>Pct.</th>
-      <th>R for</th>
-      <th>R against</th>
-      <th>Avg.</th>
-      <th>Obp.</th>
-      <th>Slg.</th>
-      <th>H</th>
-      <th>2B</th>
-      <th>3B</th>
-      <th>HR</th>
-      <th>Era.</th>
-      <th>Whip</th>
-      <th>E</th>
-    </tr>
-    <tr>
-      <td>${team1}</td>
-      <td>${teamStats[team1].output.wins}</td>
-      <td>${teamStats[team1].output.losses}</td>
-      <td>${teamStats[team1].output.winPerc}</td>
-      <td>${teamStats[team1].output.runsFor}</td>
-      <td>${teamStats[team1].output.runsAgainst}</td>
-      <td>${teamStats[team1].output.avg}</td>
-      <td>${teamStats[team1].output.obp}</td>
-      <td>${teamStats[team1].output.slg}</td>
-      <td>${teamStats[team1].output.hits}</td>
-      <td>${teamStats[team1].output.doubles}</td>
-      <td>${teamStats[team1].output.triples}</td>
-      <td>${teamStats[team1].output.homeRuns}</td>
-      <td>${teamStats[team1].output.era}</td>
-      <td>${teamStats[team1].output.whip}</td>
-      <td>${teamStats[team1].output.errors}</td>
-    </tr>
-    <tr>
-      <td>${team2}</td>
-      <td>${teamStats[team2].output.wins}</td>
-      <td>${teamStats[team2].output.losses}</td>
-      <td>${teamStats[team2].output.winPerc}</td>
-      <td>${teamStats[team2].output.runsFor}</td>
-      <td>${teamStats[team2].output.runsAgainst}</td>
-      <td>${teamStats[team2].output.avg}</td>
-      <td>${teamStats[team2].output.obp}</td>
-      <td>${teamStats[team2].output.slg}</td>
-      <td>${teamStats[team2].output.hits}</td>
-      <td>${teamStats[team2].output.doubles}</td>
-      <td>${teamStats[team2].output.triples}</td>
-      <td>${teamStats[team2].output.homeRuns}</td>
-      <td>${teamStats[team2].output.era}</td>
-      <td>${teamStats[team2].output.whip}</td>
-      <td>${teamStats[team2].output.errors}</td>
-    </tr>
-  </table>
-  `;
+    <table class="season-comparison">
+      <tr>
+        <th colspan="6"><h3>Overall Stats</h3></th>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>W</th>
+        <th>L</th>
+        <th>Pct.</th>
+        <th>Rf</th>
+        <th>Ra</th>
+      </tr>
+      <tr>
+        <th>${team1}</th>
+        <td>${teamStats[team1].output.wins}</td>
+        <td>${teamStats[team1].output.losses}</td>
+        <td>${teamStats[team1].output.winPerc}</td>
+        <td>${teamStats[team1].output.runsFor}</td>
+        <td>${teamStats[team1].output.runsAgainst}</td>
+      </tr>
+      <tr>
+        <th>${team2}</th>
+        <td>${teamStats[team2].output.wins}</td>
+        <td>${teamStats[team2].output.losses}</td>
+        <td>${teamStats[team2].output.winPerc}</td>
+        <td>${teamStats[team2].output.runsFor}</td>
+        <td>${teamStats[team2].output.runsAgainst}</td>
+      </tr>
+    </table>
+    <table class="season-comparison">
+      <tr>
+        <th colspan="6"><h3>Batting Stats</h3></th>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Avg.</th>
+        <th>Obp.</th>
+        <th>Slg.</th>
+        <th>H</th>
+        <th>HR</th>
+      </tr>
+      <tr>
+        <th>${team1}</th>
+        <td>${teamStats[team1].output.avg}</td>
+        <td>${teamStats[team1].output.obp}</td>
+        <td>${teamStats[team1].output.slg}</td>
+        <td>${teamStats[team1].output.hits}</td>
+        <td>${teamStats[team1].output.homeRuns}</td>
+      </tr>
+      <tr>
+        <th>${team2}</th>
+        <td>${teamStats[team2].output.avg}</td>
+        <td>${teamStats[team2].output.obp}</td>
+        <td>${teamStats[team2].output.slg}</td>
+        <td>${teamStats[team2].output.hits}</td>
+        <td>${teamStats[team2].output.homeRuns}</td>
+      </tr>
+    </table>
+    <table class="season-comparison">
+      <tr>
+        <th colspan="6"><h3>Pitching Stats</h3></th>
+      </tr>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Era.</th>
+        <th>Whip</th>
+        <th>S</th>
+        <th>K</th>
+        <th>BB</th>
+      </tr>
+      <tr>
+        <th>${team1}</th>
+        <td>${teamStats[team1].output.era}</td>
+        <td>${teamStats[team1].output.whip}</td>
+        <td>${teamStats[team1].output.saves}</td>
+        <td>${teamStats[team1].output.strikeouts}</td>
+        <td>${teamStats[team1].output.walks}</td>
+      </tr>
+      <tr>
+        <th>${team2}</th>
+        <td>${teamStats[team2].output.era}</td>
+        <td>${teamStats[team2].output.whip}</td>
+        <td>${teamStats[team2].output.saves}</td>
+        <td>${teamStats[team2].output.strikeouts}</td>
+        <td>${teamStats[team2].output.walks}</td>
+      </tr>
+    </table>`;
+  
 
   // Create the card
   generateMatchupComparisonCard(cardID);
@@ -390,64 +429,65 @@ function generateWinTrackerCard(team1, team2, season) {
   
   // Initiate cardID and content string
   const cardID = 'WinTracker';
-  let cardHTML = `Data for this card is currently output to the console log.`; // TEMP DESIGN STRING
+  let cardHTML = `<div id="gv-win-tracker"></div>`;
   
-  // Initialize Team Wins object
-  const teamWins = {};
-    teamWins[team1] = [];
-    teamWins[team2] = [];
-    
-  // For each team...
-  [team1, team2].forEach(team => {
-
-    // Get the games they've played in the season.
-    const games = getTeamGames(team, seasonDataGlobal[season].Games);
-    
-    // Initialize win counter
-    let winCount = 0;
+  // Initialize key variables
+  const teamWinData = [];
+  const winCounts = {};
+    winCounts[team1] = 0;
+    winCounts[team2] = 0;
   
-    // Loop through the games
-    for (let key in games) {
+  let gameWinner = "";
+  
+  // Shorthand variable, for convenience
+  const games = seasonDataGlobal[season].Games;
+  
+  // Loop through all the games..
+  for (let i = 0; i < games.length; i++) {
+    
+    // If the game is complete...
+    if (games[i].Status === "Final") {
+      // If one of the teams was involved...
+      if ([team1, team2].includes(games[i].HomeTeam) || [team1, team2].includes(games[i].AwayTeam)) {
       
-      // Convenience variable
-      let game = games[key];
-          
-      // Only use complete games
-      if (game.Status === "Final") {
+        // If the home team won..
+        if (games[i].HomeTeamRuns > games[i].AwayTeamRuns) {
+          // The home team is the winner!
+          gameWinner = games[i].HomeTeam;
+        } else {
+          // The away team is the winner!
+          gameWinner = games[i].AwayTeam;
+        }
         
-        // Account for whether team is home or away
-        if (game.HomeTeam === team) {
-          // Team is home...
-          if (game.HomeTeamRuns > game.AwayTeamRuns) {
-            // It's a win!
-            winCount += 1;
-            // Store the date and win count in the teamWin array
-            teamWins[team].push([game.Day, winCount,
-                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
-                                game.AwayTeam]);
-          }
-       } else {
-          //Team is away...
-          if (game.HomeTeamRuns < game.AwayTeamRuns) {
-            // It's a win!
-            winCount += 1;
-            // Store the date and win count in the teamWin array
-            teamWins[team].push([game.Day, winCount,
-                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
-                                game.HomeTeam]);
-          }
+        // If one of the relevant teams won
+        if ([team1, team2].includes(gameWinner)) {
+          // Increase the winning team's total
+          winCounts[gameWinner] += 1;
+          
+          // Format the date
+          
+          let gameDay = new Date(games[i].Day);
+          let gameDayStr = `${gameDay.getFullYear()}-${gameDay.getMonth()+1}-${gameDay.getDate()}`;
+        
+          // Add a data row
+          teamWinData.push([gameDay, winCounts[team1], winCounts[team2]]);
         }
       }
     }
-  });
+  }
   
-  // Output data to console log, until Google Visualization is in place.
-  console.table(teamWins);
-  
+
   // Create the card
   generateMatchupComparisonCard(cardID);
 
   const cardHeader = '<h2>Team Wins Tracker</h2>';
+
+  drawWinTracker(team1, team2, teamWinData);
+  
+  // Make chart responsive
+  $(window).resize(function(){
+    drawWinTracker(team1, team2, teamWinData);
+  });
 
   // Insert content into card
   $(`#${cardID}`).append(cardHeader).append(cardHTML);
