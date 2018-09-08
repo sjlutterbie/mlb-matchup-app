@@ -171,6 +171,11 @@ main {
         color: var(--primary-color);
       }
       
+      #gv-win-tracker {
+        width: 100%;
+        min-height: 300px;
+      }
+      
 
 /* SIDE NAV */
 

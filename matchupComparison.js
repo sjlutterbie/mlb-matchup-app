@@ -396,64 +396,65 @@ function generateWinTrackerCard(team1, team2, season) {
   
   // Initiate cardID and content string
   const cardID = 'WinTracker';
-  let cardHTML = `Data for this card is currently output to the console log.`; // TEMP DESIGN STRING
+  let cardHTML = `<div id="gv-win-tracker"></div>`;
   
-  // Initialize Team Wins object
-  const teamWins = {};
-    teamWins[team1] = [];
-    teamWins[team2] = [];
-    
-  // For each team...
-  [team1, team2].forEach(team => {
-
-    // Get the games they've played in the season.
-    const games = getTeamGames(team, seasonDataGlobal[season].Games);
-    
-    // Initialize win counter
-    let winCount = 0;
+  // Initialize key variables
+  const teamWinData = [];
+  const winCounts = {};
+    winCounts[team1] = 0;
+    winCounts[team2] = 0;
   
-    // Loop through the games
-    for (let key in games) {
+  let gameWinner = "";
+  
+  // Shorthand variable, for convenience
+  const games = seasonDataGlobal[season].Games;
+  
+  // Loop through all the games..
+  for (let i = 0; i < games.length; i++) {
+    
+    // If the game is complete...
+    if (games[i].Status === "Final") {
+      // If one of the teams was involved...
+      if ([team1, team2].includes(games[i].HomeTeam) || [team1, team2].includes(games[i].AwayTeam)) {
       
-      // Convenience variable
-      let game = games[key];
-          
-      // Only use complete games
-      if (game.Status === "Final") {
+        // If the home team won..
+        if (games[i].HomeTeamRuns > games[i].AwayTeamRuns) {
+          // The home team is the winner!
+          gameWinner = games[i].HomeTeam;
+        } else {
+          // The away team is the winner!
+          gameWinner = games[i].AwayTeam;
+        }
         
-        // Account for whether team is home or away
-        if (game.HomeTeam === team) {
-          // Team is home...
-          if (game.HomeTeamRuns > game.AwayTeamRuns) {
-            // It's a win!
-            winCount += 1;
-            // Store the date and win count in the teamWin array
-            teamWins[team].push([game.Day, winCount,
-                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
-                                game.AwayTeam]);
-          }
-       } else {
-          //Team is away...
-          if (game.HomeTeamRuns < game.AwayTeamRuns) {
-            // It's a win!
-            winCount += 1;
-            // Store the date and win count in the teamWin array
-            teamWins[team].push([game.Day, winCount,
-                                `${game.AwayTeamRuns} - ${game.HomeTeamRuns}`,
-                                game.HomeTeam]);
-          }
+        // If one of the relevant teams won
+        if ([team1, team2].includes(gameWinner)) {
+          // Increase the winning team's total
+          winCounts[gameWinner] += 1;
+          
+          // Format the date
+          
+          let gameDay = new Date(games[i].Day);
+          let gameDayStr = `${gameDay.getFullYear()}-${gameDay.getMonth()+1}-${gameDay.getDate()}`;
+        
+          // Add a data row
+          teamWinData.push([gameDay, winCounts[team1], winCounts[team2]]);
         }
       }
     }
-  });
+  }
   
-  // Output data to console log, until Google Visualization is in place.
-  //console.table(teamWins);
-  
+
   // Create the card
   generateMatchupComparisonCard(cardID);
 
   const cardHeader = '<h2>Team Wins Tracker</h2>';
+
+  drawWinTracker(team1, team2, teamWinData);
+  
+  // Make chart responsive
+  $(window).resize(function(){
+    drawWinTracker(team1, team2, teamWinData);
+  });
 
   // Insert content into card
   $(`#${cardID}`).append(cardHeader).append(cardHTML);

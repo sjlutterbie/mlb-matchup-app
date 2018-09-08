@@ -1,71 +1,28 @@
 'use strict';
 
-function drawSeasonCompTable(team1, team2, teamStats) {
+function drawWinTracker(team1, team2, teamWinData) {
   
   // Initialize Google Charts
-  google.charts.load('current', {'packages':['table']});
-  google.charts.setOnLoadCallback(function(){return drawTable(team1, team2, teamStats)});
+  google.charts.load('current', {'packages':['line']});
+  google.charts.setOnLoadCallback(function(){return drawChart(team1, team2, teamWinData)});
   
   
-  function drawTable(team1, team2, teamStats) {
+  function drawChart(team1, team2, teamWinData) {
   
-  console.log("drawTable called");
+  console.log("drawChart called");
+  
+  const data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', team1);
+    data.addColumn('number',team2);
+  data.addRows(teamWinData);
+  
+  const options = {};
 
-    // Set up the data table variables
-    const dataTableColumns = [
-      ['string', 'stat'],
-      ['number', team1],
-      ['number', team2]
-    ];
-    
-    const data = new google.visualization.DataTable();
-      //Create the data columns
-      dataTableColumns.forEach(column => {
-        data.addColumn(column[0], column[1]);
-      });
-      // Create data rows
-      let dataRows = [];
-      
-      const dataKey = [
-        ['W', 'wins'],
-        ['L', 'losses'],
-        ['Pct.', 'winPerc'],
-        ['R for','runsFor'],
-        ['R against','runsAgainst'],
-        ['Avg.','avg'],
-        ['Obp.','obp'],
-        ['Slg.','slg'],
-        ['H','hits'],
-        ['2B','doubles'],
-        ['3B','triples'],
-        ['HR','homeRuns'],
-        ['Era.','era'],
-        ['Whip.','whip'],
-        ['E','errors']
-      ];
-      
-      console.log(dataKey);
-      
-      dataKey.forEach(key => {
-        dataRows.push([
-          key[0],
-          Number(teamStats[team1].output[key[1]]),
-          Number(teamStats[team2].output[key[1]])
-          ]);
-      });
-      
-      // Add rows to GoogleViz data object
-      data.addRows(dataRows);
-      
-      
-    // Set chart options
-    const options = {
-      showRowNUmber: false,
-      cssClassNames: {},
-    };
-    
+  //  TODO: Make this actually do something.
+
     // Instantiate and draw the chart
-    const chart = new google.visualization.Table(document.getElementById('season-comp-table'));
+    const chart = new google.charts.Line(document.getElementById('gv-win-tracker'));
     chart.draw(data, options);
   }
   
