@@ -9,6 +9,7 @@ function showNavDrawerWideScreen() {
   if (window.innerWidth >= 660) {
     
     // Show the nav drawer
+    $('.js-nav-shim').attr('hidden', false);
     $('.js-nav-shim').removeClass('nav-shim-hidden');
     $('.js-nav-shim').addClass('nav-shim-shown');
     
@@ -34,8 +35,6 @@ function handleNavDrawerShow() {
     e.preventDefault();
     
     showNavDrawer();
-    
-    $('#get-started-card').hide();
     
   });
   
@@ -80,6 +79,7 @@ function handleNavDrawerHide() {
     // Make the nav drawer slide out
     $('.js-nav-shim').removeClass('nav-shim-shown');
     $('.js-nav-shim').addClass('nav-shim-hidden');
+    $('.js-nav-shim').attr('hidden', true);
 
 
   }
@@ -89,6 +89,7 @@ function handleNavDrawerHide() {
     $('.js-nav-toggle').css('transform', 'scale(0)').hide();
     
     // Make the nav drawer slide in
+    $('.js-nav-shim').attr('hidden', false);
     $('.js-nav-shim').removeClass('nav-shim-hidden');
     $('.js-nav-shim').addClass('nav-shim-shown');
 
