@@ -148,31 +148,29 @@ main {
       width: 65px;
     }
 
-    .season-comparison-container {
-      overflow-x: scroll;  
-    }
-    
     table.season-comparison {
+      display: block;
       width: 90%;
-      margin: 8px auto 16px auto;
+      margin: 8px auto 8px auto;
       border-collapse: collapse;
+      overflow-x: scroll;
     }
     
       .season-comparison th {
-        padding: 8px;
+        padding: 4px; 
         font-weight: bold;
         color: var(--primary-color);
       }
       
       .season-comparison td {
         border: 1px solid var(--primary-light);
-        padding: 8px;
+        padding: 4px; 
         text-align: left;
         color: var(--primary-color);
       }
       
       #gv-win-tracker {
-        width: 100%;
+        width: 95%;
         min-height: 300px;
       }
       

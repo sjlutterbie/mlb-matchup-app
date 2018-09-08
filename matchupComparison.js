@@ -318,7 +318,6 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // <div id="season-comp-table"></div>`;
   
   const cardHTML = `
-  <div class="season-comparison-container">
     <table class="season-comparison">
       <tr>
         <th>&nbsp;</th>
@@ -375,7 +374,6 @@ function generateSeasonComparisonCard(team1, team2, season) {
         <td>${teamStats[team2].output.errors}</td>
       </tr>
     </table>
-  </div>
   `;
   
 
