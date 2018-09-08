@@ -137,7 +137,7 @@ function handleMatchupFormSubmission() {
     
     const processingHTML = `
     <img src="${img}" class="loading-spinner js-loading-spinner"
-      alt="Data loading spinner">`;
+      alt="Data is loading and will display momentarily">`;
       
     $('main').html(processingHTML);
     

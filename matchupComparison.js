@@ -503,7 +503,7 @@ function generateMatchupComparisonCard(cardID) {
   
   // Build HTML
   const cardHTML = `<section class="card js-card" data-highlight="false"
-                      id="${cardID}"></section>`;
+                      id="${cardID}" tabindex="1"></section>`;
                     
   // Create card
   $('main').append(cardHTML);

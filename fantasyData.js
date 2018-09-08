@@ -59,9 +59,5 @@ function fantasyDataAPIQuery(searchType, successCallback,
     
     console.log(data);
     
-    if (TESTING) {
-      
-      console.log(`"outputAjazData" was called`);
-    }
     
   }
