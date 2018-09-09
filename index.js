@@ -22,6 +22,9 @@ function populateMatchupForm() {
     // Create empy HTML
     let optionsHTML = "";
     
+    // Store team information in global variable
+    storeTeamInfoData(teams);
+    
     // Loop through teams
     
     for (let i = 0; i < teams.length; i++) {
@@ -142,6 +145,37 @@ function handleMatchupFormSubmission() {
     $('main').html(processingHTML);
     
   }
+  
+/* =======================
+   = TEAM INFO FUNCTIONS =
+   ======================= */
+
+function storeTeamInfoData(teams) {
+  // Stores team data from API Query in teamInfoGlobal object.
+  
+  teamInfoGlobal = teams;
+}
+
+function getTeamInfo(teamID, item) {
+  // Get a specific item from the teamInfoGlobal object
+  
+  // Get the team object
+  const teamInfo = teamInfoGlobal.find(team => {
+    
+      return team.Key === teamID;
+    
+  });
+  
+  // Enable "ALL" to return full object
+  if (item === "ALL") {
+    return teamInfo;
+  } else {
+    return teamInfo[item];
+  }
+
+}
+
+
 
 /* ================
    = LAUNCH CODES =

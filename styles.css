@@ -129,6 +129,17 @@ main {
       
     }
     
+    .flexrow {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    
+    .boxscore {
+      padding: 8px;
+    }
+    
     .small-screen-intro{
       text-align: justify;
     }
@@ -139,7 +150,7 @@ main {
     }
     
     .fake-data-alert {
-      text-align: center;
+      text-align: justify;
       font-weight: bold;
       font-style: italic;
     }
@@ -166,6 +177,10 @@ main {
       text-align: center;
       font-weight: bold;
       color: var(--primary-color);
+    }
+    
+    .tbd-game {
+      text-align: center;
     }
     
     table.box-score {
