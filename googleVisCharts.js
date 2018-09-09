@@ -9,8 +9,6 @@ function drawWinTracker(team1, team2, teamWinData) {
   
   function drawChart(team1, team2, teamWinData) {
   
-  console.log("drawChart called");
-  
   const data = new google.visualization.DataTable();
     data.addColumn('date', 'Date');
     data.addColumn('number', team1);
@@ -24,6 +22,36 @@ function drawWinTracker(team1, team2, teamWinData) {
     // Instantiate and draw the chart
     const chart = new google.charts.Line(document.getElementById('gv-win-tracker'));
     chart.draw(data, options);
+  }
+  
+}
+
+function drawHeadtoHeadPie(team1, team2, winCounts) {
+  
+  // Initialize Google Charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(function(){return drawChart(team1, team2, winCounts)});
+  
+  function drawChart(team1, team2, winCounts) {
+    
+    console.log('DrawHeadtoHeadPie called');
+
+    const data = google.visualization.arrayToDataTable([
+    ['Winner', 'Games'],
+    [getTeamInfo(team1, 'Name'), winCounts[team1]],
+    [getTeamInfo(team2, 'Name'), winCounts[team2]],
+    ['Upcoming',winCounts['scheduled']]
+    ]);
+    
+  var options = {
+    legend: 'none',
+    pieSliceText: 'label'
+  };
+
+  const chart = new google.visualization.PieChart(document.getElementById('gv-head-to-head'));
+  
+  chart.draw(data, options);
+
   }
   
 }

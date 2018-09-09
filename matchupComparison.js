@@ -7,8 +7,6 @@
   function generateMatchupComparison(team1, team2, season) {
     // Central function that calls the individual matchup comparison analyses
     
-    console.log(`Generating ${team1} vs ${team2} comparison for ${season} season...`);
-
     // Clear any previous analysis
     $('main').html('');
     
@@ -137,15 +135,25 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     
   // Create the card
   generateMatchupComparisonCard(cardID);
-
+  
   // Output summary paragraph
   $(`#${cardID}`).append(cardHeader)
                  .append(summaryHTML)
+                 .append('<div id="gv-head-to-head"></div>')
                  .append(boxScoresHTML);
                  
+  // Insert Google visualization
+  drawHeadtoHeadPie(team1, team2, gameCounts);
+  
+  // Make chart responsive
+  $(window).resize(function(){
+      drawHeadtoHeadPie(team1, team2, gameCounts);
+  });
+
+  
+  
+                 
 }
-
-
 
   function buildBoxScoreElement(game) {
     // Builds a "Box Score Array Element", consisting of the game date and:
