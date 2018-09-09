@@ -10,6 +10,9 @@
     // Clear any previous analysis
     $('main').html('');
     
+    // Update page header
+    generatePageHeader(team1, team2, season);
+    
     // Head-to-Head W-L, including table of individual box scores
     generateHeadtoHeadSummaryCard(team1, team2, season);
 
@@ -24,6 +27,19 @@
 /* ====================================
    = MATCHUP CARD GENERATOR FUNCTIONS =
    ==================================== */
+
+/* === HEADER UPDATE === */
+
+function generatePageHeader(team1, team2, season) {
+  // Update the page header to reflect the current matchup comparison
+  
+  const headerHTML = `${team1} vs ${team2}, ${season} season`;
+  
+  $('header h1').html(headerHTML);
+  
+}
+
+
 
 /* === HEAD-TO-HEAD SUMMARY === */
 

@@ -47,11 +47,11 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
     ]);
     
   var options = {
+    legend: 'bottom',
     chartArea: {
       width: '80%',
       height: '80%'
     },
-    legend: 'none',
     pieSliceText: 'label',
     slices: {
       0: {color: getTeamInfo(team1, 'PrimaryColor')},
