@@ -12,11 +12,7 @@
     
     // Head-to-Head W-L, including table of individual box scores
     generateHeadtoHeadSummaryCard(team1, team2, season);
-    
-    // Combined box score summary, plus other comparisons, if available
-    // NOTE: Currently turned off; code commented out, below
-    //  generateCombinedBoxScoreCard(team1, team2, season); 
-    
+
     // Side-by-side comparison of overall season stats
     generateSeasonComparisonCard(team1, team2, season);
     
@@ -130,13 +126,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     }
 
   // Build game summary HTML
-  let boxScoresHTML = '';
+  let completedGames = '';
+  let upcomingGames = '';
   
   gameBoxScores.forEach(game => {
-    const gameHTML = `<p class="game-date">${game[0]}</p>${game[1]}`;
-    boxScoresHTML += gameHTML;
+    //Completed games
+    if (game[1] === "Final") {
+      completedGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
+    } else {
+      upcomingGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
+    }
   });
   
+
   // Initiate cardID and content strings
   const cardID = 'HeadtoHead';
     
@@ -150,7 +152,8 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   $(`#${cardID}`).append(cardHeader)
                  .append(summaryHTML)
                  .append('<div id="gv-head-to-head"></div>')
-                 .append(boxScoresHTML);
+                 .append(`<div class="flexrow">${completedGames}</div>`)
+                 .append(`<div class="flexrow">${upcomingGames}</div>`);
                  
   // Insert Google visualization
   drawHeadtoHeadPie(team1, team2, gameCounts);
@@ -217,7 +220,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     
     // Return array element
     
-    return [gameDateString, gameResult];
+    return [gameDateString, game.Status, gameResult];
   
   }
 
