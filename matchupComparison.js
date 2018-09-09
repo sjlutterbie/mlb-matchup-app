@@ -35,24 +35,19 @@
 
 function generateHeadtoHeadSummaryCard(team1, team2, season) {
   // Generate the Head-to-Head W-L Card, including table of individual box scores
-
-  // Initiate cardID and content string
-  const cardID = 'HeadtoHead';
-
+  
   // Get head-to-head games
   let games = getHeadtoHeadGames(team1, team2, seasonDataGlobal[season].Games);
-
-  // Initiate gameCounts
   
+  // Initiate gameCounts
   const gameCounts = {};
     gameCounts[team1] = 0;
     gameCounts[team2] = 0;
     gameCounts['scheduled'] = 0;
-    
-  // Initiate the gameResults table content string
   
-  let gameResults = "";
-  
+  // Initiate game box scores
+  const gameBoxScores = [];
+
   // Loop through games, increasing counts & building output
   
   for (let key in games) {
@@ -60,40 +55,14 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     // Extract the current game
     const game = games[key];
 
-    // Format the game date string
-    let gameDate = new Date(game.Day);
-    const dateOptions = {month: 'long', day: 'numeric' };
-    let gameDateString = gameDate.toLocaleDateString("en-US", dateOptions);
+    // Build "Box Score" array elements for completed games
+    gameBoxScores.push(buildBoxScoreElement(game));
 
-    // Initiate gameResult string
-    let gameResult = "";
-
-    // If the game was completed...
-    // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
+    // Build gameCounts
+    
+    // For completed games...
     if (game.Status === "Final") {
       
-      // Build a complete game result
-      gameResult = `<p class="game-date">${gameDateString}</p>
-      <table class="box-score">
-        <tr>
-          <th>&nbsp;</th>
-          <th class="box-score-stat">R</th>
-          <th class="box-score-stat">H</th>
-          <th class="box-score-stat">E</th>
-        </tr>
-        <tr>
-          <td>${game.AwayTeam}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
-        </tr>
-        <tr>
-          <td>${game.HomeTeam}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
-        </tr>
-      </table>`;
       // If the home team won...
       if (game.HomeTeamRuns > game.AwayTeamRuns) {
         // Give the home team a win
@@ -103,22 +72,14 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
         gameCounts[game.AwayTeam] += 1;
       }
     } else if (game.Status === "Scheduled") {
-      
-      // Build a TBD game result
-      gameResult = `<p class="game-date">${gameDateString} TBD (at ${game.HomeTeam})</p>`;
-      
       // Increase the scheduled count
       gameCounts.scheduled += 1;
     }
-    
-    // Add game to the gameResults HTML
-    gameResults += gameResult;
-  
   }
 
-  // Build the summary paragraph
-    let summaryHTML = "";
-    
+  // Build summary paragraph
+    let summaryHTML = '';
+
     // If there are games remaining...
     if (gameCounts.scheduled > 0 ) {
       // If team1 leads the series...
@@ -159,6 +120,17 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
                       ${gameCounts[team1]} games apiece.`;
       }
     }
+
+  // Build game summary HTML
+  let boxScoresHTML = '';
+  
+  gameBoxScores.forEach(game => {
+    const gameHTML = `<p class="game-date">${game[0]}</p>${game[1]}`;
+    boxScoresHTML += gameHTML;
+  });
+  
+  // Initiate cardID and content strings
+  const cardID = 'HeadtoHead';
     
   // Create card header
   const cardHeader = '<h2>Series summary</h2>';
@@ -169,101 +141,73 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   // Output summary paragraph
   $(`#${cardID}`).append(cardHeader)
                  .append(summaryHTML)
-                 .append(gameResults);
+                 .append(boxScoresHTML);
+                 
 }
+
+
+
+  function buildBoxScoreElement(game) {
+    // Builds a "Box Score Array Element", consisting of the game date and:
+    //  If the game is "Final": A box score table
+    //  If the game is "Scheduled": A "TBD" string including the location
+    
+    // Format the game date string
+    let gameDate = new Date(game.Day);
+    const dateOptions = {month: 'long', day: 'numeric' };
+    let gameDateString = gameDate.toLocaleDateString("en-US", dateOptions);  
+    
+    // Initiate gameResult string
+    let gameResult = "";
   
-/* === COMBINED BOX SCORE === */  
-
-/*
-
-function generateCombinedBoxScoreCard(team1, team2, season) {
-  // Combined box score summary, plus other comparisons, if available
+    // If the game was completed...
+    // NOTE: Omits InProgress, Suspended, Postponed, or Canceled games
+    if (game.Status === "Final") {
+      
+      // Build a complete game result
+      gameResult = `
+      <table class="box-score">
+        <tr>
+          <th>&nbsp;</th>
+          <th class="box-score-stat">R</th>
+          <th class="box-score-stat">H</th>
+          <th class="box-score-stat">E</th>
+        </tr>
+        <tr>
+          <td>${game.AwayTeam}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
+        </tr>
+        <tr>
+          <td>${game.HomeTeam}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
+          <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
+        </tr>
+      </table>`;
+      
+    } else if (game.Status === "Scheduled") {
+      
+      // Get hometeam city
+      const awayTeam = getTeamInfo(game.AwayTeam, 'Name');
+      const homeTeam = getTeamInfo(game.HomeTeam, 'Name');
+      
+      // Build a TBD game result
+      gameResult = `<p class="tbd-game">${awayTeam} at ${homeTeam}</p>`;
+    }
+    
+    // Return array element
+    
+    return [gameDateString, gameResult];
   
-  // Initiate cardID and content string
-  const cardID = 'CombinedBoxScore';
-
-  // Get head-to-head games
-  let games = getHeadtoHeadGames(team1, team2, seasonDataGlobal[season].Games);
-  
-  // Initiate output boxScore
-  const boxScore = {};
-    boxScore[team1] = {};
-    boxScore[team2] = {};
-    
-    boxScore[team1].runs = 0;
-    boxScore[team2].runs = 0;
-    
-    boxScore[team1].hits = 0;
-    boxScore[team2].hits = 0;
-    
-    boxScore[team1].errors = 0;
-    boxScore[team2].errors = 0;
-    
-  // Loop through games, compiling Box Score
-  for (let key in games) {
-    
-    // Extract the current game
-    const game = games[key];
-    
-    // Set home and away teams (for clarity)
-    const homeTeam = game.HomeTeam;
-    const awayTeam = game.AwayTeam;
-    
-    // Update box score
-    boxScore[awayTeam].runs += game.AwayTeamRuns;
-    boxScore[homeTeam].runs += game.HomeTeamRuns;
-    
-    boxScore[awayTeam].hits += game.AwayTeamHits;
-    boxScore[homeTeam].hits += game.HomeTeamHits;
-    
-    boxScore[awayTeam].errors += game.AwayTeamErrors;
-    boxScore[homeTeam].errors += game.HomeTeamErrors;
-
   }
-  
-  // Generate combined box score HTML
-  const combinedBoxScoreTable = `
-    <table>
-      <tr>
-        <th>&nbsp;</th>
-        <th>Runs</th>
-        <th>Hits</th>
-        <th>Errors</th>
-      </tr>
-      <tr>
-        <td>${team1}</td>
-        <td>${boxScore[team1].runs}</td>
-        <td>${boxScore[team1].hits}</td>
-        <td>${boxScore[team1].errors}</td>
-      </tr>
-      <tr>
-        <td>${team2}</td>
-        <td>${boxScore[team2].runs}</td>
-        <td>${boxScore[team2].hits}</td>
-        <td>${boxScore[team2].errors}</td>
-      </tr>
-    </table>
-  `;
-  
-  // Create card Header
-  const cardHeader = '<h2>Combined box score</h2>';
-  
-  // Create the card
-  generateMatchupComparisonCard(cardID);
 
-  // Insert content into card
-  $(`#${cardID}`).append(cardHeader).append(combinedBoxScoreTable);
-  
-}
-
-*/
 
 /* === SEASON STATS COMPARISON === */
 
 function generateSeasonComparisonCard(team1, team2, season) {
   // Side-by-side comparison of overall season stats
-
-  console.log(seasonDataGlobal[season].TeamSeasonStats);
 
   // Initiate cardID and content string
   const cardID = 'SeasonComparison';

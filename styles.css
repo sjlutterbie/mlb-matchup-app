@@ -168,6 +168,10 @@ main {
       color: var(--primary-color);
     }
     
+    .tbd-game {
+      text-align: center;
+    }
+    
     table.box-score {
     width: 100%;
     max-width: 256px;
