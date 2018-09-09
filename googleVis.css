@@ -4,6 +4,12 @@
   margin-bottom: 16px;
 }
 
+#gv-head-to-head {
+  margin: 8px auto 8px auto;
+}
+
+
+
 .gv-table-header-cell {
   background: var(--primary-color);
   background-color: var(--primary-color);

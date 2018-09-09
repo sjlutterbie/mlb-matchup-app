@@ -15,7 +15,12 @@ function drawWinTracker(team1, team2, teamWinData) {
     data.addColumn('number',team2);
   data.addRows(teamWinData);
   
-  const options = {};
+  const options = {
+    colors: [
+      getTeamInfo(team1, 'PrimaryColor'),
+      getTeamInfo(team2, 'PrimaryColor')
+    ]
+  };
 
   //  TODO: Make this actually do something.
 
@@ -42,8 +47,17 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
     ]);
     
   var options = {
+    chartArea: {
+      width: '100%',
+      height: '100%'
+    },
     legend: 'none',
-    pieSliceText: 'label'
+    pieSliceText: 'label',
+    slices: {
+      0: {color: getTeamInfo(team1, 'PrimaryColor')},
+      1: {color: getTeamInfo(team2, 'PrimaryColor')},
+      2: {color: '#aaa'}
+    }
   };
 
   const chart = new google.visualization.PieChart(document.getElementById('gv-head-to-head'));

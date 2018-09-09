@@ -292,7 +292,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
         ['string', ''],
         ['number', 'W'],
         ['number', 'L'],
-        ['number', 'Pct.'],
+        ['string', 'Pct.'],
         ['number', 'Runs for'],
         ['number', 'Runs against']
       ];
@@ -301,59 +301,55 @@ function generateSeasonComparisonCard(team1, team2, season) {
         [team1,
           Number(teamStats[team1].output.wins),
           Number(teamStats[team1].output.losses),
-          Number(teamStats[team1].output.winPerc),
+          Number(teamStats[team1].output.winPerc).toFixed(3),
           Number(teamStats[team1].output.runsFor),
           Number(teamStats[team1].output.runsAgainst)
         ],
         [team2,
           Number(teamStats[team2].output.wins),
           Number(teamStats[team2].output.losses),
-          Number(teamStats[team2].output.winPerc),
+          Number(teamStats[team2].output.winPerc).toFixed(3),
           Number(teamStats[team2].output.runsFor),
           Number(teamStats[team2].output.runsAgainst)
         ]
       ];
 
     drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
-      // Insert chart title
-      $('#gv-season-overall-table').prepend('<h3>Overall Stats</h3>');
 
     // Batting
       const statsNamesBatting = [
         ['string', ''],
-        ['number', 'Avg.'],
-        ['number', 'Obp.'],
-        ['number', 'Slg.'],
+        ['string', 'Avg.'],
+        ['string', 'Obp.'],
+        ['string', 'Slg.'],
         ['number', 'H'],
         ['number', 'HR']
       ];
 
       const statsDataBatting = [
         [team1,
-          Number(teamStats[team1].output.avg),
-          Number(teamStats[team1].output.obp),
-          Number(teamStats[team1].output.slg),
+          Number(teamStats[team1].output.avg).toFixed(3),
+          Number(teamStats[team1].output.obp).toFixed(3),
+          Number(teamStats[team1].output.slg).toFixed(3),
           Number(teamStats[team1].output.hits),
           Number(teamStats[team1].output.homeRuns)
         ],
         [team2,
-          Number(teamStats[team2].output.avg),
-          Number(teamStats[team2].output.obp),
-          Number(teamStats[team2].output.slg),
+          Number(teamStats[team2].output.avg).toFixed(3),
+          Number(teamStats[team2].output.obp).toFixed(3),
+          Number(teamStats[team2].output.slg).toFixed(3),
           Number(teamStats[team2].output.hits),
           Number(teamStats[team2].output.homeRuns)
         ]
       ];
 
     drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
-      // Insert chart title
-      $('#gv-season-batting-table').prepend('<h3>Batting Stats</h3>');
-    
+
     // Pitching
       const statsNamesPitching = [
         ['string', ''],
-        ['number', 'Era.'],
-        ['number', 'Whip.'],
+        ['string', 'Era.'],
+        ['string', 'Whip.'],
         ['number', 'S'],
         ['number', 'K'],
         ['number', 'BB']
@@ -361,37 +357,28 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
       const statsDataPitching = [
         [team1,
-          Number(teamStats[team1].output.era),
-          Number(teamStats[team1].output.whip),
+          Number(teamStats[team1].output.era).toFixed(3),
+          Number(teamStats[team1].output.whip).toFixed(3),
           Number(teamStats[team1].output.saves),
           Number(teamStats[team1].output.strikeouts),
           Number(teamStats[team1].output.walks)
         ],
         [team2,
-          Number(teamStats[team2].output.era),
-          Number(teamStats[team2].output.whip),
+          Number(teamStats[team2].output.era).toFixed(3),
+          Number(teamStats[team2].output.whip).toFixed(3),
           Number(teamStats[team2].output.saves),
           Number(teamStats[team2].output.strikeouts),
           Number(teamStats[team2].output.walks)
         ]
       ];
-      
-
+    
     drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
-      // Insert chart title
-      $('#gv-season-pitching-table').prepend('<h3>Pitching Stats</h3>');
 
   // Make tables responsive
   $(window).resize(function(){
     drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
-      // Insert chart title
-      $('#gv-season-batting-table').prepend('<h3>Batting Stats</h3>');
     drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
-      // Insert chart title
-      $('#gv-season-overall-table').prepend('<h3>Overall Stats</h3>');
     drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
-      // Insert chart title
-      $('#gv-pitching-overall-table').prepend('<h3>Pitching Stats</h3>');
 
   });
   
