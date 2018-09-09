@@ -1,0 +1,32 @@
+
+#gv-season-overall-table, #gv-season-batting-table, #gv-season-pitching-table {
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.gv-table-header-cell {
+  background: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--on-primary-color);
+  font-size: 16px;
+  background-image: none;
+}
+
+.gv-table-cell {
+  background: #fff;
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+
+
+/*
+  headerRow
+  tableRow
+  oddTableRow
+  selectedTableRow
+  hoverTableCell
+  headerCell
+  tableCell
+  rowNumberCell
+*/

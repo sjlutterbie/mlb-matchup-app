@@ -69,7 +69,12 @@ function drawSeasonStatsTable(statsNames, statsData, divId) {
     data.addRows(statsData);
     
     const options = {
-      width: '100%'
+      width: '100%',
+      cssClassNames: {
+        headerCell: 'gv-table-header-cell',
+        tableCell: 'gv-table-cell'
+      }
+      
     };
     
     const table = new google.visualization.Table(document.getElementById(divId));

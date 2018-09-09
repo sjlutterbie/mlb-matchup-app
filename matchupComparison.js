@@ -261,14 +261,14 @@ function generateSeasonComparisonCard(team1, team2, season) {
                   / rawStats.InningsPitchedDecimal).toFixed(3);
     output.strikeouts = Math.floor(rawStats.PitchingStrikeouts);
     output.walks = Math.floor(rawStats.PitchingWalks);
-    output.saves = Math.floor(rawStats.PitchingSaves);
+    output.saves = Math.floor(rawStats.Saves);
     output.errors = Math.floor(rawStats.Errors);
     
     // Insert data into original object
     teamStats[team].output = output;
     
   });
-
+  
   // Generate HTML output
 
 
@@ -289,7 +289,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Draw Google Viz tables
     // Overall
       const statsNamesOverall = [
-        ['string', 'Team'],
+        ['string', ''],
         ['number', 'W'],
         ['number', 'L'],
         ['number', 'Pct.'],
@@ -320,7 +320,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
     // Batting
       const statsNamesBatting = [
-        ['string', 'Team'],
+        ['string', ''],
         ['number', 'Avg.'],
         ['number', 'Obp.'],
         ['number', 'Slg.'],
@@ -351,10 +351,10 @@ function generateSeasonComparisonCard(team1, team2, season) {
     
     // Pitching
       const statsNamesPitching = [
-        ['string', 'Team'],
+        ['string', ''],
         ['number', 'Era.'],
         ['number', 'Whip.'],
-        ['number', 'Saves'],
+        ['number', 'S'],
         ['number', 'K'],
         ['number', 'BB']
       ];
@@ -375,6 +375,7 @@ function generateSeasonComparisonCard(team1, team2, season) {
           Number(teamStats[team2].output.walks)
         ]
       ];
+      
 
     drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
       // Insert chart title
