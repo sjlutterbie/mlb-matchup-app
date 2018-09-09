@@ -34,8 +34,6 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
   
   function drawChart(team1, team2, winCounts) {
     
-    console.log('DrawHeadtoHeadPie called');
-
     const data = google.visualization.arrayToDataTable([
     ['Winner', 'Games'],
     [getTeamInfo(team1, 'Name'), winCounts[team1]],
@@ -54,4 +52,30 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
 
   }
   
+}
+
+function drawSeasonStatsTable(statsNames, statsData, divId) {
+  
+  // Initialize Google Charts
+  google.charts.load('current', {'packages': ['table']});
+  google.charts.setOnLoadCallback(function() {return drawTable(statsNames, statsData, divId)});
+  
+
+  function drawTable(statsNames, statsData, divId) {
+    const data = new google.visualization.DataTable();
+    statsNames.forEach(stat => {
+      data.addColumn(stat[0], stat[1]);
+    });
+    data.addRows(statsData);
+    
+    const options = {
+      width: '100%'
+    };
+    
+    const table = new google.visualization.Table(document.getElementById(divId));
+
+    table.draw(data, options);
+
+  }
+
 }

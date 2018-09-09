@@ -272,96 +272,10 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Generate HTML output
 
 
-  // <div id="season-comp-table"></div>`;
-  
   const cardHTML = `
-    <table class="season-comparison">
-      <tr>
-        <th colspan="6"><h3>Overall Stats</h3></th>
-      </tr>
-      <tr>
-        <th>&nbsp;</th>
-        <th>W</th>
-        <th>L</th>
-        <th>Pct.</th>
-        <th>Rf</th>
-        <th>Ra</th>
-      </tr>
-      <tr>
-        <th>${team1}</th>
-        <td>${teamStats[team1].output.wins}</td>
-        <td>${teamStats[team1].output.losses}</td>
-        <td>${teamStats[team1].output.winPerc}</td>
-        <td>${teamStats[team1].output.runsFor}</td>
-        <td>${teamStats[team1].output.runsAgainst}</td>
-      </tr>
-      <tr>
-        <th>${team2}</th>
-        <td>${teamStats[team2].output.wins}</td>
-        <td>${teamStats[team2].output.losses}</td>
-        <td>${teamStats[team2].output.winPerc}</td>
-        <td>${teamStats[team2].output.runsFor}</td>
-        <td>${teamStats[team2].output.runsAgainst}</td>
-      </tr>
-    </table>
-    <table class="season-comparison">
-      <tr>
-        <th colspan="6"><h3>Batting Stats</h3></th>
-      </tr>
-      <tr>
-        <th>&nbsp;</th>
-        <th>Avg.</th>
-        <th>Obp.</th>
-        <th>Slg.</th>
-        <th>H</th>
-        <th>HR</th>
-      </tr>
-      <tr>
-        <th>${team1}</th>
-        <td>${teamStats[team1].output.avg}</td>
-        <td>${teamStats[team1].output.obp}</td>
-        <td>${teamStats[team1].output.slg}</td>
-        <td>${teamStats[team1].output.hits}</td>
-        <td>${teamStats[team1].output.homeRuns}</td>
-      </tr>
-      <tr>
-        <th>${team2}</th>
-        <td>${teamStats[team2].output.avg}</td>
-        <td>${teamStats[team2].output.obp}</td>
-        <td>${teamStats[team2].output.slg}</td>
-        <td>${teamStats[team2].output.hits}</td>
-        <td>${teamStats[team2].output.homeRuns}</td>
-      </tr>
-    </table>
-    <table class="season-comparison">
-      <tr>
-        <th colspan="6"><h3>Pitching Stats</h3></th>
-      </tr>
-      <tr>
-        <th>&nbsp;</th>
-        <th>Era.</th>
-        <th>Whip</th>
-        <th>S</th>
-        <th>K</th>
-        <th>BB</th>
-      </tr>
-      <tr>
-        <th>${team1}</th>
-        <td>${teamStats[team1].output.era}</td>
-        <td>${teamStats[team1].output.whip}</td>
-        <td>${teamStats[team1].output.saves}</td>
-        <td>${teamStats[team1].output.strikeouts}</td>
-        <td>${teamStats[team1].output.walks}</td>
-      </tr>
-      <tr>
-        <th>${team2}</th>
-        <td>${teamStats[team2].output.era}</td>
-        <td>${teamStats[team2].output.whip}</td>
-        <td>${teamStats[team2].output.saves}</td>
-        <td>${teamStats[team2].output.strikeouts}</td>
-        <td>${teamStats[team2].output.walks}</td>
-      </tr>
-    </table>`;
+    <div id="gv-season-overall-table"><h3>Overall Stats</h3></div>
+    <div id="gv-season-batting-table"></div>
+    <div id="gv-season-pitching-table"></div>`;
   
 
   // Create the card
@@ -372,7 +286,116 @@ function generateSeasonComparisonCard(team1, team2, season) {
   // Insert content into card
   $(`#${cardID}`).append(cardHeader).append(cardHTML);
   
+  // Draw Google Viz tables
+    // Overall
+      const statsNamesOverall = [
+        ['string', 'Team'],
+        ['number', 'W'],
+        ['number', 'L'],
+        ['number', 'Pct.'],
+        ['number', 'Runs for'],
+        ['number', 'Runs against']
+      ];
+
+      const statsDataOverall = [
+        [team1,
+          Number(teamStats[team1].output.wins),
+          Number(teamStats[team1].output.losses),
+          Number(teamStats[team1].output.winPerc),
+          Number(teamStats[team1].output.runsFor),
+          Number(teamStats[team1].output.runsAgainst)
+        ],
+        [team2,
+          Number(teamStats[team2].output.wins),
+          Number(teamStats[team2].output.losses),
+          Number(teamStats[team2].output.winPerc),
+          Number(teamStats[team2].output.runsFor),
+          Number(teamStats[team2].output.runsAgainst)
+        ]
+      ];
+
+    drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
+      // Insert chart title
+      $('#gv-season-overall-table').prepend('<h3>Overall Stats</h3>');
+
+    // Batting
+      const statsNamesBatting = [
+        ['string', 'Team'],
+        ['number', 'Avg.'],
+        ['number', 'Obp.'],
+        ['number', 'Slg.'],
+        ['number', 'H'],
+        ['number', 'HR']
+      ];
+
+      const statsDataBatting = [
+        [team1,
+          Number(teamStats[team1].output.avg),
+          Number(teamStats[team1].output.obp),
+          Number(teamStats[team1].output.slg),
+          Number(teamStats[team1].output.hits),
+          Number(teamStats[team1].output.homeRuns)
+        ],
+        [team2,
+          Number(teamStats[team2].output.avg),
+          Number(teamStats[team2].output.obp),
+          Number(teamStats[team2].output.slg),
+          Number(teamStats[team2].output.hits),
+          Number(teamStats[team2].output.homeRuns)
+        ]
+      ];
+
+    drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
+      // Insert chart title
+      $('#gv-season-batting-table').prepend('<h3>Batting Stats</h3>');
+    
+    // Pitching
+      const statsNamesPitching = [
+        ['string', 'Team'],
+        ['number', 'Era.'],
+        ['number', 'Whip.'],
+        ['number', 'Saves'],
+        ['number', 'K'],
+        ['number', 'BB']
+      ];
+
+      const statsDataPitching = [
+        [team1,
+          Number(teamStats[team1].output.era),
+          Number(teamStats[team1].output.whip),
+          Number(teamStats[team1].output.saves),
+          Number(teamStats[team1].output.strikeouts),
+          Number(teamStats[team1].output.walks)
+        ],
+        [team2,
+          Number(teamStats[team2].output.era),
+          Number(teamStats[team2].output.whip),
+          Number(teamStats[team2].output.saves),
+          Number(teamStats[team2].output.strikeouts),
+          Number(teamStats[team2].output.walks)
+        ]
+      ];
+
+    drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
+      // Insert chart title
+      $('#gv-season-pitching-table').prepend('<h3>Pitching Stats</h3>');
+
+  // Make tables responsive
+  $(window).resize(function(){
+    drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
+      // Insert chart title
+      $('#gv-season-batting-table').prepend('<h3>Batting Stats</h3>');
+    drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
+      // Insert chart title
+      $('#gv-season-overall-table').prepend('<h3>Overall Stats</h3>');
+    drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
+      // Insert chart title
+      $('#gv-pitching-overall-table').prepend('<h3>Pitching Stats</h3>');
+
+  });
+  
 }
+
 
 /* === WIN TRACKER === */
 
