@@ -77,24 +77,31 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
 
   // Build summary paragraph
     let summaryHTML = '';
+    const team1City = getTeamInfo(team1, 'City');
+    const team2City = getTeamInfo(team2, 'City');
+    const team1Name = getTeamInfo(team1, 'Name');
+    const team2Name = getTeamInfo(team2, 'Name');
 
     // If there are games remaining...
     if (gameCounts.scheduled > 0 ) {
       // If team1 leads the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                       the ${team1City} ${team1Name} have a
                        ${gameCounts[team1]} games to ${gameCounts[team2]}
-                       series lead over ${team2}, with
+                       series lead over the ${team2City} ${team2Name}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} have a
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                       the ${team2City} ${team2Name} have a
                        ${gameCounts[team2]} games to ${gameCounts[team1]}
-                       series lead over ${team1}, with
+                       series lead over the ${team1City} ${team1Name}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                       the ${team1City} ${team1Name} and the ${team2City} ${team2Name}
                        have split the head-to-head series ${gameCounts[team1]}
                        games apiece, with ${gameCounts.scheduled}
                        games remaining.`;
@@ -103,17 +110,20 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else {
       // If team1 won the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} won the
-                       head-to-head series against ${team2},
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                       the ${team1City} ${team1Name} won the
+                       head-to-head series against the ${team2City} ${team2Name},
                        ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team2} won the
-                       head-to-head series against ${team1},
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                       the ${team2City} ${team2Name} won the
+                       head-to-head series against the ${team1City} ${team1Name},
                        ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season, ${team1} and ${team2}
+        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+                      the ${team1City} ${team1Name} and ${team2City} ${team2Name}
                       split the head-to-head series
                       ${gameCounts[team1]} games apiece.`;
       }
