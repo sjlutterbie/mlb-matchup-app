@@ -4,6 +4,10 @@
   margin-bottom: 16px;
 }
 
+table.google-visualization-table-table{
+  table-layout: fixed;
+}
+
 #gv-head-to-head {
   margin: 8px auto 8px auto;
   width: 90%;

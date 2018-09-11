@@ -15,10 +15,15 @@ function drawWinTracker(team1, team2, teamWinData) {
     data.addColumn('number',team2);
   data.addRows(teamWinData);
   
+  // Set visualization colors
+  const team1Color = getTeamInfo(team1, 'PrimaryColor');
+  const team2Color = getTeamInfo(team2, 'SecondaryColor') === "FFFFFF" ? 
+    getTeamInfo(team2, 'TertiaryColor') : getTeamInfo(team2, 'SecondaryColor');
+  
   const options = {
     colors: [
-      getTeamInfo(team1, 'PrimaryColor'),
-      getTeamInfo(team2, 'PrimaryColor')
+      team1Color,
+      team2Color
     ]
   };
 
@@ -46,6 +51,11 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
     ['Upcoming',winCounts['scheduled']]
     ]);
     
+  // Set visualization colors
+  const team1Color = getTeamInfo(team1, 'PrimaryColor');
+  const team2Color = getTeamInfo(team2, 'SecondaryColor') === "FFFFFF" ? 
+    getTeamInfo(team2, 'TertiaryColor') : getTeamInfo(team2, 'SecondaryColor');  
+  
   var options = {
     legend: 'bottom',
     chartArea: {
@@ -54,8 +64,8 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
     },
     pieSliceText: 'label',
     slices: {
-      0: {color: getTeamInfo(team1, 'PrimaryColor')},
-      1: {color: getTeamInfo(team2, 'PrimaryColor')},
+      0: {color: team1Color},
+      1: {color: team2Color},
       2: {color: '#aaa'}
     }
   };
