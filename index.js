@@ -13,32 +13,92 @@ function populateMatchupForm() {
    
 }
 
+
   /* === populateMatchupComparisonForms helper functions === */
   
   function buildMatchupFormOptions(teams) {
     // Renders options for MatchupComparisonForm dropdown
     // Note: Callback function for fantasyData API request
-    
-    // Create empy HTML
-    let optionsHTML = "";
+
     
     // Store team information in global variable
     storeTeamInfoData(teams);
     
-    // Loop through teams
-    
-    for (let i = 0; i < teams.length; i++) {
-      
-      let team = teams[i];
-      // Add the team to the option list
-      optionsHTML += `<option value="${team.Key}">${team.Name}</option>`;
-
-    }
-    
+    // Generate option list
+    const optionsHTML =  buildMatchupFormHTML(teams);
+  
     // Populate BOTH team dropdown lists
     $('.js-team-select').append(optionsHTML);
 
   }
+  
+  function buildMatchupFormHTML(teams) {
+    // Takes a list of teams, plus their leagues and divisions, and returns a
+    // list of the same, sorted by league & division
+    
+    // Initalize teamOps object
+    const teamOpts = {
+      AL: {
+        West: [],
+        Central: [],
+        East: []
+      },
+      NL: {
+        West: [],
+        Central: [],
+        East: []
+      }
+    };
+    
+    // Loop through teams
+    
+    for (let key in teams) {
+      
+      // Extract variables for brevity
+      let league = teams[key].League;
+      let division = teams[key].Division;
+
+      // Add team to teamOpts
+      teamOpts[league][division].push(teams[key]);
+      
+    }
+    
+    // Initialize blank options list
+    
+    let teamOutput = [];
+    
+    // Loop through leagues
+    for (let league in teamOpts){
+      
+      // Loop through divisions
+      for (let division in teamOpts[league]) {
+        
+      // Create option group
+      teamOutput.push(`<optgroup label="${league} ${division}">`);
+        
+        // Sort team lists
+        teamOpts[league][division].sort((a, b) => {
+          let textA = a.Name.toUpperCase();
+          let textB = b.Name.toUpperCase();
+          
+          return  (textA < textB) ? -1 : 1;
+          
+        });
+        
+        // Add team options
+        teamOpts[league][division].forEach(team => {
+          teamOutput.push(`<option value="${team.Key}">${team.Name}</option>`);});
+        }
+      
+        // Close option group
+        teamOutput.push(`</optgroup>`);
+      
+    }
+    
+    return teamOutput;
+
+  }
+  
   
 /* ===========================
    = MATCHUP FORM SUBMISSION = 
