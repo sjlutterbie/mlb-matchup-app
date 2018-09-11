@@ -115,10 +115,7 @@ function handleMatchupFormSubmission() {
           hideNavDrawer();
     }
 
-    //Load processing image
-    
-    loadProcessingIcon('loading-spinner.gif');
-    
+
     // Collect data from form
     let team1 = this[0].value;
     let team2 = this[1].value;
@@ -159,6 +156,10 @@ function handleMatchupFormSubmission() {
         //TODO: Display "Loading..." animation
         
         // Begin "Data loading chain":
+        
+          //Load processing image
+          loadProcessingIcon('loading-spinner.gif');
+    
           // Load Game data...
           fantasyDataAPIQuery('Games',
             function(data) {
