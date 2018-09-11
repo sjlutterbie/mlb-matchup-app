@@ -13,11 +13,16 @@ function populateMatchupForm() {
    
 }
 
+
   /* === populateMatchupComparisonForms helper functions === */
   
   function buildMatchupFormOptions(teams) {
     // Renders options for MatchupComparisonForm dropdown
     // Note: Callback function for fantasyData API request
+
+  // TEMP DEV FUNCTION CALL
+  sortMatchupFormOptions(teams);
+
     
     // Create empy HTML
     let optionsHTML = "";
@@ -39,6 +44,58 @@ function populateMatchupForm() {
     $('.js-team-select').append(optionsHTML);
 
   }
+  
+  function sortMatchupFormOptions(teams) {
+    // Takes a list of teams, plus their leagues and divisions, and returns a
+    // list of the same, sorted by league & division
+    
+    // Initalize variables
+    let teamOptions = [];
+    let leagues = [];
+    let divisions = [];
+    
+    // Loop through teams
+    for (let key in teams) {
+      // Extract unique league names
+      if (!leagues.includes(teams[key].League)) {
+        leagues.push(teams[key].League);
+      }
+      // Extract unique division names
+      if (!divisions.includes(teams[key].Division)) {
+        divisions.push(teams[key].Division)
+      }
+      
+    }
+    
+    leagues.sort();
+    divisions.sort();
+    
+    console.log(leagues);
+      console.log(divisions);
+      
+
+  
+    
+    
+    // Extract a team list array that includes:
+      // Leage, Division, Key and Name
+      
+      // Alphabetize the list by team name
+    
+    // Get the list of unique leagues
+    // Get the list of unique divisions
+    // Initalize output array
+    
+    // Loop through leagues
+      // Loop through divisions
+        // Filter out teams in league/division
+        // Add league & division placeholders to output array
+        // Loop through teams, adding them to output array 
+    
+    
+    
+  }
+  
   
 /* ===========================
    = MATCHUP FORM SUBMISSION = 
