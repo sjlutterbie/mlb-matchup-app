@@ -20,32 +20,21 @@ function populateMatchupForm() {
     // Renders options for MatchupComparisonForm dropdown
     // Note: Callback function for fantasyData API request
 
-  // TEMP DEV FUNCTION CALL
-  sortMatchupFormOptions(teams);
-
-    
-    // Create empy HTML
-    let optionsHTML = "";
     
     // Store team information in global variable
     storeTeamInfoData(teams);
     
-    // Loop through teams
+    // Generate option list
+    const optionsHTML =  buildMatchupFormHTML(teams);
     
-    for (let i = 0; i < teams.length; i++) {
-      
-      let team = teams[i];
-      // Add the team to the option list
-      optionsHTML += `<option value="${team.Key}">${team.Name}</option>`;
-
-    }
+    console.log(optionsHTML);
     
     // Populate BOTH team dropdown lists
     $('.js-team-select').append(optionsHTML);
 
   }
   
-  function sortMatchupFormOptions(teams) {
+  function buildMatchupFormHTML(teams) {
     // Takes a list of teams, plus their leagues and divisions, and returns a
     // list of the same, sorted by league & division
     
@@ -72,28 +61,34 @@ function populateMatchupForm() {
       
     }
     
-      console.log(teamOpts);
+    // Initialize blank options list
     
-  
-    
-    
-    // Extract a team list array that includes:
-      // Leage, Division, Key and Name
-      
-      // Alphabetize the list by team name
-    
-    // Get the list of unique leagues
-    // Get the list of unique divisions
-    // Initalize output array
+    let teamOutput = [];
     
     // Loop through leagues
+    for (let league in teamOpts){
+      
       // Loop through divisions
-        // Filter out teams in league/division
-        // Add league & division placeholders to output array
-        // Loop through teams, adding them to output array 
+      for (let division in teamOpts[league]) {
+        
+      // Create option group
+      teamOutput.push(`<optgroup label="${league} ${division}">`);
+        
+        // Sort team lists
+        teamOpts[league][division].sort();
+        
+        // Add team options
+        teamOpts[league][division].forEach(team => {
+          teamOutput.push(`<option value="${team.Key}">${team.Name}</option>`);});
+        }
+      
+        // Close option group
+        teamOutput.push(`</optgroup>`);
+      
+    }
     
-    
-    
+    return teamOutput;
+
   }
   
   
