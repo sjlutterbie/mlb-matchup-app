@@ -49,31 +49,31 @@ function populateMatchupForm() {
     // Takes a list of teams, plus their leagues and divisions, and returns a
     // list of the same, sorted by league & division
     
-    // Initalize variables
-    let teamOptions = [];
-    let leagues = [];
-    let divisions = [];
+    // Initalize teamOps object
+    const teamOpts = {};
     
     // Loop through teams
+    
     for (let key in teams) {
-      // Extract unique league names
-      if (!leagues.includes(teams[key].League)) {
-        leagues.push(teams[key].League);
-      }
-      // Extract unique division names
-      if (!divisions.includes(teams[key].Division)) {
-        divisions.push(teams[key].Division)
-      }
+      
+      // Extract variables for brevity
+      let league = teams[key].League;
+      let division = teams[key].Division;
+      
+      // If the league hasn't been initialized, initialize it!
+      teamOpts[league] === undefined ?
+        teamOpts[league] = {} : null ;
+      // If the division hasn't been initalized, initialize it!
+      teamOpts[league][division] === undefined ?
+        teamOpts[league][division] = [] : null;
+      
+      // Add team to teamOpts
+      teamOpts[league][division].push(teams[key]);
       
     }
     
-    leagues.sort();
-    divisions.sort();
+      console.log(teamOpts);
     
-    console.log(leagues);
-      console.log(divisions);
-      
-
   
     
     
