@@ -26,9 +26,7 @@ function populateMatchupForm() {
     
     // Generate option list
     const optionsHTML =  buildMatchupFormHTML(teams);
-    
-    console.log(optionsHTML);
-    
+  
     // Populate BOTH team dropdown lists
     $('.js-team-select').append(optionsHTML);
 
@@ -39,7 +37,18 @@ function populateMatchupForm() {
     // list of the same, sorted by league & division
     
     // Initalize teamOps object
-    const teamOpts = {};
+    const teamOpts = {
+      AL: {
+        West: [],
+        Central: [],
+        East: []
+      },
+      NL: {
+        West: [],
+        Central: [],
+        East: []
+      }
+    };
     
     // Loop through teams
     
@@ -48,14 +57,7 @@ function populateMatchupForm() {
       // Extract variables for brevity
       let league = teams[key].League;
       let division = teams[key].Division;
-      
-      // If the league hasn't been initialized, initialize it!
-      teamOpts[league] === undefined ?
-        teamOpts[league] = {} : null ;
-      // If the division hasn't been initalized, initialize it!
-      teamOpts[league][division] === undefined ?
-        teamOpts[league][division] = [] : null;
-      
+
       // Add team to teamOpts
       teamOpts[league][division].push(teams[key]);
       
@@ -75,7 +77,13 @@ function populateMatchupForm() {
       teamOutput.push(`<optgroup label="${league} ${division}">`);
         
         // Sort team lists
-        teamOpts[league][division].sort();
+        teamOpts[league][division].sort((a, b) => {
+          let textA = a.Name.toUpperCase();
+          let textB = b.Name.toUpperCase();
+          
+          return  (textA < textB) ? -1 : 1;
+          
+        });
         
         // Add team options
         teamOpts[league][division].forEach(team => {
