@@ -151,8 +151,6 @@ function handleMatchupFormSubmission() {
         // Initialize seasonDataGLobal[season] object
         seasonDataGlobal[season] = {};
         
-        console.log("Loading season data...");
-        
         //TODO: Display "Loading..." animation
         
         // Begin "Data loading chain":
@@ -196,8 +194,6 @@ function handleMatchupFormSubmission() {
 
   function loadProcessingIcon(img) {
     // Replace the main content with a processing icon
-    
-    console.log('loadProccessingIcon called');
     
     const processingHTML = `
     <img src="${img}" class="loading-spinner js-loading-spinner"
