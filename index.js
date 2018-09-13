@@ -118,11 +118,16 @@ function handleMatchupFormSubmission() {
           hideNavButtons();
     }
 
-    // Collect data from form
+    // Collect data from form...
     let team1 = this[0].value;
     let team2 = this[1].value;
     let season = String(this[2].value);
-
+    
+    // Repopulate the form for next use
+    $('select[name="team1"]').val(team1);
+    $('select[name="team2"]').val(team2);
+    $('select[name="season"]').val(season);
+ 
     // If one or both teams missing...
     if (team1 === "" || team2 === "") {
       // ...Show the "two teams alert" and exit the function
