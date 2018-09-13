@@ -164,7 +164,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   gameBoxScores.forEach(game => {
     //Completed games
     if (game[1] === "Final") {
-      completedGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
+      completedGames += `<div class="boxscore">${game[2]}</div>`;
     } else {
       upcomingGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
     }
@@ -220,20 +220,23 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
       // Build a complete game result
       gameResult = `
       <table class="box-score">
+        <caption class="game-date">
+          ${gameDateString}: ${game.AwayTeam} at ${game.HomeTeam}
+        </caption>
         <tr>
-          <th>&nbsp;</th>
-          <th class="box-score-stat">R</th>
-          <th class="box-score-stat">H</th>
-          <th class="box-score-stat">E</th>
+          <th scope="col"><span class="reader-only">Team</span></th>
+          <th scope="col" class="box-score-stat">Runs</th>
+          <th scope="col" class="box-score-stat">Hits</th>
+          <th scope="col" class="box-score-stat">Errors</th>
         </tr>
         <tr>
-          <td>${game.AwayTeam}</td>
+          <th scope="row">${game.AwayTeam}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
-          <td>${game.HomeTeam}</td>
+          <th scope="row">${game.HomeTeam}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
@@ -595,7 +598,56 @@ function generateWinTrackerCard(team1, team2, season) {
     }
   }
   
-  console.log(teamWinData);
+  // Create the summary paragraph
+  let haveTense = "have";
+  let hasBeenTense = "have been";
+  let summaryHTML = "";
+  
+  // If not the current season...
+  if (season != 2018) {
+    haveTense = "";
+    hasBeenTense = "were";
+  }
+
+
+  if (winCounts[team1] > winCounts[team2]) {
+
+    let margin = winCounts[team1] - winCounts[team2];
+    let percentage = (daysAhead[team1]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team1, 'Name')}
+      ${haveTense} won ${margin} more games than
+      ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
+      ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
+      ahead in win count for ${percentage}% of the season</p>`;
+    
+  } else if (winCounts[team2] > winCounts[team1]) {
+    
+    let margin = winCounts[team2] - winCounts[team1];
+    let percentage = (daysAhead[team2]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team2, 'Name')}
+      ${haveTense} won ${margin} more games than
+      ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
+      ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
+      ahead in win count for ${percentage}% of the season</p>`;
+      
+  } else {
+    
+    let percentage = (daysAhead[team1]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, ${getTeamInfo(team1, 'Name')} and
+      ${getTeamInfo(team2, 'Name')} ${haveTense} won the same number
+      of games (${winCounts[team1]} wins each). The ${getTeamInfo(team1, 'Name')}
+      ${hasBeenTense} ahead in win count for ${percentage}% of the season.</p>`;
+    
+  }
   
 
   // Create the card
@@ -611,7 +663,7 @@ function generateWinTrackerCard(team1, team2, season) {
   });
 
   // Insert content into card
-  $(`#${cardID}`).append(cardHeader).append(cardHTML);
+  $(`#${cardID}`).append(cardHeader).append(summaryHTML).append(cardHTML);
 
 }
 

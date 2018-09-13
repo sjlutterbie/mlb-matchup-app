@@ -156,6 +156,10 @@ main {
       padding: 8px;
     }
     
+    .boxscore .game-date {
+      margin-bottom: 4px;
+    }
+    
     .fake-data-alert {
       text-align: center;
       font-style: italic;
