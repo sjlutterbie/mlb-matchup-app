@@ -239,6 +239,21 @@ function getTeamInfo(teamID, item) {
 
 }
 
+function setTeamInfo(teamID, item, value) {
+  // Get a specific item from the teamInfoGlobal object
+  
+  // Get the team object
+  const teamInfo = teamInfoGlobal.find(team => {
+    
+      return team.Key === teamID;
+    
+  });
+
+  // Set the info  
+  teamInfo[item] = value;
+
+}
+
 
 
 /* ================
