@@ -10,12 +10,23 @@
     // Clear any previous analysis
     $('main').html('');
     
+    // On first time generating comparison...
+    if (!landingPageDismissedGlobal) {
+      landingPageDismissedGlobal = true;
+      $('main').addClass('landing-page-dismissed');
+    }
+
     // Update page header
     generatePageHeader(team1, team2, season);
     
     // On narrow screens, load nav buttons
     if (window.innerWidth < screenThresholdGlobal) {
       showNavButtons();
+    }
+    
+    // On wide screens, load nav drawer
+    if (window.innerWidth >= screenThresholdGlobal) {
+      showNavDrawer();
     }
     
     // Head-to-Head W-L, including table of individual box scores

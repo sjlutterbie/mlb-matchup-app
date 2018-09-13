@@ -112,7 +112,6 @@ function handleMatchupFormSubmission() {
     e.preventDefault();
     
     // Submitting the form hides the landing page
-    landingPageDismissedGlobal = true;
     
     if (window.innerWidth < screenThresholdGlobal) {
           hideNavDrawer();
