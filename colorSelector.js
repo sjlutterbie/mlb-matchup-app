@@ -11,7 +11,8 @@ function selectTeamColors(team1, team2) {
   // Selects sufficiently contrasting team colors
   
   // Set minimum contrast value
-  const minContrast = .3;
+  const minHueDiff = 45;
+  const maxLum = 60;
   
   // Initiate color object
     const colors = {};
@@ -31,18 +32,30 @@ function selectTeamColors(team1, team2) {
   loop1:
     for(let i = 0; i < colors[team1].length; i++) {
       
-      let team1Hue = hueFromHex(colors[team1][i]);
+      let team1HSL = hslFromHex(colors[team1][i]);
+      let team1Hue = team1HSL[0];
+      let team1Lum = team1HSL[2];
+      
+      if (!evalMaxLum(team1Lum, maxLum)) {
+        continue;
+      }
       
       // Loop through team2's colors
   loop2:
         for(let j = 0; j < colors[team2].length; j++) {
           
-          let team2Hue = hueFromHex(colors[team2][j]);
+          let team2HSL = hslFromHex(colors[team2][j]);
+          let team2Hue = team2HSL[0];
+          let team2Lum = team2HSL[2];
+          
+          if (!evalMaxLum(team2Lum, maxLum)) {
+            continue;
+          }
 
           console.log(`Testing ${team1} color ${i} (${colors[team1][i]}) vs. ${team2} color ${j} (${colors[team2][j]})...`);
           
           // If they're different...
-          if (evalHueDifference(team1Hue, team2Hue, 45)) {
+          if (evalHueDifference(team1Hue, team2Hue, minHueDiff)) {
               console.log(`${team1} color ${i} and ${team2} color ${j} contrasts sufficiently!`);
               
               // Set colors, and break!
@@ -94,7 +107,7 @@ function selectTeamColors(team1, team2) {
   
   // ====================================
   
-  function hueFromHex(hexString) {
+  function hslFromHex(hexString) {
     // Takes a hex color string and returns the color's hue (from HSL) value
     // NOTE: Solution drawn from:
     //    https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript
@@ -114,12 +127,13 @@ function selectTeamColors(team1, team2) {
     // Identify max & min values
     const max = Math.max(r, g, b);
     const min = Math.min(r, g, b);
-    let h = (min + max) / 2;
+    let h, s, l = (min + max) / 2;
     
     if(max == min){
         h = 0; // achromatic
     } else {
         const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
         switch(max) {
             case r: h = (g - b) / d + (g < b ? 6 : 0); break;
             case g: h = (b - r) / d + 2; break;
@@ -127,10 +141,13 @@ function selectTeamColors(team1, team2) {
         }
         h /= 6;
     }
-    
-  h = Math.round(360 * h);
   
-  return h;
+  h = Math.round(360 * h);
+  s = Math.round(100 * s);
+  l = Math.round(100 * l);
+  
+  
+  return [h, s, l];
     
   }
   
@@ -160,19 +177,9 @@ function selectTeamColors(team1, team2) {
 
   }
   
-// TEST CASES
-
- // They're within minDiff (expect false)
-  // And hue1 isn't close to 0 or 360
-    console.log(`Within minDiff, not close (expect false): ${evalHueDifference(20, 25, 10)}`);
-  // And hue1 is close to 0
-    console.log(`Within minDiff, hue1 close to 0 (expect false): ${evalHueDifference(8, 12, 10)}`);
-  // And hue1 is close to 360
-    console.log(`Within minDiff, hue1 close to 360 (expect false): ${evalHueDifference(357, 3, 10)}`);
- // They're greater than minDiff (expect true)
-  // And hue1 isn't close to 0 or 360
-    console.log(`Not within minDiff, not close (expect true): ${evalHueDifference(15, 55, 10)}`);
-  // And hue1 is close to 0
-    console.log(`Not within minDiff, hue1 close to 0 (expect true): ${evalHueDifference(5, 50, 10)}`);
-  // And hue1 is close to 360
-    console.log(`Not within minDiff, hue1 close to 360 (expect true): ${evalHueDifference(355, 45, 10)}`);
+  function evalMaxLum(lum, maxLum) {
+    // Confirms that a color's luminosity is less than a defined maximum
+    
+    return lum < maxLum;
+    
+  }
