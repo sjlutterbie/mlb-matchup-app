@@ -224,7 +224,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
       // Build a complete game result
       gameResult = `
       <table class="box-score">
-        <caption class="game-date">
+        <caption class="box-score-caption">
           ${gameDateString}: ${game.AwayTeam} at ${game.HomeTeam}
         </caption>
         <tr>
@@ -234,7 +234,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
           <th scope="col" class="box-score-stat">Errors</th>
         </tr>
         <tr>
-          <th scope="row">${game.AwayTeam}</td>
+          <th scope="row" class="box-score-row-header">${game.AwayTeam}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>

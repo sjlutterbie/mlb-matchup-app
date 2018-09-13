@@ -223,6 +223,15 @@ main {
     margin-bottom: 16px;
     }
     
+    .box-score-caption {
+      font-weight: normal;
+      
+    }
+    
+    .box-score-row-header {
+      padding-right: 4px;
+    }
+    
     .box-score th {
       font-weight: bold;
       color: var(--primary-color);
