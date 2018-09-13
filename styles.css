@@ -422,6 +422,7 @@ footer {
 
 
 @media only screen and (min-width: 660px) {
+  /* NOTE: If changing threshold, update screenThreshold  in globalVars Match */
   
   /* Toggle the intro paragraphs and get started button */
   .small-screen-intro{

@@ -1,92 +1,103 @@
 'use strict';
 
-/* === HANLDER FUNCTIONS === */
+/* =========================== 
+   = EVENT HANLDER FUNCTIONS =
+   =========================== */
 
-// When the page loads...
-function showNavDrawerWideScreen() {
+/* === Initialize nav display system on page load === */
+
+function pageLoadNavSystem() {
+  // Detects the initial screen width, and updates the nav drawer display
+  //  variables, accordingly
   
-  // If the window is wider than the 660px responsive threshold...
-  if (window.innerWidth >= 660) {
-    
-    // Show the nav drawer
-    $('.js-nav-shim').attr('hidden', false);
-    $('.js-nav-shim').removeClass('nav-shim-hidden');
-    $('.js-nav-shim').addClass('nav-shim-shown');
-    
-    // Hide the nav toggle buttons
-    $('.js-nav-toggle').hide();
-  }
+  // Set initial screenIsNarrow value
+  checkScreenWidthStatus();
+  
+  // Set initial narrowScreenNav value
+  wideNavScreenGlobal = screenIsWideGlobal;
+  
+  // Hide the navDrawer on page load
+  setNavDrawerDisplay(false);
   
 }
 
-// Ways to make the navigation drawer appear:
-function handleNavDrawerShow() {
+/* === HANDLE CHANGING SCREEN SIZE EVENTS === */
+
+function handlePageResize() {
   
-  // When the user clicks on the "drawer icon" or the "float button" in the page header
-  $('html').on('click', '.js-nav-toggle', function(e) {
-    e.preventDefault();
-    
-    showNavDrawer();
-    
-  });
-  
-  // When the user clicks on the "Get started" button
-  $('html').on('click', '.js-get-started-button', function(e) {
-    e.preventDefault();
-    
-    showNavDrawer();
-    
-  });
-  
-  // Handle responsive design transitions  
+  // When the page resizes...
   $(window).on('resize', function(e) {
     
-    // As long as window is wider than 660px responsive threshold...
-    if (window.innerWidth >= 660) {
+    // Update screenIsNarrowGlobal
+    checkScreenWidthStatus();
+    
+    // If the screen & nav are no longer aligned...
+    if (screenIsWideGlobal != wideNavScreenGlobal) {
       
-      // Make sure the nav drawer is visible
-      if (!$('.js-nav-shim').hasClass('nav-shim-shown')) {
-        $('.js-nav-shim').removeClass('nav-shim-hidden');
-        $('.js-nav-shim').addClass('nav-shim-shown');
-        $('.js-nav-toggle').hide();
-      }
-    }
-  });
+      // Only change display is landing page is gone
+      if (!landingPageVisibleGlobal) {
 
+       // Show navDrawer on wide screens, hide on narrow screens
+       setNavDrawerDisplay(wideNavScreenGlobal)
+        
+      }
+      
+      // Update wideScreenGlobal to match
+      wideNavScreenGlobal = screenIsNarrowGlobal;
+
+    }
+    
+  });
+    
 }
 
-// Ways to make the navigation drawer disappear:
-function handleNavDrawerHide() {
-  
-  // When the user clicks on the "hide navigation button"
-  $('html').on('click', '.js-hide-nav-button', function(e){
-    e.preventDefault();
-    
-    hideNavDrawer();
+/* === HANDLE BUTTON CLICKS === */
 
+function handleNavToggleClicks() {
+  // Handle actions when a user clicks a show/hide nav drawer element
+  
+  $('html').on('click', '.js-show-nav-drawer', function(e) {
+
+    e.preventDefault();
+    showNavDrawer();
+    
   });
 
-  // NOTE: User submitting the matchup form handled in index.js
-
-}    
+  $('html').on('click', '.js-hide-nav-drawer', function(e) {
+    
+    e.preventDefault();
+    hideNavDrawer();
+    
+  });
+  
+}
 
   /* === HELPER FUNCTIONS === */
+
+  function checkScreenWidthStatus() {
+    // Checks the screen width in comparison to the screenThreshold, and
+    //  updates screenIsNarrow, if necessary
   
-  function hideNavDrawer() {
-    // Show the drawer icon and float button
-    $('.js-nav-toggle').show().css('transform', 'scale(1)');
+    screenIsWideGlobal = (window.innerWidth >= screenThresholdGlobal);
     
-    // Make the nav drawer slide out
-    $('.js-nav-shim').removeClass('nav-shim-shown');
-    $('.js-nav-shim').addClass('nav-shim-hidden');
-    $('.js-nav-shim').attr('hidden', true);
-
-
   }
   
+  function setNavDrawerDisplay(shouldDisplay) {
+    // Hide/display the navDrawer
+    
+    if (shouldDisplay) {
+      showNavDrawer();
+    } else {
+      hideNavDrawer();
+    }
+    
+  }
+
   function showNavDrawer() {
+    // Triggers transitions to make navDrawer visible
+
     // Hide the drawer icon and float button
-    $('.js-nav-toggle').css('transform', 'scale(0)').hide();
+    $('.js-show-nav-drawer').css('transform', 'scale(0)').hide();
     
     // Make the nav drawer slide in
     $('.js-nav-shim').attr('hidden', false);
@@ -94,10 +105,25 @@ function handleNavDrawerHide() {
     $('.js-nav-shim').addClass('nav-shim-shown');
 
   }
-
   
+  function hideNavDrawer() {
+    // Triggers transitions to hide navDrawer and show toggleButtons
+    // NOTE: toggleButtons' actual visibility determined by CSS (responsive)
+    
+    // Show the drawer icon and float button
+    $('.js-show-nav-drawer').show().css('transform', 'scale(1)');
+    
+    // Make the nav drawer slide out
+    $('.js-nav-shim').removeClass('nav-shim-shown');
+    $('.js-nav-shim').addClass('nav-shim-hidden');
+    $('.js-nav-shim').attr('hidden', true);
+
+  }
+  
+
+
 /* === LAUNCH CODES === */
 
-$(showNavDrawerWideScreen());
-$(handleNavDrawerShow);
-$(handleNavDrawerHide);
+$(pageLoadNavSystem());
+$(handlePageResize);
+$(handleNavToggleClicks);
