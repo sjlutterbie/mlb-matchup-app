@@ -28,45 +28,31 @@ function selectTeamColors(team1, team2) {
     let team2Color = colors[team2][0];
 
   // Loop through team1's colors
+  loop1:
     for(let i = 0; i < colors[team1].length; i++) {
       
-      let team1ColorYIQ = hexToYIQ(colors[team1][i]);
+      let team1Hue = hueFromHex(colors[team1][i]);
       
-      console.log(`Testing ${team1} color ${i+1}: ${colors[team1][i]}...`);
-
-      // If team1's color contrasts sufficiently with white...
-      if(evalColorContrast(team1ColorYIQ, 255, minContrast)) {
-        
-        console.log(`${team1} color ${i+1} contrasts sufficiently with white...`);
-        
-        // Loop through team2's colors
+      // Loop through team2's colors
+  loop2:
         for(let j = 0; j < colors[team2].length; j++) {
           
-          let team2ColorYIQ = hexToYIQ(colors[team2][j]);
+          let team2Hue = hueFromHex(colors[team2][j]);
+
+          console.log(`Testing ${team1} color ${i} (${colors[team1][i]}) vs. ${team2} color ${j} (${colors[team2][j]})...`);
           
-          console.log(`Testing ${team2} color ${j+1}: ${colors[team2][j]}...`);
-          
-          // If team2's color contrasts sufficiently with white...
-          if (evalColorContrast(team2ColorYIQ, 255, minContrast)) {
-            
-            console.log(`${team2} color ${j+1} contrasts sufficiently with white...`);
-            
-            // And team2's color contrasts sufficiently with team1's color...
-            if(evalColorContrast(team1ColorYIQ, team2ColorYIQ, minContrast)) {
-              
-             console.log(`${team1} color ${i} and ${team2} color ${j+1} contrasts sufficiently!`);
+          // If they're different...
+          if (evalHueDifference(team1Hue, team2Hue, 45)) {
+              console.log(`${team1} color ${i} and ${team2} color ${j} contrasts sufficiently!`);
               
               // Set colors, and break!
               team1Color = colors[team1][i];
               team2Color = colors[team2][j];
-              break;
-              
-            }
+              break loop1;
+            
           }
         }
-      }
     }
-
 
   // Store team colors
   setTeamInfo(team1, "DisplayColor", team1Color);
@@ -104,6 +90,9 @@ function selectTeamColors(team1, team2) {
     return (Math.abs(((color1 - color2) / 255)) >= minContrast);
     
   }
+  
+  
+  // ====================================
   
   function hueFromHex(hexString) {
     // Takes a hex color string and returns the color's hue (from HSL) value
@@ -144,3 +133,46 @@ function selectTeamColors(team1, team2) {
   return h;
     
   }
+  
+  function evalHueDifference(hue1, hue2, minDiff) {
+    // Calculates whether two hues are sufficiently different
+  
+    console.log(`hue1: ${hue1}`);
+    console.log(`hue2: ${hue2}`);
+    
+    // Case 1 - They're simply within the minDiff of each other:
+    if (Math.abs(hue1 - hue2) <= minDiff) {
+      return false;
+    }    
+    
+    // Case 2 - They're different, but hue1 is less than minDiff from 0
+    if (hue1 < minDiff) {
+      return (hue1 - (hue2-360) >= minDiff);
+    }
+    
+    // Case 3 - They're different, but hue1 is less than minDiff from 360
+    if (360 - hue1 < minDiff) {
+      return (hue2 - (hue1-360) >= minDiff);
+    }
+    
+    // Case 4 - They're different, and hue isn't close to an edge
+    return true;
+
+  }
+  
+// TEST CASES
+
+ // They're within minDiff (expect false)
+  // And hue1 isn't close to 0 or 360
+    console.log(`Within minDiff, not close (expect false): ${evalHueDifference(20, 25, 10)}`);
+  // And hue1 is close to 0
+    console.log(`Within minDiff, hue1 close to 0 (expect false): ${evalHueDifference(8, 12, 10)}`);
+  // And hue1 is close to 360
+    console.log(`Within minDiff, hue1 close to 360 (expect false): ${evalHueDifference(357, 3, 10)}`);
+ // They're greater than minDiff (expect true)
+  // And hue1 isn't close to 0 or 360
+    console.log(`Not within minDiff, not close (expect true): ${evalHueDifference(15, 55, 10)}`);
+  // And hue1 is close to 0
+    console.log(`Not within minDiff, hue1 close to 0 (expect true): ${evalHueDifference(5, 50, 10)}`);
+  // And hue1 is close to 360
+    console.log(`Not within minDiff, hue1 close to 360 (expect true): ${evalHueDifference(355, 45, 10)}`);
