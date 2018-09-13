@@ -133,6 +133,14 @@ main {
       
     }
     
+    #get-started-card p {
+      text-align: center;
+    }
+    
+    .landing-card-instructions {
+      font-style: italic;
+    }
+    
     .flexrow {
       display: flex;
       flex-flow: row wrap;
@@ -144,19 +152,12 @@ main {
       padding: 8px;
     }
     
-    .small-screen-intro{
-      text-align: justify;
-    }
-    
-    .large-screen-intro{
-      text-align: justify;
-      display: none;
-    }
-    
     .fake-data-alert {
-      text-align: justify;
-      font-weight: bold;
+      text-align: center;
       font-style: italic;
+      font-size: 14px;
+      max-width: 360px;
+      margin: auto;
     }
     
     .get-started-button {
@@ -186,6 +187,25 @@ main {
     .tbd-game {
       text-align: center;
     }
+    
+    .matchup-form-landing {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      padding: 8px;
+      margin: 8px auto;
+      max-width: 360px;
+    }
+    
+      .matchup-form-landing h2 {
+        width: 100%;
+      }
+      
+      .matchup-form-landing label {
+        width: 100%;
+      }
     
     table.box-score {
     width: 100%;
