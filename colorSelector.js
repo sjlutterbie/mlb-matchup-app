@@ -104,3 +104,43 @@ function selectTeamColors(team1, team2) {
     return (Math.abs(((color1 - color2) / 255)) >= minContrast);
     
   }
+  
+  function hueFromHex(hexString) {
+    // Takes a hex color string and returns the color's hue (from HSL) value
+    // NOTE: Solution drawn from:
+    //    https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript
+    
+    
+    // Remove #, if present
+    hexString = hexString.replace("#", "");
+    
+    // Extract RGB components
+    let r = parseInt(hexString.substr(0,2),16);
+    let g = parseInt(hexString.substr(2,2),16);
+    let b = parseInt(hexString.substr(4,2),16);
+    
+    // Convert to fractions of 255
+    r /= 255, g /= 255, b /= 255;
+    
+    // Identify max & min values
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = (min + max) / 2;
+    
+    if(max == min){
+        h = 0; // achromatic
+    } else {
+        const d = max - min;
+        switch(max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    
+  h = Math.round(360 * h);
+  
+  return h;
+    
+  }
