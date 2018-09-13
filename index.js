@@ -111,10 +111,12 @@ function handleMatchupFormSubmission() {
   $('.js-matchup-form').submit(function(e) {
     e.preventDefault();
     
-    if (window.innerWidth < 660) {
+    // Submitting the form hides the landing page
+    
+    if (window.innerWidth < screenThresholdGlobal) {
           hideNavDrawer();
+          hideNavButtons();
     }
-
 
     // Collect data from form
     let team1 = this[0].value;

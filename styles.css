@@ -70,6 +70,10 @@ header {
     padding-left: 8px;
   }
   
+  .header-icon-container {
+    display: inline-block;
+  }
+  
   .header-icon {
     padding-right: 8px;
     line-height: 24px;
@@ -422,22 +426,11 @@ footer {
 
 
 @media only screen and (min-width: 660px) {
-  
-  /* Toggle the intro paragraphs and get started button */
-  .small-screen-intro{
-    display: none;
-  }
-  
-  .large-screen-intro{
-    display: block;
-  }
-  
-  .get-started-button {
-    display: none;
-  }
-  
-  /* Hide the nav drawer toggles */
-  .header-icon, .hide-nav-button, .float-button {
+  /* NOTE: If changing threshold, update screenThreshold  in globalVars Match */
+
+
+  /* Hide the hide nav drawer button */
+  .hide-nav-button {
     display: none;
   }
   
@@ -456,7 +449,8 @@ footer {
     background: rgba(0,0,0,0) !important;
     transform: translateX(0%) !important;
   }
-  
+
+
   /* Position the nav bar on the left side of the screen */
   nav {
     display: flex;
@@ -469,7 +463,7 @@ footer {
   
   
   /* Adjust main content to avoid nav drawer */
-  main {
+  .landing-page-dismissed {
     margin-left: 256px;
   }
   
