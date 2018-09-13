@@ -20,25 +20,41 @@ function selectTeamColors(team1, team2) {
       colors[team] = [
         getTeamInfo(team, "PrimaryColor"),
         getTeamInfo(team, "SecondaryColor"),
-        getTeamInfo(team, "TertiaryColor"),
-        getTeamInfo(team, "QuarternaryColor")
-      ];
+        getTeamInfo(team, "TertiaryColor")      ];
       });
       
   // Default to primary colors (in case loop doesn't find a contrasting pair)
     let team1Color = colors[team1][0];
     let team2Color = colors[team2][0];
-  
+
   // Loop through team1's colors
     for(let i = 0; i < colors[team1].length; i++) {
+      
+      let team1ColorYIQ = hexToYIQ(colors[team1][i]);
+      
+      console.log(`Testing ${team1} color ${i+1}: ${colors[team1][i]}...`);
+
       // If team1's color contrasts sufficiently with white...
-      if(evalColorContrast(colors[team1][i], "ffffff", minContrast)) {
+      if(evalColorContrast(team1ColorYIQ, 255, minContrast)) {
+        
+        console.log(`${team1} color ${i+1} contrasts sufficiently with white...`);
+        
         // Loop through team2's colors
         for(let j = 0; j < colors[team2].length; j++) {
+          
+          let team2ColorYIQ = hexToYIQ(colors[team2][j]);
+          
+          console.log(`Testing ${team2} color ${j+1}: ${colors[team2][j]}...`);
+          
           // If team2's color contrasts sufficiently with white...
-          if (evalColorContrast(colors[team2][j], "ffffff", minContrast)) {
+          if (evalColorContrast(team2ColorYIQ, 255, minContrast)) {
+            
+            console.log(`${team2} color ${j+1} contrasts sufficiently with white...`);
+            
             // And team2's color contrasts sufficiently with team1's color...
-            if(evalColorContrast(colors[team1][i], colors[team2][j], minContrast)) {
+            if(evalColorContrast(team1ColorYIQ, team2ColorYIQ, minContrast)) {
+              
+             console.log(`${team1} color ${i} and ${team2} color ${j+1} contrasts sufficiently!`);
               
               // Set colors, and break!
               team1Color = colors[team1][i];
@@ -56,8 +72,6 @@ function selectTeamColors(team1, team2) {
   setTeamInfo(team1, "DisplayColor", team1Color);
   setTeamInfo(team2, "DisplayColor", team2Color);
 
-  console.log(getTeamInfo(team1, "DisplayColor"));
-  console.log(getTeamInfo(team2, "DisplayColor"));
 }
 
 
@@ -71,9 +85,9 @@ function selectTeamColors(team1, team2) {
     hexString = hexString.replace("#", "");
     
     // Extract RGB components
-    const hexR = parseInt(hexcolor.substr(0,2),16);
-    const hexG = parseInt(hexcolor.substr(2,2),16);
-    const hexB = parseInt(hexcolor.substr(4,2),16);
+    const hexR = parseInt(hexString.substr(0,2),16);
+    const hexG = parseInt(hexString.substr(2,2),16);
+    const hexB = parseInt(hexString.substr(4,2),16);
     
     // Calculate YIQ value
     const YIQ = ((hexR*299)+(hexG*587)+(hexB*114))/1000;
@@ -84,7 +98,9 @@ function selectTeamColors(team1, team2) {
 
   function evalColorContrast(color1, color2, minContrast) {
     // Calculate the contrast between two YIQ color values
-    
-    return (((color1 - color2) / 255) >= minContrast);
+  
+    console.log(`Contrast value: ${Math.abs(((color1 - color2) / 255))}`);
+  
+    return (Math.abs(((color1 - color2) / 255)) >= minContrast);
     
   }
