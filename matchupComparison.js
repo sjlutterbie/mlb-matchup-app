@@ -595,7 +595,56 @@ function generateWinTrackerCard(team1, team2, season) {
     }
   }
   
-  console.log(teamWinData);
+  // Create the summary paragraph
+  let haveTense = "have";
+  let hasBeenTense = "have been";
+  let summaryHTML = "";
+  
+  // If not the current season...
+  if (season != 2018) {
+    haveTense = "";
+    hasBeenTense = "were";
+  }
+
+
+  if (winCounts[team1] > winCounts[team2]) {
+
+    let margin = winCounts[team1] - winCounts[team2];
+    let percentage = (daysAhead[team1]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team1, 'Name')}
+      ${haveTense} won ${margin} more games than
+      ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
+      ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
+      ahead in win count for ${percentage}% of the season</p>`;
+    
+  } else if (winCounts[team2] > winCounts[team1]) {
+    
+    let margin = winCounts[team2] - winCounts[team1];
+    let percentage = (daysAhead[team2]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team2, 'Name')}
+      ${haveTense} won ${margin} more games than
+      ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
+      ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
+      ahead in win count for ${percentage}% of the season</p>`;
+      
+  } else {
+    
+    let percentage = (daysAhead[team1]
+                     / (daysAhead[team1] + daysAhead[team2])
+                     * 100).toFixed(0);
+    
+    summaryHTML = `<p>In the ${season}, ${getTeamInfo(team1, 'Name')} and
+      ${getTeamInfo(team2, 'Name')} ${haveTense} won the same number
+      of games (${winCounts[team1]} wins each). The ${getTeamInfo(team1, 'Name')}
+      ${hasBeenTense} ahead in win count for ${percentage}% of the season.</p>`;
+    
+  }
   
 
   // Create the card
@@ -611,7 +660,7 @@ function generateWinTrackerCard(team1, team2, season) {
   });
 
   // Insert content into card
-  $(`#${cardID}`).append(cardHeader).append(cardHTML);
+  $(`#${cardID}`).append(cardHeader).append(summaryHTML).append(cardHTML);
 
 }
 
