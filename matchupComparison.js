@@ -164,7 +164,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   gameBoxScores.forEach(game => {
     //Completed games
     if (game[1] === "Final") {
-      completedGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
+      completedGames += `<div class="boxscore">${game[2]}</div>`;
     } else {
       upcomingGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
     }
@@ -220,20 +220,23 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
       // Build a complete game result
       gameResult = `
       <table class="box-score">
+        <caption class="game-date">
+          ${gameDateString}: ${game.AwayTeam} at ${game.HomeTeam}
+        </caption>
         <tr>
-          <th>&nbsp;</th>
-          <th class="box-score-stat">R</th>
-          <th class="box-score-stat">H</th>
-          <th class="box-score-stat">E</th>
+          <th scope="col"><span class="reader-only">Team</span></th>
+          <th scope="col" class="box-score-stat">Runs</th>
+          <th scope="col" class="box-score-stat">Hits</th>
+          <th scope="col" class="box-score-stat">Errors</th>
         </tr>
         <tr>
-          <td>${game.AwayTeam}</td>
+          <th scope="row">${game.AwayTeam}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
-          <td>${game.HomeTeam}</td>
+          <th scope="row">${game.HomeTeam}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
