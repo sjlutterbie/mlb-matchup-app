@@ -17,7 +17,8 @@ function pageLoadNavSystem() {
   wideNavScreenGlobal = screenIsWideGlobal;
   
   // Hide the navDrawer on page load
-  setNavDrawerDisplay(false);
+  hideNavDrawer();
+  hideNavButtons();
   
 }
 
@@ -34,21 +35,24 @@ function handlePageResize() {
     // If the screen & nav are no longer aligned...
     if (screenIsWideGlobal != wideNavScreenGlobal) {
       
-      // Only change display is landing page is gone
-      if (!landingPageVisibleGlobal) {
+      // Only change if the landing page has been dismissed
+      if (landingPageDismissedGlobal) {
 
-       // Show navDrawer on wide screens, hide on narrow screens
-       setNavDrawerDisplay(wideNavScreenGlobal)
-        
+        // If the screen became wide...
+        if (screenIsWideGlobal) {
+          showNavDrawer();
+          hideNavButtons();
+        } else {
+          hideNavDrawer();
+          showNavButtons();
+        }
       }
       
       // Update wideScreenGlobal to match
-      wideNavScreenGlobal = screenIsNarrowGlobal;
+      wideNavScreenGlobal = screenIsWideGlobal;
 
     }
-    
   });
-    
 }
 
 /* === HANDLE BUTTON CLICKS === */
@@ -60,6 +64,7 @@ function handleNavToggleClicks() {
 
     e.preventDefault();
     showNavDrawer();
+    hideNavButtons();
     
   });
 
@@ -67,6 +72,7 @@ function handleNavToggleClicks() {
     
     e.preventDefault();
     hideNavDrawer();
+    showNavButtons();
     
   });
   
@@ -82,23 +88,10 @@ function handleNavToggleClicks() {
     
   }
   
-  function setNavDrawerDisplay(shouldDisplay) {
-    // Hide/display the navDrawer
-    
-    if (shouldDisplay) {
-      showNavDrawer();
-    } else {
-      hideNavDrawer();
-    }
-    
-  }
 
   function showNavDrawer() {
     // Triggers transitions to make navDrawer visible
 
-    // Hide the drawer icon and float button
-    $('.js-show-nav-drawer').css('transform', 'scale(0)').hide();
-    
     // Make the nav drawer slide in
     $('.js-nav-shim').attr('hidden', false);
     $('.js-nav-shim').removeClass('nav-shim-hidden');
@@ -108,11 +101,7 @@ function handleNavToggleClicks() {
   
   function hideNavDrawer() {
     // Triggers transitions to hide navDrawer and show toggleButtons
-    // NOTE: toggleButtons' actual visibility determined by CSS (responsive)
-    
-    // Show the drawer icon and float button
-    $('.js-show-nav-drawer').show().css('transform', 'scale(1)');
-    
+
     // Make the nav drawer slide out
     $('.js-nav-shim').removeClass('nav-shim-shown');
     $('.js-nav-shim').addClass('nav-shim-hidden');
@@ -120,7 +109,16 @@ function handleNavToggleClicks() {
 
   }
   
-
+  function showNavButtons() {
+    // Only works if screen is NOT wide
+    if(!screenIsWideGlobal) {
+      $('.js-show-nav-drawer').show().css('transform', 'scale(1)'); 
+    }
+  }
+  
+  function hideNavButtons() {
+    $('.js-show-nav-drawer').css('transform', 'scale(0)').hide();
+  }
 
 /* === LAUNCH CODES === */
 

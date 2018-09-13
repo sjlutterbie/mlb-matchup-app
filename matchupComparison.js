@@ -13,6 +13,11 @@
     // Update page header
     generatePageHeader(team1, team2, season);
     
+    // On narrow screens, load nav buttons
+    if (window.innerWidth < screenThresholdGlobal) {
+      showNavButtons();
+    }
+    
     // Head-to-Head W-L, including table of individual box scores
     generateHeadtoHeadSummaryCard(team1, team2, season);
 

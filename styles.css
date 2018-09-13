@@ -70,6 +70,10 @@ header {
     padding-left: 8px;
   }
   
+  .header-icon-container {
+    display: inline-block;
+  }
+  
   .header-icon {
     padding-right: 8px;
     line-height: 24px;
