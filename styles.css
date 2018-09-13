@@ -181,9 +181,10 @@ main {
       font-weight: bold;
     }
     
-    .card .head-to-head-summary {
-      text-align: center;
+    .card-summary {
+      text-align: justify;
       margin-bottom: 16px;
+      color: var(--primary-color);
     }
     
     .game-date {
@@ -215,34 +216,53 @@ main {
         width: 100%;
       }
     
-    table.box-score {
-    width: 100%;
-    max-width: 256px;
-    margin: auto;
-    border-collapse: collapse;
-    margin-bottom: 16px;
-    }
-    
-    .box-score-caption {
-      font-weight: normal;
-      
-    }
-    
-    .box-score-row-header {
-      padding-right: 4px;
-    }
-    
-    .box-score th {
-      font-weight: bold;
-      color: var(--primary-color);
-    }
-    
-    .box-score td {
-      border: 1px solid var(--primary-light);
+    .box-score-container {
       padding: 8px;
-      text-align: center;
-      color: var(--primary-color);
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      margin: 4px;
     }
+    
+    table.box-score {
+      width: 100%;
+      max-width: 256px;
+      margin: auto;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+    }
+    
+      .box-score-caption {
+        font-weight: normal;
+        padding: 8px 0px;
+        color: var(--primary-color);
+    }
+    
+      .box-score-column-header {
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+      
+      .box-score-row-header {
+        padding-right: 8px;
+        color: var(--primary-color);
+      }
+      
+      .box-score-runs {
+        background: #ccc;
+      }
+    
+      .box-score td {
+        border: 1px solid var(--primary-light);
+        padding: 8px;
+        text-align: center;
+        color: var(--primary-color);
+      }
+  
+
+    
+
+    
+
     
     .box-score-stat {
       width: 65px;
@@ -322,7 +342,7 @@ main {
       display: block;
       padding-top: 8px;
       padding-bottom: 8px;
-      color: var(--primary-dark);
+      color: var(--primary-color);
       font-weight: bold;
       text-align: center;
     }
