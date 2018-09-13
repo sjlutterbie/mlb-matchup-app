@@ -7,6 +7,10 @@
   function generateMatchupComparison(team1, team2, season) {
     // Central function that calls the individual matchup comparison analyses
     
+    // Select team colors
+    selectTeamColors(team1, team2);
+    
+    
     // Clear any previous analysis
     $('main').html('');
     

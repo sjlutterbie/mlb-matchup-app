@@ -16,9 +16,8 @@ function drawWinTracker(team1, team2, teamWinData) {
   data.addRows(teamWinData);
   
   // Set visualization colors
-  const team1Color = getTeamInfo(team1, 'PrimaryColor');
-  const team2Color = getTeamInfo(team2, 'SecondaryColor') === "FFFFFF" ? 
-    getTeamInfo(team2, 'TertiaryColor') : getTeamInfo(team2, 'SecondaryColor');
+  const team1Color = getTeamInfo(team1, 'DisplayColor');
+  const team2Color = getTeamInfo(team2, 'DisplayColor');
   
   const options = {
     colors: [
@@ -52,9 +51,8 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
     ]);
     
   // Set visualization colors
-  const team1Color = getTeamInfo(team1, 'PrimaryColor');
-  const team2Color = getTeamInfo(team2, 'SecondaryColor') === "FFFFFF" ? 
-    getTeamInfo(team2, 'TertiaryColor') : getTeamInfo(team2, 'SecondaryColor');  
+  const team1Color = getTeamInfo(team1, 'DisplayColor');
+  const team2Color = getTeamInfo(team2, 'DisplayColor');  
   
   var options = {
     legend: 'bottom',
