@@ -94,9 +94,8 @@ function handleNavToggleClicks() {
 
     // Make the nav drawer slide in
     $('.js-nav-shim').attr('hidden', false);
-    $('.js-nav-shim').removeClass('nav-shim-hidden');
-    $('.js-nav-shim').addClass('nav-shim-shown');
-
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
+    $('.js-nav-shim').css('transform', 'translateX(0%)');
   }
   
   function hideNavDrawer() {
