@@ -544,6 +544,9 @@ function generateWinTrackerCard(team1, team2, season) {
   const winCounts = {};
     winCounts[team1] = 0;
     winCounts[team2] = 0;
+  const daysAhead = {};
+    daysAhead[team1] = 0;
+    daysAhead[team2] = 0;
   
   let gameWinner = "";
   
@@ -572,6 +575,14 @@ function generateWinTrackerCard(team1, team2, season) {
           // Increase the winning team's total
           winCounts[gameWinner] += 1;
           
+          // Advanced "daysAhead"
+          if (winCounts[team1] > winCounts[team2]) {
+            daysAhead[team1] += 1;
+          }
+          if (winCounts[team2] > winCounts[team1]) {
+            daysAhead[team2] += 1;
+          }
+          
           // Format the date
           
           let gameDay = new Date(games[i].Day);
@@ -583,6 +594,8 @@ function generateWinTrackerCard(team1, team2, season) {
       }
     }
   }
+  
+  console.log(teamWinData);
   
 
   // Create the card
