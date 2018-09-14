@@ -109,18 +109,26 @@ function handleNavToggleClicks() {
     // Triggers transitions to make navDrawer visible
 
     // Make the nav drawer slide in
-    $('.js-nav-shim').attr('hidden', false);
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
-    $('.js-nav-shim').css('transform', 'translateX(0%)');
+
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)')
+      .css('transform', 'translateX(0%)')
+      .attr('hidden', false);
+      
   }
   
   function hideNavDrawer() {
     // Triggers transitions to hide navDrawer and show toggleButtons
 
     // Make the nav drawer slide out
-    $('.js-nav-shim').removeClass('nav-shim-shown');
-    $('.js-nav-shim').addClass('nav-shim-hidden');
-    $('.js-nav-shim').attr('hidden', true);
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3');
+    $('.js-nav-shim').css('transform', 'translateX(-100%)');
+    
+    $('.js-nav-shim').on('transitionend', function(e){
+      e.preventDefault();
+      
+      $('.js-nav-shim').attr('hidden', true);
+      
+    });
 
   }
   

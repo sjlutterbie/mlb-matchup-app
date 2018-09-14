@@ -621,7 +621,7 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season}, the ${getTeamInfo(team1, 'Name')}
+    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team1, 'Name')}
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
       ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
@@ -634,7 +634,7 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season}, the ${getTeamInfo(team2, 'Name')}
+    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team2, 'Name')}
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
       ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
@@ -646,7 +646,7 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season}, ${getTeamInfo(team1, 'Name')} and
+    summaryHTML = `<p class="card-summary">In the ${season} season, ${getTeamInfo(team1, 'Name')} and
       ${getTeamInfo(team2, 'Name')} ${haveTense} won the same number
       of games (${winCounts[team1]} wins each). The ${getTeamInfo(team1, 'Name')}
       ${hasBeenTense} ahead in win count for ${percentage}% of the season.</p>`;
