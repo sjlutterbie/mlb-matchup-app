@@ -625,7 +625,7 @@ function generateWinTrackerCard(team1, team2, season) {
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
       ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season</p>`;
+      ahead in win count for ${percentage}% of the season.</p>`;
     
   } else if (winCounts[team2] > winCounts[team1]) {
     
@@ -638,7 +638,7 @@ function generateWinTrackerCard(team1, team2, season) {
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
       ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season</p>`;
+      ahead in win count for ${percentage}% of the season.</p>`;
       
   } else {
     
@@ -680,7 +680,7 @@ function generateMatchupComparisonCard(cardID) {
   
   // Build HTML
   const cardHTML = `<section class="card js-card" data-highlight="false"
-                      id="${cardID}" tabindex="1"></section>`;
+                      id="${cardID}" tabindex="0"></section>`;
                     
   // Create card
   $('main').append(cardHTML);

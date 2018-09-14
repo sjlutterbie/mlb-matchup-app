@@ -22,6 +22,22 @@ function pageLoadNavSystem() {
   
 }
 
+/* === HANDLE GET STARTED BUTTON === */
+
+function handleGetStartedButton() {
+  
+  $('html').on('click', '.get-started-button', function(e){
+    e.preventDefault();
+    
+
+    // Replace landing page part 1, with landing page part 2
+    $('.js-landing-card-part-1').attr('hidden', 'true').hide();
+    $('.js-landing-card-part-2').removeAttr('hidden').show();
+    
+  });
+}
+
+
 /* === HANDLE CHANGING SCREEN SIZE EVENTS === */
 
 function handlePageResize() {
@@ -121,6 +137,7 @@ function handleNavToggleClicks() {
 
 /* === LAUNCH CODES === */
 
+$(handleGetStartedButton);
 $(pageLoadNavSystem());
 $(handlePageResize);
 $(handleNavToggleClicks);
