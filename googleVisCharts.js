@@ -15,6 +15,8 @@ function drawWinTracker(team1, team2, teamWinData) {
     data.addColumn('number',team2);
   data.addRows(teamWinData);
   
+  console.log(data);
+  
   // Set visualization colors
   const team1Color = getTeamInfo(team1, 'DisplayColor');
   const team2Color = getTeamInfo(team2, 'DisplayColor');
