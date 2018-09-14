@@ -28,8 +28,6 @@ function drawWinTracker(team1, team2, teamWinData) {
     ]
   };
 
-  //  TODO: Make this actually do something.
-
     // Instantiate and draw the chart
     const chart = new google.charts.Line(document.getElementById('gv-win-tracker'));
     chart.draw(data, options);
