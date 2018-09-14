@@ -118,21 +118,21 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     if (gameCounts.scheduled > 0 ) {
       // If team1 leads the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team1City} ${team1Name} have a
                        ${gameCounts[team1]} games to ${gameCounts[team2]}
                        series lead over the ${team2City} ${team2Name}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team2City} ${team2Name} have a
                        ${gameCounts[team2]} games to ${gameCounts[team1]}
                        series lead over the ${team1City} ${team1Name}, with
                        ${gameCounts.scheduled} games remaining.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team1City} ${team1Name} and the ${team2City} ${team2Name}
                        have split the head-to-head series ${gameCounts[team1]}
                        games apiece, with ${gameCounts.scheduled}
@@ -142,19 +142,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     } else {
       // If team1 won the series...
       if (gameCounts[team1] > gameCounts[team2]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team1City} ${team1Name} won the
                        head-to-head series against the ${team2City} ${team2Name},
                        ${gameCounts[team1]} games to ${gameCounts[team2]}.`;
       // If team2 leads the series...
       } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team2City} ${team2Name} won the
                        head-to-head series against the ${team1City} ${team1Name},
                        ${gameCounts[team2]} games to ${gameCounts[team1]}.`;
       // If the series is tied...
       } else {
-        summaryHTML = `<p class="head-to-head-summary">In the ${season} season,
+        summaryHTML = `<p class="card-summary">In the ${season} season,
                       the ${team1City} ${team1Name} and ${team2City} ${team2Name}
                       split the head-to-head series
                       ${gameCounts[team1]} games apiece.`;
@@ -168,9 +168,9 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
   gameBoxScores.forEach(game => {
     //Completed games
     if (game[1] === "Final") {
-      completedGames += `<div class="boxscore">${game[2]}</div>`;
+      completedGames += `<div class="box-score-container">${game[2]}</div>`;
     } else {
-      upcomingGames += `<div class="boxscore"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
+      upcomingGames += `<div class="box-score-container"><p class="game-date">${game[0]}</p>${game[2]}</div>`;
     }
   });
   
@@ -229,19 +229,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
         </caption>
         <tr>
           <th scope="col"><span class="reader-only">Team</span></th>
-          <th scope="col" class="box-score-stat">Runs</th>
-          <th scope="col" class="box-score-stat">Hits</th>
-          <th scope="col" class="box-score-stat">Errors</th>
+          <th scope="col" class="box-score-stat box-score-column-header">Runs</th>
+          <th scope="col" class="box-score-stat box-score-column-header">Hits</th>
+          <th scope="col" class="box-score-stat box-score-column-header">Errors</th>
         </tr>
         <tr>
-          <th scope="row" class="box-score-row-header">${game.AwayTeam}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamRuns)}</td>
+          <th scope="row" class="box-score-row-header">${game.AwayTeam}</th>
+          <td class="box-score-stat box-score-runs">${Math.floor(game.AwayTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
-          <th scope="row">${game.HomeTeam}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamRuns)}</td>
+          <th scope="row" class="box-score-row-header">${game.HomeTeam}</th>
+          <td class="box-score-stat box-score-runs">${Math.floor(game.HomeTeamRuns)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
           <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
         </tr>
@@ -357,11 +357,11 @@ function generateSeasonComparisonCard(team1, team2, season) {
         topTeamName = getTeamInfo(topTeam, 'Name');
         botTeamName = getTeamInfo(botTeam, 'Name');
       
-      summaryHTML += `<p>In the ${season} Season, the ${topTeamName} ${haveHad} a
+      summaryHTML += `<p class="card-summary">In the ${season} Season, the ${topTeamName} ${haveHad} a
         higher winning percentage than the ${botTeamName} (${topTeamStat} compared 
         to ${botTeamStat}); `;
     } else {
-      summaryHTML += `<p>In the ${season} Season, the ${getTeamInfo(team1, 'Name')}
+      summaryHTML += `<p class="card-summary">In the ${season} Season, the ${getTeamInfo(team1, 'Name')}
       and ${getTeamInfo(team2, 'Name')} both ${haveHad} a winning percentage
       of ${teamStats[team1].output.winPerc}; `;
     }
@@ -621,11 +621,11 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team1, 'Name')}
+    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team1, 'Name')}
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
       ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season</p>`;
+      ahead in win count for ${percentage}% of the season.</p>`;
     
   } else if (winCounts[team2] > winCounts[team1]) {
     
@@ -634,11 +634,11 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p>In the ${season}, the ${getTeamInfo(team2, 'Name')}
+    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team2, 'Name')}
       ${haveTense} won ${margin} more games than
       ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
       ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season</p>`;
+      ahead in win count for ${percentage}% of the season.</p>`;
       
   } else {
     
@@ -646,7 +646,7 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p>In the ${season}, ${getTeamInfo(team1, 'Name')} and
+    summaryHTML = `<p class="card-summary">In the ${season} season, ${getTeamInfo(team1, 'Name')} and
       ${getTeamInfo(team2, 'Name')} ${haveTense} won the same number
       of games (${winCounts[team1]} wins each). The ${getTeamInfo(team1, 'Name')}
       ${hasBeenTense} ahead in win count for ${percentage}% of the season.</p>`;
@@ -680,7 +680,7 @@ function generateMatchupComparisonCard(cardID) {
   
   // Build HTML
   const cardHTML = `<section class="card js-card" data-highlight="false"
-                      id="${cardID}" tabindex="1"></section>`;
+                      id="${cardID}" tabindex="0"></section>`;
                     
   // Create card
   $('main').append(cardHTML);

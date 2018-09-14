@@ -42,11 +42,15 @@
       <h1>MLB Matchup Comparison</h1>
     </header>
 
-    <main role="main" aria-live="assertive" tabindex="1">
-      <section class="card" id="get-started-card" tabindex="1">
-        <p class="landing-card-instructions">See how your MLB team stacks up head-to-head against any other team in the league.</p>
+    <main role="main" aria-live="assertive">
+      <section class="card" id="get-started-card">
+        <div class="js-landing-card-part-1">
+          <p class="landing-card-instructions">How has your favorite MLB team fared head-to-head against its rivals?</p>
+          <button class="md-whiteframe-4dp get-started-button">FIND OUT</button>
+        </div>
+        <div class="js-landing-card-part-2" hidden>
         <form class="js-matchup-form matchup-form-landing" aria-describedby="matchup-form-title">
-          <h2 id="matchup-form-title">Compare Teams</h2>
+          <h2 id="matchup-form-title-main">Compare Teams</h2>
           <label>Team 1:
             <select name="team1" class="js-team-select" required>
               <option value="">Select One</option>
@@ -75,11 +79,12 @@
         <p class="fake-data-alert">NOTE: This app uses a trial API. The data has
           been randomly manipulated, and may not reflect real-world results,
           nor be internally consistent.</p>
+      </div>
       </section>
     </main>
       
-    <div class="nav-shim js-nav-shim nav-shim-hidden" hidden>
-      <nav class="nav-drawer" tabindex="2">
+    <div class="nav-shim js-nav-shim" hidden>
+      <nav class="nav-drawer">
         <form class="js-matchup-form" aria-describedby="matchup-form-title">
             <h2 id="matchup-form-title">Matchup Comparison Form</h2>
             <label>Team 1:
@@ -107,12 +112,12 @@
           </div>
           <input type="submit" class="md-whiteframe-2dp js-mcf-submit" value="Compare">
         </form>
-        <button class="hide-nav-button js-hide-nav-drawer"><i class="fas fa-arrow-left"></i></button>
+        <button class="hide-nav-button js-hide-nav-drawer"><i class="fas fa-arrow-left"><span class="reader-only">Close matchup comparison form</span></i></button>
       </nav>
     </div>
     
     
-    <div class="md-whiteframe-8dp float-button js-float-button js-show-nav-drawer"><i class="fas fa-plus"></i></div>
+    <div class="md-whiteframe-8dp float-button js-float-button js-show-nav-drawer"><i class="fas fa-bars"></i></div>
     
     <footer role="contentinfo">
       &copy; 2018 Simon Lutterbie&nbsp;

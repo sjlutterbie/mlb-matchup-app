@@ -5,7 +5,7 @@
 }
 
 table.google-visualization-table-table{
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 #gv-head-to-head {
@@ -13,14 +13,11 @@ table.google-visualization-table-table{
   width: 90%;
 }
 
-
-
-
 .gv-table-header-cell {
   background: var(--primary-color);
   background-color: var(--primary-color);
   color: var(--on-primary-color);
-  font-size: 16px;
+  font-size: 14px;
   background-image: none;
 }
 
@@ -30,3 +27,11 @@ table.google-visualization-table-table{
   font-size: 14px;
 }
 
+@media only screen and (min-width: 660px) {
+
+  table.google-visualization-table-table{
+    table-layout: fixed;
+  }
+
+  
+}

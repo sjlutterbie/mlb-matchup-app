@@ -22,6 +22,22 @@ function pageLoadNavSystem() {
   
 }
 
+/* === HANDLE GET STARTED BUTTON === */
+
+function handleGetStartedButton() {
+  
+  $('html').on('click', '.get-started-button', function(e){
+    e.preventDefault();
+    
+
+    // Replace landing page part 1, with landing page part 2
+    $('.js-landing-card-part-1').attr('hidden', 'true').hide();
+    $('.js-landing-card-part-2').removeAttr('hidden').show();
+    
+  });
+}
+
+
 /* === HANDLE CHANGING SCREEN SIZE EVENTS === */
 
 function handlePageResize() {
@@ -93,18 +109,26 @@ function handleNavToggleClicks() {
     // Triggers transitions to make navDrawer visible
 
     // Make the nav drawer slide in
-    $('.js-nav-shim').attr('hidden', false);
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
-    $('.js-nav-shim').css('transform', 'translateX(0%)');
+
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)')
+      .css('transform', 'translateX(0%)')
+      .attr('hidden', false);
+      
   }
   
   function hideNavDrawer() {
     // Triggers transitions to hide navDrawer and show toggleButtons
 
     // Make the nav drawer slide out
-    $('.js-nav-shim').removeClass('nav-shim-shown');
-    $('.js-nav-shim').addClass('nav-shim-hidden');
-    $('.js-nav-shim').attr('hidden', true);
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3');
+    $('.js-nav-shim').css('transform', 'translateX(-100%)');
+    
+    $('.js-nav-shim').on('transitionend', function(e){
+      e.preventDefault();
+      
+      $('.js-nav-shim').attr('hidden', true);
+      
+    });
 
   }
   
@@ -121,6 +145,7 @@ function handleNavToggleClicks() {
 
 /* === LAUNCH CODES === */
 
+$(handleGetStartedButton);
 $(pageLoadNavSystem());
 $(handlePageResize);
 $(handleNavToggleClicks);
