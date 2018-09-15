@@ -3,7 +3,7 @@
 // Functions that build data objects and send them to the Google Visualization
 //  API, which returns the requested chart objects to display in the app.
 
-function drawHeadtoHeadPie(team1, team2, winCounts) {
+function drawHeadtoHeadPie(team1, team2, winCounts, divID) {
   // Creates a pie chart summarizing the season's head-to-head results.
   // winCounts = [team1Wins, team2Wins, scheduledGames]
   
@@ -45,7 +45,7 @@ function drawHeadtoHeadPie(team1, team2, winCounts) {
   
     // Create Google Chart object
     const chart = new google.visualization.PieChart(
-      document.getElementById('gv-head-to-head')
+      document.getElementById(divID)
     );
     
     // Draw Chart

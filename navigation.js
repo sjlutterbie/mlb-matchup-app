@@ -120,9 +120,10 @@ function handleNavButtonClicks() {
   function showNavDrawer() {
     // Triggers transitions to make navDrawer visible
 
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)')
-      .css('transform', 'translateX(0%)')
-      .show();
+    $('.js-nav-shim').show()
+      .css('background', 'rgba(0,0,0,.3)')
+      .css('transform', 'translateX(0%)');
+      
     
     // TODO: How to prevent .show() from interrupting transitions?
     
