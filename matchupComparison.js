@@ -253,25 +253,19 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
 function generateSeasonComparisonCard(team1, team2, season) {
   // Side-by-side comparison of overall season stats
 
-  // Initiate cardID and content string
-  const cardID = 'SeasonComparison';
-
-  // Initiate stats object
+// Initiate stats object
   const teamStats = {};
   
-  //For each team...
+  // Compile season stats for each team
+  // NOTE: Due to data scrambling, some stats must be calculated manually
   [team1, team2].forEach(team => {
-    
-    // Initialize team stats object
-    teamStats[team] = {};
-    
+  
     // Get raw stats
-    teamStats[team].raw = getTeamStats(team, season);
+    const rawStats = getTeamStats(team, season);
     
-    // Shorter var names, for convenience
-    const rawStats = teamStats[team].raw;
+    // Object to hold output statistics
     const output = {};
-    
+
     // Clean calculate the relevant Team Stats
     output.wins = Math.floor(rawStats.Wins);
     output.losses = Math.floor(rawStats.Losses);
@@ -301,127 +295,133 @@ function generateSeasonComparisonCard(team1, team2, season) {
     output.errors = Math.floor(rawStats.Errors);
     
     // Insert data into original object
-    teamStats[team].output = output;
+    teamStats[team] = output;
     
   });
   
-  // Generate HTML output
+  // Create summary paragraph HTML (comprised of 3 statements)
+
     // Initialize summary paragraph HTML
     let summaryHTML = "";
-  
-    // Set present/past tense
-    let haveHad = "";
-    season === "2018" ?  haveHad = "have" : haveHad = "had";
-  
-    // Initlialize comparison stats
-    let topTeam = "";
-      let topTeamName = "";
-    let botTeam = "";
-      let botTeamName = "";
-    let topTeamStat = 0;
-    let botTeamStat = 0;
-    
-    // Season winning percentage
-    if (teamStats[team1].output.winPerc > teamStats[team2].output.winPerc) {
-      topTeam = team1;
-      botTeam = team2;
 
-    } else if (teamStats[team2].output.winPerc > teamStats[team1].output.winPerc) {
-      topTeam = team2;
-      botTeam = team1;
-      
-    } else {
-      topTeam = "EQUAL";
-    }
+    // STATEMENT 1 (Winning percentage)
     
-    // Assign strings
-    if (topTeam != "EQUAL") {
-      topTeamStat = teamStats[topTeam].output.winPerc;
-      botTeamStat = teamStats[botTeam].output.winPerc;
+      // Set present/past tense
+      let haveHad = "";
+      season === "2018" ?  haveHad = "have" : haveHad = "had";
+    
+      // Initlialize comparison stats
+      let topTeam = "";
+        let topTeamName = "";
+      let botTeam = "";
+        let botTeamName = "";
+      let topTeamStat = 0;
+      let botTeamStat = 0;
+    
+      // Compare winning percentages
+      if (teamStats[team1].winPerc > teamStats[team2].winPerc) {
+        topTeam = team1;
+        botTeam = team2;
+      } else if (teamStats[team2].winPerc > teamStats[team1].winPerc) {
+        topTeam = team2;
+        botTeam = team1;
+      } else {
+        // Handle the edge case
+        topTeam = "EQUAL";
+      }
+    
+      // Assign strings
+      if (topTeam != "EQUAL") {
+        topTeamStat = teamStats[topTeam].winPerc;
+        botTeamStat = teamStats[botTeam].winPerc;
         topTeamName = getTeamInfo(topTeam, 'Name');
         botTeamName = getTeamInfo(botTeam, 'Name');
       
-      summaryHTML += `<p class="card-summary">In the ${season} Season, the ${topTeamName} ${haveHad} a
-        higher winning percentage than the ${botTeamName} (${topTeamStat} compared 
-        to ${botTeamStat}); `;
-    } else {
-      summaryHTML += `<p class="card-summary">In the ${season} Season, the ${getTeamInfo(team1, 'Name')}
-      and ${getTeamInfo(team2, 'Name')} both ${haveHad} a winning percentage
-      of ${teamStats[team1].output.winPerc}; `;
-    }
+        // Append statement to summaryHTML
+        summaryHTML += `<p class="card-summary">
+          In the ${season} Season, the ${topTeamName} ${haveHad} a
+          higher winning percentage than the ${botTeamName}
+          (${topTeamStat} compared to ${botTeamStat}); `;
+        
+      } else {
+        
+        // Append statement to summaryHTML      
+        summaryHTML += `<p class="card-summary">
+          In the ${season} Season, the ${getTeamInfo(team1, 'Name')}
+          and ${getTeamInfo(team2, 'Name')} both ${haveHad} a winning
+          percentage of ${teamStats[team1].winPerc}; `;
+      }
     
-    // Batting average
-    if (teamStats[team1].output.avg > teamStats[team2].output.avg) {
-      topTeam = team1;
-      botTeam = team2;
-
-    } else if (teamStats[team2].output.avg > teamStats[team1].output.avg) {
-      topTeam = team2;
-      botTeam = team1;
+    // STATEMENT 2 (Batting average)
       
-    } else {
-      topTeam = "EQUAL";
-    }
-    
-    // Assign strings
-    if (topTeam != "EQUAL") {
-      topTeamStat = teamStats[topTeam].output.avg;
-      botTeamStat = teamStats[botTeam].output.avg;
+      // Compare batting averages
+      if (teamStats[team1].avg > teamStats[team2].avg) {
+        topTeam = team1;
+        botTeam = team2;
+      } else if (teamStats[team2].avg > teamStats[team1].avg) {
+        topTeam = team2;
+        botTeam = team1;
+      } else {
+        // Handle edge case
+        topTeam = "EQUAL";
+      }
+      
+      // Assign strings
+      if (topTeam != "EQUAL") {
+        topTeamStat = teamStats[topTeam].avg;
+        botTeamStat = teamStats[botTeam].avg;
         topTeamName = getTeamInfo(topTeam, 'Name');
         botTeamName = getTeamInfo(botTeam, 'Name');
-      
-      summaryHTML += ` the ${topTeamName} ${haveHad} a
-        higher batting average than the ${botTeamName} (${topTeamStat} compared 
-        to ${botTeamStat}); `;
-    } else {
-      summaryHTML += ` the ${getTeamInfo(team1, 'Name')} and
-      ${getTeamInfo(team2, 'Name')} both 
-      ${haveHad} a batting average of ${teamStats[team1].output.avg}; `;
-    }
-    
-    // ERA
-    if (teamStats[team1].output.era > teamStats[team2].output.era) {
-      topTeam = team1;
-      botTeam = team2;
+        
+        // Append statement to summaryHTML
+        summaryHTML += ` the ${topTeamName} ${haveHad} a
+          higher batting average than the ${botTeamName}
+          (${topTeamStat} compared to ${botTeamStat}); `;
 
-    } else if (teamStats[team2].output.era > teamStats[team1].output.era) {
-      topTeam = team2;
-      botTeam = team1;
-      
-    } else {
-      topTeam = "EQUAL";
-    }
+      } else {
+        
+        // Append statement to summaryHTML
+        summaryHTML += ` the ${getTeamInfo(team1, 'Name')} and
+          ${getTeamInfo(team2, 'Name')} both 
+          ${haveHad} a batting average of ${teamStats[team1].avg}; `;
+      }
     
-    // Assign strings
-    if (topTeam != "EQUAL") {
-      topTeamStat = teamStats[topTeam].output.era;
-      botTeamStat = teamStats[botTeam].output.era;
+    // STATEMENT 3 (ERA)
+
+      // Compare ERAs
+      if (teamStats[team1].era > teamStats[team2].era) {
+        topTeam = team1;
+        botTeam = team2;
+      } else if (teamStats[team2].era > teamStats[team1].era) {
+        topTeam = team2;
+        botTeam = team1;
+      } else {
+        // Handle edge case
+        topTeam = "EQUAL";
+      }
+      
+      // Assign strings
+      if (topTeam != "EQUAL") {
+        topTeamStat = teamStats[topTeam].era;
+        botTeamStat = teamStats[botTeam].era;
         topTeamName = getTeamInfo(topTeam, 'Name');
         botTeamName = getTeamInfo(botTeam, 'Name');
-      
-      summaryHTML += `and the ${topTeamName} ${haveHad} a
-        higher ERA than the ${botTeamName} (${topTeamStat} compared 
-        to ${botTeamStat}).</p>`;
-    } else {
-      summaryHTML += `and the ${getTeamInfo(team1, 'Name')} and ${getTeamInfo(team2,'Name')} both 
-      ${haveHad} a winning percentage of ${teamStats[team1].output.era}.</p>`;
-    }
-  
 
-  const cardHTML = `${summaryHTML}
-    <div id="gv-season-overall-table"><h3>Overall Stats</h3></div>
-    <div id="gv-season-batting-table"></div>
-    <div id="gv-season-pitching-table"></div>`;
-  
+        // Append statement to summaryHTML      
+        summaryHTML += `and the ${topTeamName} ${haveHad} a
+          higher ERA than the ${botTeamName} (${topTeamStat} compared 
+          to ${botTeamStat}).</p>`;
 
-  // Create the card
-  generateMatchupComparisonCard(cardID);
+      } else {
+        
+        // Append statement to summaryHTML
+        summaryHTML += `and the ${getTeamInfo(team1, 'Name')}
+          and ${getTeamInfo(team2,'Name')} both ${haveHad} a winning
+          percentage of ${teamStats[team1].era}.</p>`;
+      }
 
-  const cardHeader = '<h2>Team Season Stats Comparison</h2>';
 
-  // Insert content into card
-  $(`#${cardID}`).append(cardHeader).append(cardHTML);
-  
+
   // Draw Google Viz tables
     // Overall
       const statsNamesOverall = [
@@ -435,22 +435,21 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
       const statsDataOverall = [
         [team1,
-          Number(teamStats[team1].output.wins),
-          Number(teamStats[team1].output.losses),
-          Number(teamStats[team1].output.winPerc).toFixed(3),
-          Number(teamStats[team1].output.runsFor),
-          Number(teamStats[team1].output.runsAgainst)
+          Number(teamStats[team1].wins),
+          Number(teamStats[team1].losses),
+          Number(teamStats[team1].winPerc).toFixed(3),
+          Number(teamStats[team1].runsFor),
+          Number(teamStats[team1].runsAgainst)
         ],
         [team2,
-          Number(teamStats[team2].output.wins),
-          Number(teamStats[team2].output.losses),
-          Number(teamStats[team2].output.winPerc).toFixed(3),
-          Number(teamStats[team2].output.runsFor),
-          Number(teamStats[team2].output.runsAgainst)
+          Number(teamStats[team2].wins),
+          Number(teamStats[team2].losses),
+          Number(teamStats[team2].winPerc).toFixed(3),
+          Number(teamStats[team2].runsFor),
+          Number(teamStats[team2].runsAgainst)
         ]
       ];
 
-    drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
 
     // Batting
       const statsNamesBatting = [
@@ -464,22 +463,21 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
       const statsDataBatting = [
         [team1,
-          Number(teamStats[team1].output.avg).toFixed(3),
-          Number(teamStats[team1].output.obp).toFixed(3),
-          Number(teamStats[team1].output.slg).toFixed(3),
-          Number(teamStats[team1].output.hits),
-          Number(teamStats[team1].output.homeRuns)
+          Number(teamStats[team1].avg).toFixed(3),
+          Number(teamStats[team1].obp).toFixed(3),
+          Number(teamStats[team1].slg).toFixed(3),
+          Number(teamStats[team1].hits),
+          Number(teamStats[team1].homeRuns)
         ],
         [team2,
-          Number(teamStats[team2].output.avg).toFixed(3),
-          Number(teamStats[team2].output.obp).toFixed(3),
-          Number(teamStats[team2].output.slg).toFixed(3),
-          Number(teamStats[team2].output.hits),
-          Number(teamStats[team2].output.homeRuns)
+          Number(teamStats[team2].avg).toFixed(3),
+          Number(teamStats[team2].obp).toFixed(3),
+          Number(teamStats[team2].slg).toFixed(3),
+          Number(teamStats[team2].hits),
+          Number(teamStats[team2].homeRuns)
         ]
       ];
 
-    drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
 
     // Pitching
       const statsNamesPitching = [
@@ -493,32 +491,65 @@ function generateSeasonComparisonCard(team1, team2, season) {
 
       const statsDataPitching = [
         [team1,
-          Number(teamStats[team1].output.era).toFixed(3),
-          Number(teamStats[team1].output.whip).toFixed(3),
-          Number(teamStats[team1].output.saves),
-          Number(teamStats[team1].output.strikeouts),
-          Number(teamStats[team1].output.walks)
+          Number(teamStats[team1].era).toFixed(3),
+          Number(teamStats[team1].whip).toFixed(3),
+          Number(teamStats[team1].saves),
+          Number(teamStats[team1].strikeouts),
+          Number(teamStats[team1].walks)
         ],
         [team2,
-          Number(teamStats[team2].output.era).toFixed(3),
-          Number(teamStats[team2].output.whip).toFixed(3),
-          Number(teamStats[team2].output.saves),
-          Number(teamStats[team2].output.strikeouts),
-          Number(teamStats[team2].output.walks)
+          Number(teamStats[team2].era).toFixed(3),
+          Number(teamStats[team2].whip).toFixed(3),
+          Number(teamStats[team2].saves),
+          Number(teamStats[team2].strikeouts),
+          Number(teamStats[team2].walks)
         ]
       ];
     
-    drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
+
+
+    // Put it all together
+      // Initiate cardID
+      const cardID = 'SeasonComparison';
+      const cardHTML = `${summaryHTML}
+        <div id="gv-season-overall-table"><h3>Overall Stats</h3></div>
+        <div id="gv-season-batting-table"></div>
+        <div id="gv-season-pitching-table"></div>`;
+  
+  // Create the card
+  generateMatchupComparisonCard(cardID);
+
+  const cardHeader = '<h2>Team Season Stats Comparison</h2>';
+
+  // Insert content into card
+  $(`#${cardID}`).append(cardHeader).append(cardHTML);
+  
+  // Draw Google Viz tables
+  drawSeasonStatsTable(
+    statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
+  drawSeasonStatsTable(
+    statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
+  drawSeasonStatsTable(
+    statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
+
 
   // Make tables responsive
   $(window).resize(function(){
-    drawSeasonStatsTable(statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
-    drawSeasonStatsTable(statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
-    drawSeasonStatsTable(statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
-
+    drawSeasonStatsTable(
+      statsNamesBatting, statsDataBatting, 'gv-season-batting-table');
+    drawSeasonStatsTable(
+      statsNamesOverall, statsDataOverall, 'gv-season-overall-table');
+    drawSeasonStatsTable(
+      statsNamesPitching, statsDataPitching, 'gv-season-pitching-table');
   });
-  
 }
+
+
+
+
+
+
+
 
 
 /* === WIN TRACKER === */
