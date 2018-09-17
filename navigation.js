@@ -127,6 +127,10 @@ function handleNavButtonClicks() {
     
     // TODO: How to prevent .show() from interrupting transitions?
     
+    $('.js-nav-shim').show();
+    $('.js-nav-shim').css('transform','translateX(0%)');
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
+
   }
   
   function hideNavDrawer() {
