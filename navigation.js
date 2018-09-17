@@ -106,15 +106,12 @@ function handleNavButtonClicks() {
   function showNavDrawer() {
     // Triggers transitions to make navDrawer visible
 
-    $('.js-nav-shim').show()
-      .css('background', 'rgba(0,0,0,.3)')
-      .css('transform', 'translateX(0%)');
-      
-    
+
     // TODO: How to prevent .show() from interrupting transitions?
     
     $('.js-nav-shim').show();
-    $('.js-nav-shim').css('transform','translateX(0%)');
+    $('.js-nav-shim').css('left', '0px');
+    //$('.js-nav-shim').css('transform','translateX(0%)');
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
 
   }
@@ -123,15 +120,9 @@ function handleNavButtonClicks() {
     // Triggers transitions to hide navDrawer and show toggleButtons
 
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3');
-    $('.js-nav-shim').css('transform', 'translateX(-100%)');
-    
-    // Queue up the .hide() event so it doesn't interrupt transitions
-    $('.js-nav-shim').on('transitionend', function(e){
-      e.preventDefault();
-      
-      $('.js-nav-shim').hide();
-      
-    });
+    $('.js-nav-shim').css('left', '-9999px');
+    //$('.js-nav-shim').css('transform', 'translateX(-100%)');
+
   }
   
   function showNavButtons() {
