@@ -152,7 +152,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
                        ${gameCounts.scheduled} games remaining.`;
       }
     // CASE 2: The season series is complete
-    } else {
+    } else if (gameCounts.scheduled === 0) {
       // If team1 won the series...
       if (gameCounts[team1] > gameCounts[team2]) {
         summaryHTML = `<p class="card-summary">In the ${season} season,
@@ -175,6 +175,20 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
                       ${gameCounts[team1]} games apiece.`;
       }
     }
+      
+    // OVERRIDE: If the teams never actually played each other
+    if (Object.keys(games).length === 0 && games.constructor === Object) {
+      
+      let haveTense = "have";
+      
+      if (season != 2018) {
+        haveTense = "had";
+      }
+      
+      summaryHTML = `<p class="card-summary">${team1Name} and ${team2Name}
+                     ${haveTense} no head-to-head games scheduled in the ${season}
+                     season.</p>`;
+    }
 
   // Put it all together and build the full card
     const cardID = 'HeadtoHead';
@@ -189,9 +203,13 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
                    .append('<div id="gv-head-to-head"></div>') // Google Viz
                    .append(`<div class="flexrow">${completedGames}</div>`)
                    .append(`<div class="flexrow">${upcomingGames}</div>`);
-                 
-  // Insert Google visualization
-  drawHeadtoHeadPie(team1, team2, gameCounts, 'gv-head-to-head');
+  
+  
+  // Unless the teams never played... 
+  if (!(Object.keys(games).length === 0 && games.constructor === Object)) {
+    // Insert Google visualization
+    drawHeadtoHeadPie(team1, team2, gameCounts, 'gv-head-to-head');
+  }
   
   // Make chart responsive
   $(window).resize(function(){
