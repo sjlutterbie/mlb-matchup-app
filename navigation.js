@@ -35,20 +35,6 @@ function pageLoadNavSystem() {
   
 }
 
-/* === HANDLE GET STARTED BUTTON === */
-
-function handleGetStartedButton() {
-  
-  $('html').on('click', '.get-started-button', function(e){
-    e.preventDefault();
-    
-    // Replace intro text with Matchup Comparison Form
-    $('.js-landing-card-part-1').hide();
-    $('.js-landing-card-part-2').show();
-    
-  });
-}
-
 /* === HANDLE CHANGING SCREEN SIZE EVENTS === */
 
 function handlePageResize() {
@@ -86,7 +72,7 @@ function handlePageResize() {
 /* === HANDLE NAV BUTTON CLICKS === */
 
 function handleNavButtonClicks() {
-  // Handle actions when a user clicks a show/hide nav drawer element
+  // Handle actions when a user clicks the show/hide nav drawer element
   
   $('html').on('click', '.js-show-nav-drawer', function(e) {
     e.preventDefault();
@@ -167,7 +153,6 @@ function handleNavButtonClicks() {
    = LAUNCH CODES =
    ================ */
 
-$(handleGetStartedButton);
 $(pageLoadNavSystem());
 $(handlePageResize);
 $(handleNavButtonClicks);
