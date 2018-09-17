@@ -6,6 +6,43 @@
 
   // NOTE: fantasyData API functions can be found in fantasyData.js
    
+function renderMatchupForm() {
+  // Render the matchup form (saves duplicate HTML code)
+  
+  $('.matchup-form-container').html(
+    `<form class="js-matchup-form" aria-describedby="matchup-form-title">
+        <h2 id="matchup-form-title">Matchup Comparison Form</h2>
+          <label>Team 1:
+            <select name="team1" class="js-team-select" required>
+              <option value="">Select One</option>
+            </select>
+          </label>
+          <label>Team 2:
+            <select name="team2" class="js-team-select" required>
+              <option value="">Select One</option>
+            </select>
+          </label>
+          <label>Season:
+            <select name="season" required>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+              <option value="2016">2016</option>
+            </select>
+          </label>
+          <div class="md-whiteframe-2dp form-alert-two-teams
+                      js-form-alert-two-teams" hidden>
+            <p>Please select two teams</p>
+          </div>
+          <div class="md-whiteframe-2dp form-alert-dist-teams
+                      js-form-alert-dist-teams" hidden>
+            <p>Please select two distinct teams</p>
+          </div>
+          <input type="submit" class="md-whiteframe-2dp js-mcf-submit"
+                 value="Compare">
+      </form>`
+    );
+}
+   
 function populateMatchupForm() {
   // Populates the Matchup Comparison Form with a list of all active MLB Teams
   
@@ -262,10 +299,9 @@ function setTeamInfo(teamID, item, value) {
 
 function initFunctions() {
   
+  renderMatchupForm();
   handleMatchupFormSubmission();
   populateMatchupForm();
 }
-
-
 
 $(initFunctions);
