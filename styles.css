@@ -105,12 +105,15 @@ main {
 }
 
   #get-started-card {
-    align-self: center;
     min-height: 288px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     max-width: 400px;
+  }
+  
+  #get-started-card h2 {
+    font-size: 18px; 
   }
 
   .js-landing-card-part-1 {
