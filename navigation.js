@@ -111,7 +111,6 @@ function handleNavButtonClicks() {
     
     $('.js-nav-shim').show();
     $('.js-nav-shim').css('left', '0px');
-    //$('.js-nav-shim').css('transform','translateX(0%)');
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
 
   }
@@ -121,7 +120,6 @@ function handleNavButtonClicks() {
 
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3');
     $('.js-nav-shim').css('left', '-9999px');
-    //$('.js-nav-shim').css('transform', 'translateX(-100%)');
 
   }
   
