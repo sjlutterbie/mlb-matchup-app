@@ -3,8 +3,7 @@
 // Handles the various navigation elements in the app:
 //  getStartedButton: Button displayed on introductory landing card
 //  - When clicked, loads the landing card's Matchup Comparison Form
-//  navButtons: One in the header (technically an anchor element) and
-//    one floating in the lower right-hand corner of small screens.
+//  navButton in the header (technically an anchor element)
 //    - When clicked, make the navDrawer appear
 //  navDrawer: Sidebar that includes the Matchup Comparison Form
 //  hideNavButton: Button on the navDrawer

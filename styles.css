@@ -38,6 +38,7 @@ body {
   color: #000;
   max-width: 1000px;
   margin: auto;
+  overflow: hidden;
 }
 
 /* Text only intended only for screen readers */
