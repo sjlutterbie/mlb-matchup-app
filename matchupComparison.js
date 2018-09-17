@@ -227,21 +227,32 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
         </caption>
         <tr>
           <th scope="col"><span class="reader-only">Team</span></th>
-          <th scope="col" class="box-score-stat box-score-column-header">Runs</th>
-          <th scope="col" class="box-score-stat box-score-column-header">Hits</th>
-          <th scope="col" class="box-score-stat box-score-column-header">Errors</th>
+          <th scope="col" class="box-score-stat box-score-column-header">
+            Runs</th>
+          <th scope="col" class="box-score-stat box-score-column-header">
+            Hits</th>
+          <th scope="col" class="box-score-stat box-score-column-header">
+            Errors</th>
         </tr>
         <tr>
-          <th scope="row" class="box-score-row-header">${game.AwayTeam}</th>
-          <td class="box-score-stat box-score-runs">${Math.floor(game.AwayTeamRuns)}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamHits)}</td>
-          <td class="box-score-stat">${Math.floor(game.AwayTeamErrors)}</td>
+          <th scope="row" class="box-score-row-header">
+            ${game.AwayTeam}</th>
+          <td class="box-score-stat box-score-runs">
+            ${Math.floor(game.AwayTeamRuns)}</td>
+          <td class="box-score-stat">
+            ${Math.floor(game.AwayTeamHits)}</td>
+          <td class="box-score-stat">
+            ${Math.floor(game.AwayTeamErrors)}</td>
         </tr>
         <tr>
-          <th scope="row" class="box-score-row-header">${game.HomeTeam}</th>
-          <td class="box-score-stat box-score-runs">${Math.floor(game.HomeTeamRuns)}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamHits)}</td>
-          <td class="box-score-stat">${Math.floor(game.HomeTeamErrors)}</td>
+          <th scope="row" class="box-score-row-header">
+            ${game.HomeTeam}</th>
+          <td class="box-score-stat box-score-runs">
+            ${Math.floor(game.HomeTeamRuns)}</td>
+          <td class="box-score-stat">
+            ${Math.floor(game.HomeTeamHits)}</td>
+          <td class="box-score-stat">
+            ${Math.floor(game.HomeTeamErrors)}</td>
         </tr>
       </table>`;
         

@@ -85,7 +85,7 @@ function selectTeamColors(team1, team2) {
   function hslFromHex(hexString) {
     // Takes a hex color string and returns the color's hue (from HSL) value
     // NOTE: Solution drawn from:
-    //  https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript
+    // https://stackoverflow.com/questions/46432335/hex-to-hsl-convert-javascript
     
     
     // Remove #, if present

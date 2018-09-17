@@ -8,13 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <title>MLB Matchup Comparison App</title>
-    <meta name="description" content="Compares two MLB teams side-by-side, both overall and in terms of head-to-head play.">
+    <meta name="description" content="Compares two MLB teams side-by-side,
+                                      for both overall and head-to-head play.">
     
     <!-- CSS Reset -->
     <link rel="stylesheet" type="text/css" href="reset.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+          crossorigin="anonymous">
 
     <!-- Material Design dropshadows -->
     <link rel="stylesheet" type="text/css" href="material-design.css">
@@ -26,7 +30,8 @@
     <link rel="stylesheet" type="text/css" href="googleVis.css">
     
     <!-- Google Visualization API -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
     
   </head>
   
@@ -45,11 +50,13 @@
     <main role="main" aria-live="assertive">
       <section class="card" id="get-started-card">
         <div class="js-landing-card-part-1">
-          <p class="landing-card-instructions">How has your favorite MLB team fared head-to-head against its rivals?</p>
+          <p class="landing-card-instructions">How has your favorite MLB team
+            fared head-to-head against its rivals?</p>
           <button class="md-whiteframe-4dp get-started-button">FIND OUT</button>
         </div>
         <div class="js-landing-card-part-2" hidden>
-        <form class="js-matchup-form matchup-form-landing" aria-describedby="matchup-form-title">
+        <form class="js-matchup-form matchup-form-landing"
+              aria-describedby="matchup-form-title">
           <h2 id="matchup-form-title-main">Compare Teams</h2>
           <label>Team 1:
             <select name="team1" class="js-team-select" required>
@@ -68,13 +75,16 @@
               <option value="2016">2016</option>
             </select>
           </label>
-          <div class="md-whiteframe-2dp form-alert-two-teams js-form-alert-two-teams" hidden>
+          <div class="md-whiteframe-2dp form-alert-two-teams
+                      js-form-alert-two-teams" hidden>
             <p>Please select two teams</p>
           </div>
-          <div class="md-whiteframe-2dp form-alert-dist-teams js-form-alert-dist-teams" hidden>
+          <div class="md-whiteframe-2dp form-alert-dist-teams
+                      js-form-alert-dist-teams" hidden>
             <p>Please select two distinct teams</p>
           </div>
-          <input type="submit" class="md-whiteframe-2dp js-mcf-submit" value="Compare">
+          <input type="submit" class="md-whiteframe-2dp js-mcf-submit"
+                 value="Compare">
         </form>
         <p class="fake-data-alert">NOTE: This app uses a trial API. The data has
           been randomly manipulated, and may not reflect real-world results,
@@ -104,29 +114,41 @@
               <option value="2016">2016</option>
             </select>
             </label>
-          <div class="md-whiteframe-2dp form-alert-two-teams js-form-alert-two-teams" hidden>
+          <div class="md-whiteframe-2dp form-alert-two-teams
+                      js-form-alert-two-teams" hidden>
             <p>Please select two teams</p>
           </div>
-          <div class="md-whiteframe-2dp form-alert-dist-teams js-form-alert-dist-teams" hidden>
+          <div class="md-whiteframe-2dp form-alert-dist-teams
+                      js-form-alert-dist-teams" hidden>
             <p>Please select two distinct teams</p>
           </div>
-          <input type="submit" class="md-whiteframe-2dp js-mcf-submit" value="Compare">
+          <input type="submit" class="md-whiteframe-2dp js-mcf-submit"
+                 value="Compare">
         </form>
-        <button class="hide-nav-button js-hide-nav-drawer"><i class="fas fa-arrow-left"><span class="reader-only">Close matchup comparison form</span></i></button>
+        <button class="hide-nav-button js-hide-nav-drawer">
+          <i class="fas fa-arrow-left">
+            <span class="reader-only">Close matchup comparison form</span>
+          </i>
+        </button>
       </nav>
     </div>
     
     
-    <div class="md-whiteframe-8dp float-button js-float-button js-show-nav-drawer"><i class="fas fa-bars"></i></div>
+    <div class="md-whiteframe-8dp float-button js-float-button
+                js-show-nav-drawer">
+      <i class="fas fa-bars"></i>
+    </div>
     
     <footer role="contentinfo">
       &copy; 2018 Simon Lutterbie&nbsp;
-      <a href="mailto:simon@ltrbe.com" title="Email Simon Lutterbie" target="_blank">
+      <a href="mailto:simon@ltrbe.com" title="Email Simon Lutterbie"
+         target="_blank">
         <i class="fa fa-envelope" aria-hidden="true">
           <span class="reader-only">Email Simon Lutterbie</span>
         </i>
       </a>&nbsp;
-      <a href="https://github.com/sjlutterbie" title="Simon Lutterbie on GitHub" target="_blank">
+      <a href="https://github.com/sjlutterbie" title="Simon Lutterbie on GitHub"
+         target="_blank">
         <i class="fab fa-github" aria-hidden="true">
           <span class="reader-only">Simon Lutterbie's GitHub profile</span>
         </i>
@@ -148,5 +170,3 @@
   </body>
   
 </html>
-
-  <!-- TODO: Create the float button, give it class "js-nav-toggle" -->
