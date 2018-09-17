@@ -18,21 +18,27 @@ function renderMatchupForm() {
     `<form class="js-matchup-form" aria-describedby="matchup-form-title-${val}">
         <h2 id="matchup-form-title-${val}">Matchup Comparison Form</h2>
           <label>Team 1:
-            <select name="team1" class="js-team-select" required>
-              <option value="">Select One</option>
-            </select>
+            <div class="select-container">
+              <select name="team1" class="js-team-select" required>
+                <option value="">Select One</option>
+              </select>
+            </div>
           </label>
           <label>Team 2:
-            <select name="team2" class="js-team-select" required>
-              <option value="">Select One</option>
-            </select>
+            <div class="select-container">
+              <select name="team2" class="js-team-select" required>
+                <option value="">Select One</option>
+              </select>
+            </div>
           </label>
           <label>Season:
-            <select name="season" required>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-            </select>
+            <div class="select-container">
+              <select name="season" required>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+              </select>
+            </div>
           </label>
           <div class="md-whiteframe-2dp form-alert-two-teams
                       js-form-alert-two-teams" hidden>

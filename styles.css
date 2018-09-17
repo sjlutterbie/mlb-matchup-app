@@ -266,6 +266,10 @@ main {
     main .matchup-form-container label {
         width: 100%;
       }
+      
+    .matchup-form-container-landing form h2 {
+      display: none;
+    }
     
     .box-score-container {
       padding: 8px;
@@ -308,12 +312,6 @@ main {
         text-align: center;
         color: var(--primary-color);
       }
-  
-
-    
-
-    
-
     
     .box-score-stat {
       width: 65px;
@@ -346,6 +344,33 @@ main {
         min-height: 300px;
       }
       
+/* MATCHUP FORM */
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: .5em;
+    background: #efefef;
+    border: none;
+    border-radius: 2px;
+    padding: 4px 8px 4px 4px;
+    font-size: 14px;
+}
+.select-container {position:relative; display: inline;}
+.select-container:after {content:""; width:0; height:0; position:absolute; pointer-events: none;}
+.select-container:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    top: .3em;
+    right: .75em;
+    border-top: 8px solid black;
+    opacity: 0.5;
+}
+select::-ms-expand {
+    display: none;
+}
+
 
 /* SIDE NAV */
 
