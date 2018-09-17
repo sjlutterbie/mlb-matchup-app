@@ -54,10 +54,29 @@ function fantasyDataAPIQuery(searchType, successCallback,
 
   function fantasyDataAPIErrorCallback(xhrObj,err,exObj) {
     
-    //TODO: Extend this to provide actionable user feedback.
-    
-    console.log(`The following error occured: ${err}`);
-    console.log('Details:');
-    console.log(exObj);
+    showAPIErrorAlert();
     
   }
+  
+/* ===========================
+   = DATA ERROR ALERT WINDOW =
+   =========================== */
+   
+function showAPIErrorAlert() {
+  // If there's an API error, raise an alert box that prompts the user to
+  //  reload the page.
+  
+  // Show alert shim (contains modal window)
+  $('.js-alert-shim').show()
+  
+  // Activate the alert button
+  $('html').on('click', '.js-alert-window-button', function(e) {
+    
+    // Refresh the page
+    location.reload();
+    
+  });
+  
+  
+  
+}
