@@ -9,9 +9,14 @@
 function renderMatchupForm() {
   // Render the matchup form (saves duplicate HTML code)
   
-  $('.matchup-form-container').html(
-    `<form class="js-matchup-form" aria-describedby="matchup-form-title">
-        <h2 id="matchup-form-title">Matchup Comparison Form</h2>
+  //Unique IDs for titles in both forms
+  const formIDs = ['landing', 'nav'];
+  
+  formIDs.forEach(val => {
+    
+    $(`.matchup-form-container-${val}`).html(
+    `<form class="js-matchup-form" aria-describedby="matchup-form-title-${val}">
+        <h2 id="matchup-form-title-${val}">Matchup Comparison Form</h2>
           <label>Team 1:
             <select name="team1" class="js-team-select" required>
               <option value="">Select One</option>
@@ -40,7 +45,10 @@ function renderMatchupForm() {
           <input type="submit" class="md-whiteframe-2dp js-mcf-submit"
                  value="Compare">
       </form>`
-    );
+    
+  )});
+  
+  
 }
    
 function populateMatchupForm() {
