@@ -49,6 +49,17 @@ function generateMatchupComparison(team1, team2, season) {
    = MATCHUP CARD GENERATOR FUNCTIONS =
    ==================================== */
 
+/* === UPDATE HEADER === */
+
+function generatePageHeader(team1, team2, season) {
+  // Update the page header to reflect the current matchup comparison
+  
+  const headerHTML = `${team1} vs ${team2}, ${season} season`;
+  
+  $('header h1').html(headerHTML);
+  
+}
+
 /* === HEAD-TO-HEAD SUMMARY === */
 
 function generateHeadtoHeadSummaryCard(team1, team2, season) {
@@ -544,23 +555,12 @@ function generateSeasonComparisonCard(team1, team2, season) {
   });
 }
 
-
-
-
-
-
-
-
-
 /* === WIN TRACKER === */
 
 function generateWinTrackerCard(team1, team2, season) {
-  // A "win tracker" charting their relative progress over the course of the season
-  
-  // Initiate cardID and content string
-  const cardID = 'WinTracker';
-  let cardHTML = `<div id="gv-win-tracker"></div>`;
-  
+  // The 'win tracker' charts the teams' relative win accumulation
+  //  over the course of the season.
+
   // Initialize key variables
   const teamWinData = [];
   const winCounts = {};
@@ -581,7 +581,8 @@ function generateWinTrackerCard(team1, team2, season) {
     // If the game is complete...
     if (games[i].Status === "Final") {
       // If one of the teams was involved...
-      if ([team1, team2].includes(games[i].HomeTeam) || [team1, team2].includes(games[i].AwayTeam)) {
+      if ([team1, team2].includes(games[i].HomeTeam)
+          || [team1, team2].includes(games[i].AwayTeam)) {
       
         // If the home team won..
         if (games[i].HomeTeamRuns > games[i].AwayTeamRuns) {
@@ -608,7 +609,8 @@ function generateWinTrackerCard(team1, team2, season) {
           // Format the date
           
           let gameDay = new Date(games[i].Day);
-          let gameDayStr = `${gameDay.getFullYear()}-${gameDay.getMonth()+1}-${gameDay.getDate()}`;
+          let gameDayStr = `${gameDay.getFullYear()}-${gameDay.getMonth()+1}`
+                            + `-${gameDay.getDate()}`;
         
           // Add a data row
           teamWinData.push([gameDay, winCounts[team1], winCounts[team2]]);
@@ -636,9 +638,9 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team1, 'Name')}
-      ${haveTense} won ${margin} more games than
-      ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
+    summaryHTML = `<p class="card-summary">In the ${season} season,
+      the ${getTeamInfo(team1, 'Name')} ${haveTense} won ${margin} more games
+      than the ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
       ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
       ahead in win count for ${percentage}% of the season.</p>`;
     
@@ -649,9 +651,9 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season} season, the ${getTeamInfo(team2, 'Name')}
-      ${haveTense} won ${margin} more games than
-      ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
+    summaryHTML = `<p class="card-summary">In the ${season} season,
+      the ${getTeamInfo(team2, 'Name')} ${haveTense} won ${margin} more games
+      than the ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
       ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
       ahead in win count for ${percentage}% of the season.</p>`;
       
@@ -661,29 +663,34 @@ function generateWinTrackerCard(team1, team2, season) {
                      / (daysAhead[team1] + daysAhead[team2])
                      * 100).toFixed(0);
     
-    summaryHTML = `<p class="card-summary">In the ${season} season, ${getTeamInfo(team1, 'Name')} and
-      ${getTeamInfo(team2, 'Name')} ${haveTense} won the same number
-      of games (${winCounts[team1]} wins each). The ${getTeamInfo(team1, 'Name')}
-      ${hasBeenTense} ahead in win count for ${percentage}% of the season.</p>`;
-    
+    summaryHTML = `<p class="card-summary">In the ${season} season,
+      the ${getTeamInfo(team1, 'Name')} and the ${getTeamInfo(team2, 'Name')}
+      ${haveTense} won the same number of games (${winCounts[team1]} wins each).
+      The ${getTeamInfo(team1, 'Name')} ${hasBeenTense} ahead in win count for
+      ${percentage}% of the season.</p>`;
   }
   
+  // Put it all together
+    // Initiate cardID and content string
+    const cardID = 'WinTracker';
+    let cardHTML = `<div id="gv-win-tracker"></div>`;
 
-  // Create the card
-  generateMatchupComparisonCard(cardID);
+    // Create the card
+    generateMatchupComparisonCard(cardID);
 
-  const cardHeader = '<h2>Team Wins Tracker</h2>';
+    const cardHeader = '<h2>Team Wins Tracker</h2>';
 
-  drawWinTracker(team1, team2, teamWinData);
+    // Insert content into card
+    $(`#${cardID}`).append(cardHeader).append(summaryHTML).append(cardHTML);
   
-  // Make chart responsive
-  $(window).resize(function(){
+    // Draw the Google Visualization
     drawWinTracker(team1, team2, teamWinData);
-  });
-
-  // Insert content into card
-  $(`#${cardID}`).append(cardHeader).append(summaryHTML).append(cardHTML);
-
+  
+    // Make chart responsive
+    $(window).resize(function(){
+      drawWinTracker(team1, team2, teamWinData);
+    });
+    
 }
 
 /* =======================================
@@ -694,8 +701,8 @@ function generateMatchupComparisonCard(cardID) {
   // Generates the wrapper HTML for a matchup comparison card
   
   // Build HTML
-  const cardHTML = `<section class="card js-card" data-highlight="false"
-                      id="${cardID}" tabindex="0"></section>`;
+  const cardHTML = `<section class="card js-card" id="${cardID}"
+                             tabindex="0"></section>`;
                     
   // Create card
   $('main').append(cardHTML);
@@ -742,16 +749,5 @@ function getTeamStats(team, season) {
   });
   
   return stats;
-  
-}
-
-/* === HEADER UPDATE === */
-
-function generatePageHeader(team1, team2, season) {
-  // Update the page header to reflect the current matchup comparison
-  
-  const headerHTML = `${team1} vs ${team2}, ${season} season`;
-  
-  $('header h1').html(headerHTML);
   
 }
