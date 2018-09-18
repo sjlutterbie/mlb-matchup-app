@@ -39,6 +39,7 @@ function generateMatchupComparison(team1, team2, season) {
   }
 
   // Call matchup comparison card functions
+    generateLogoDisplayCard(team1, team2, season);
     generateHeadtoHeadSummaryCard(team1, team2, season);
     generateSeasonComparisonCard(team1, team2, season);
     generateWinTrackerCard(team1, team2, season);
@@ -57,6 +58,42 @@ function generatePageHeader(team1, team2, season) {
   const headerHTML = `${team1} vs ${team2}, ${season} season`;
   
   $('header h1').html(headerHTML);
+  
+}
+
+/* === LOGO DISPLAY CARD === */
+
+function generateLogoDisplayCard(team1, team2, season) {
+  // Generate the Logo Display Card, which shows both teams' logos, and the season
+  //  under comparison
+  
+  // Get the team logo URLS
+    const team1LogoURL = getTeamInfo(team1, "WikipediaLogoUrl");
+    const team2LogoURL = getTeamInfo(team2, "WikipediaLogoUrl");
+  
+  // Get the team names & cities
+    const team1Name = getTeamInfo(team1, "City") + " " + getTeamInfo(team1, "Name");
+    const team2Name = getTeamInfo(team2, "City") + " " + getTeamInfo(team2, "Name");
+  
+    console.log(team1Name);
+    console.log(team2Name);
+  
+  // Build the HTML content string
+    const contentHTML = `
+      <div class="flexrow logo-display-row">
+        <img src="${team1LogoURL}" alt="${team1Name}">
+        <p class="logo-display-card">vs.</p>
+        <img src="${team2LogoURL}" alt="${team2Name}">
+      </div>
+    `
+  // Build the card
+    const cardID = "LogoDisplay";
+    
+  // Create the card
+    generateMatchupComparisonCard(cardID);
+    
+  // Insert HTML
+    $(`#${cardID}`).html(contentHTML);
   
 }
 

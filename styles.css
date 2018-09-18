@@ -51,6 +51,25 @@ body {
   overflow: hidden;
 }
 
+/* SELECT ELEMENT - Crossbrowser styling */
+
+select, option {
+  -webkit-appearance: none; /* WebKit/Chromium */
+  -moz-appearance: none; /* Gecko */
+}
+
+/* Internet Explorer 10–11 and Edge */
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  padding: 8px;
+}
+
+  option {
+    padding: 4px;
+  }
 
 /* PAGE HEADER */
 
@@ -170,7 +189,7 @@ main {
     max-height: 100px;
   }
 
-  .card {
+  .card {  
     z-index: 12;
     width: 100%;
     max-width: 800px;
@@ -213,6 +232,25 @@ main {
       flex-flow: row wrap;
       align-items: flex-start;
       justify-content: center;
+    }
+    
+      .logo-display-row {
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      
+        .logo-display-row img {
+          max-width: 40%;
+          max-height: 120px;
+        }
+    
+    .logo-display-card {
+      
+      font-size: 22px;
+      color: var(--primary-color);
+      font-weight: bold;
+      text-align: center;
+      
     }
     
     .boxscore {
