@@ -1,12 +1,3 @@
-<style>
-
-img {
-  border: 1px solid #ccc;
-}
-
-</style>
-
-
 # MLB Matchup App
 
 __View App Here:__ <https://sjlutterbie.github.io/mlb-matchup-app/>
@@ -19,15 +10,18 @@ may not reflect real-world results, nor be internally consistent._
 
 ## Motivation
 
-## Build status
+Build a simple, easy-to-use app that demonstrates the following functionality:
+
+* Interacts with a third-party API
+* Interacts with Google Charts API
+* Incorporates responsive design principles
+* Incorporates [Material Design](https://material.io) concepts
 
 ## Screenshots
 
 ### Mobile screenshots
 
 #### Landing page
-
-<img src="screenshots/Mobile_LandingPage.png" alt="Mobile landing page screenshot" style="border: 1px solid #ccc;">
 
 > ![Mobile landing page screenshot](screenshots/Mobile_LandingPage.png "Mobile landing page")
 
@@ -41,7 +35,6 @@ may not reflect real-world results, nor be internally consistent._
 
 ### Desktop screenshots
 
-
 #### Landing page
 
 > ![Desktop landing page screenshot](screenshots/Desktop_LandingPage.png "Desktop landing page")
@@ -49,7 +42,6 @@ may not reflect real-world results, nor be internally consistent._
 #### Comparison Page
 
 > ![Desktop comparison page screenshot](screenshots/Desktop_ComparisonPage.png "Desktop comparison page")
-
 
 ## Technology Used
 
