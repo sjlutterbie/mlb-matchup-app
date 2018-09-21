@@ -1,3 +1,12 @@
+<style type="text/css">
+
+img {
+  border: 1px solid #ccc;
+}
+
+</style>
+
+
 # MLB Matchup App
 
 __View App Here:__ <https://sjlutterbie.github.io/mlb-matchup-app/>
