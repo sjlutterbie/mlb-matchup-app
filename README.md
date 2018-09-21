@@ -1,6 +1,6 @@
 # MLB Matchup App
 
-__View App Here:__ <https://sjlutterbie.github.io/mlb-matchup-app/>
+__[Access App on GitHub Pages](https://sjlutterbie.github.io/mlb-matchup-app/)__
 
 Compare the head-to-head performance of any two MLB Teams during the 2016-2018
 seasons.
@@ -31,7 +31,7 @@ Build a simple, easy-to-use app that demonstrates the following functionality:
 
 #### Comparison page w/ Nav
 
-> ![Mobile comparison page, with navigation bar screenshot](screenshots/Mobile_LandingPage.png "Mobile comparison page w/ Nav")
+> ![Mobile comparison page, with navigation bar screenshot](screenshots/Mobile_ComparisonPageNav.png "Mobile comparison page w/ Nav")
 
 ### Desktop screenshots
 
