@@ -161,68 +161,102 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
     const team1Name = getTeamInfo(team1, 'Name');
     const team2Name = getTeamInfo(team2, 'Name');
 
-    // CASE 1: There are games remaining
-    if (gameCounts.scheduled > 0 ) {
-      // If team1 leads the series...
-      if (gameCounts[team1] > gameCounts[team2]) {
+    // Did the two teams play each other?
+    let seriesHappened = !(Object.keys(games).length === 0 &&
+                            games.constructor === Object);
+
+    // Is the series complete?
+    let seriesComplete = (gameCounts.scheduled === 0);
+
+    // Is the series tied?
+    let seriesTied = (gameCounts[team1] === gameCounts[team2]);
+
+    // Initialize replacement strings
+      let winningTeamCity, winningTeamName, winningCount,
+          losingTeamCity, losingTeamName, losingCount = "";
+
+    // If the series isn't tied, name the winner/loser
+    if (!seriesTied) {
+      // Determine series leader/winner
+        if (gameCounts[team1] > gameCounts[team2]) {
+
+          winningTeamCity = team1City;
+          winningTeamName = team1Name;
+          winningCount = gameCounts[team1];
+          
+          losingTeamCity = team2City;
+          losingTeamName = team2Name;
+          losingCount = gameCounts[team2];
+  
+        } else if (gameCounts[team2] > gameCounts[team1]) {
+
+          winningTeamCity = team2City;
+          winningTeamName = team2Name;
+          winningCount = gameCounts[team2];
+          
+          losingTeamCity = team1City;
+          losingTeamName = team1Name;
+          losingCount = gameCounts[team1];
+  
+        }
+    }
+    
+    // Determine verb tense for current/previous seasons
+    let haveTense = (season === "2018") ? "have" : "had";
+    
+    // Convert booleans to string for switch statement
+    seriesHappened = seriesHappened ? "T" : "F";
+    seriesComplete = seriesComplete ? "T" : "F";
+    seriesTied = seriesTied ? "T" : "F";
+
+    // Compile seriesStatus string    
+    const seriesStatus = seriesHappened + seriesComplete + seriesTied;
+
+    // Determine the relevant summary paragraph
+    switch (seriesStatus) {
+      case ('TTT'):
+        // The series is complete and ended in a tie
         summaryHTML = `<p class="card-summary">In the ${season} season,
-                       the ${team1City} ${team1Name} have a
-                       ${gameCounts[team1]} games to ${gameCounts[team2]}
-                       series lead over the ${team2City} ${team2Name}, with
-                       ${gameCounts.scheduled} games remaining.`;
-      // If team2 leads the series...
-      } else if (gameCounts[team2] > gameCounts[team1]) {
+                      the ${team1City} ${team1Name} and ${team2City}
+                      ${team2Name} split the head-to-head series
+                      ${gameCounts[team1]} games apiece.`;
+        break;
+        
+      case ('TTF'):
+        // The series is complete, and one team won
         summaryHTML = `<p class="card-summary">In the ${season} season,
-                       the ${team2City} ${team2Name} have a
-                       ${gameCounts[team2]} games to ${gameCounts[team1]}
-                       series lead over the ${team1City} ${team1Name}, with
-                       ${gameCounts.scheduled} games remaining.`;
-      // If the series is tied...
-      } else {
+                       the ${winningTeamCity} ${winningTeamName} won the
+                       head-to-head series against the ${losingTeamCity} 
+                       ${losingTeamName}, ${winningCount} games
+                       to ${losingCount}.`;
+        break;
+        
+      case ('TFT'):
+        // There are games remaining, and it's currently tied
         summaryHTML = `<p class="card-summary">In the ${season} season,
                        the ${team1City} ${team1Name} and the ${team2City}
                        ${team2Name} have split the head-to-head series
                        ${gameCounts[team1]} games apiece, with
                        ${gameCounts.scheduled} games remaining.`;
-      }
-    // CASE 2: The season series is complete
-    } else if (gameCounts.scheduled === 0) {
-      // If team1 won the series...
-      if (gameCounts[team1] > gameCounts[team2]) {
+        break;
+        
+      case ('TFF'):
+        // There are games remaining, and one team has a lead
         summaryHTML = `<p class="card-summary">In the ${season} season,
-                       the ${team1City} ${team1Name} won the 
-                       head-to-head series against the ${team2City} 
-                       ${team2Name},${gameCounts[team1]} games
-                       to ${gameCounts[team2]}.`;
-      // If team2 leads the series...
-      } else if (gameCounts[team2] > gameCounts[team1]) {
-        summaryHTML = `<p class="card-summary">In the ${season} season,
-                       the ${team2City} ${team2Name} won the
-                       head-to-head series against the ${team1City} 
-                       ${team1Name}, ${gameCounts[team2]} games
-                       to ${gameCounts[team1]}.`;
-      // If the series is tied...
-      } else {
-        summaryHTML = `<p class="card-summary">In the ${season} season,
-                      the ${team1City} ${team1Name} and ${team2City}
-                      ${team2Name} split the head-to-head series
-                      ${gameCounts[team1]} games apiece.`;
-      }
-    }
+                       the ${winningTeamCity} ${winningTeamName} have a
+                       ${winningCount} games to ${losingCount}
+                       series lead over the ${losingTeamCity} ${losingTeamName},
+                       with ${gameCounts.scheduled} games remaining.`;
+        break;
       
-    // OVERRIDE: If the teams never actually played each other
-    if (Object.keys(games).length === 0 && games.constructor === Object) {
-      
-      let haveTense = "have";
-      
-      if (season != 2018) {
-        haveTense = "had";
-      }
-      
-      summaryHTML = `<p class="card-summary">${team1Name} and ${team2Name}
+      default:
+        // The teams haven't actually played each other
+        summaryHTML = `<p class="card-summary">${team1Name} and ${team2Name}
                      ${haveTense} no head-to-head games scheduled in the ${season}
                      season.</p>`;
+        break;
     }
+
 
   // Put it all together and build the full card
     const cardID = 'HeadtoHead';
