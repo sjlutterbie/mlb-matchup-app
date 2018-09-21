@@ -105,12 +105,18 @@ function handleNavButtonClicks() {
   function showNavDrawer() {
     // Triggers transitions to make navDrawer visible
 
-
-    // TODO: How to prevent .show() from interrupting transitions?
-    
     $('.js-nav-shim').show();
+    
+    // Remove animation if screen is wide
+    if (screenIsWideGlobal) {
+      $('.js-nav-shim').css('transition', 'none');
+    }
+    
     $('.js-nav-shim').css('left', '0px');
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
+    
+    // Reinstate transitions
+    $('.js-nav-shim').css('transition', 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)');
 
   }
   
