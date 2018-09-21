@@ -82,7 +82,7 @@ function generateLogoDisplayCard(team1, team2, season) {
         <p class="logo-display-card">vs.</p>
         <img src="${team2LogoURL}" alt="${team2Name}">
       </div>
-    `
+    `;
   // Build the card
     const cardID = "LogoDisplay";
     
@@ -706,9 +706,7 @@ function generateWinTrackerCard(team1, team2, season) {
           // Format the date
           
           let gameDay = new Date(games[i].Day);
-          let gameDayStr = `${gameDay.getFullYear()}-${gameDay.getMonth()+1}`
-                            + `-${gameDay.getDate()}`;
-        
+
           // Add a data row
           teamWinData.push([gameDay, winCounts[team1], winCounts[team2]]);
         }
