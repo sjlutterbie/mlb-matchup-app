@@ -147,7 +147,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
       // Box score
       completedGames += `<div class="box-score-container">
         ${game[2]}</div>`;
-    } else {
+    } else if (game[1] === "Scheduled") {
       // Upcoming game
       upcomingGames += `<div class="box-score-container">
         <p class="game-date">${game[0]}</p>${game[2]}</div>`;
