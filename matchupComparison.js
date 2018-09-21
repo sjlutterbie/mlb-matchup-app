@@ -726,47 +726,72 @@ function generateWinTrackerCard(team1, team2, season) {
     haveTense = "";
     hasBeenTense = "were";
   }
-
-
-  if (winCounts[team1] > winCounts[team2]) {
-
-    let margin = winCounts[team1] - winCounts[team2];
-    let percentage = (daysAhead[team1]
-                     / (daysAhead[team1] + daysAhead[team2])
-                     * 100).toFixed(0);
-    
-    summaryHTML = `<p class="card-summary">In the ${season} season,
-      the ${getTeamInfo(team1, 'Name')} ${haveTense} won ${margin} more games
-      than the ${getTeamInfo(team2, 'Name')} (${winCounts[team1]} compared to
-      ${winCounts[team2]}). The ${getTeamInfo(team1, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season.</p>`;
-    
-  } else if (winCounts[team2] > winCounts[team1]) {
-    
-    let margin = winCounts[team2] - winCounts[team1];
-    let percentage = (daysAhead[team2]
-                     / (daysAhead[team1] + daysAhead[team2])
-                     * 100).toFixed(0);
-    
-    summaryHTML = `<p class="card-summary">In the ${season} season,
-      the ${getTeamInfo(team2, 'Name')} ${haveTense} won ${margin} more games
-      than the ${getTeamInfo(team1, 'Name')} (${winCounts[team2]} compared to
-      ${winCounts[team1]}). The ${getTeamInfo(team2, 'Name')} ${hasBeenTense}
-      ahead in win count for ${percentage}% of the season.</p>`;
+                     
+  // Initialize strings & statistics
+  let winningTeamCity, winningTeamName, winningTeamCount,
+      losingTeamCity, losingTeamName, losingTeamCount = "";
       
+  let margin, percentage = 0;
+      
+  // If the teams didn't win the same number of games...
+  if (winCounts[team1] !== winCounts[team2]) {
+    if (winCounts[team1] > winCounts[team2]) {
+      
+      winningTeamCity = getTeamInfo(team1, 'City');
+      winningTeamName = getTeamInfo(team1, 'Name');
+      winningTeamCount = winCounts[team1];
+      
+      losingTeamCity = getTeamInfo(team2, 'City');
+      losingTeamName = getTeamInfo(team2, 'Name');
+      losingTeamCount = winCounts[team2];
+      
+      // Calculate statistics
+      margin = winCounts[team1] - winCounts[team2];
+      percentage = (daysAhead[team1]
+                         / (daysAhead[team1] + daysAhead[team2])
+                         * 100).toFixed(0);
+    
+    } else {
+      
+      winningTeamCity = getTeamInfo(team2, 'City');
+      winningTeamName = getTeamInfo(team2, 'Name');
+      winningTeamCount = winCounts[team2];
+      
+      losingTeamCity = getTeamInfo(team1, 'City');
+      losingTeamName = getTeamInfo(team1, 'Name');
+      losingTeamCount = winCounts[team1];
+
+      // Calculate statistics
+      margin = winCounts[team2] - winCounts[team1];
+      percentage = (daysAhead[team2]
+                         / (daysAhead[team1] + daysAhead[team2])
+                         * 100).toFixed(0);
+    }
+    
+    // Generate summaryHTML for a team in the lead
+    summaryHTML = `<p class="card-summary">In the ${season} season,
+      the ${winningTeamCity} ${winningTeamName} ${haveTense} won ${margin} more
+      games than the ${losingTeamCity} ${losingTeamName} (${winningTeamCount}
+      compared to ${losingTeamCount}). The ${winningTeamName} ${hasBeenTense}
+      ahead in win count for ${percentage}% of the season.</p>`;
+    
   } else {
     
-    let percentage = (daysAhead[team1]
-                     / (daysAhead[team1] + daysAhead[team2])
-                     * 100).toFixed(0);
-    
+      // Calculate statistics
+      percentage = (daysAhead[team1]
+                         / (daysAhead[team1] + daysAhead[team2])
+                         * 100).toFixed(0);
+                         
+    // Generate summaryHTML when both teams tied for wins    
     summaryHTML = `<p class="card-summary">In the ${season} season,
-      the ${getTeamInfo(team1, 'Name')} and the ${getTeamInfo(team2, 'Name')}
+      the ${getTeamInfo(team1, 'City')} ${getTeamInfo(team1, 'Name')} and
+      the ${getTeamInfo(team2, 'City')} ${getTeamInfo(team2, 'Name')}
       ${haveTense} won the same number of games (${winCounts[team1]} wins each).
       The ${getTeamInfo(team1, 'Name')} ${hasBeenTense} ahead in win count for
       ${percentage}% of the season.</p>`;
   }
-  
+
+
   // Put it all together
     // Initiate cardID and content string
     const cardID = 'WinTracker';
