@@ -107,7 +107,7 @@ function handleNavButtonClicks() {
 
     $('.js-nav-shim').show();
     
-    // Remove animation if screen is wide
+    // Remove animation if screen is wide (to avoid fly-in)
     if (screenIsWideGlobal) {
       $('.js-nav-shim').css('transition', 'none');
     }
@@ -115,7 +115,7 @@ function handleNavButtonClicks() {
     $('.js-nav-shim').css('left', '0px');
     $('.js-nav-shim').css('background', 'rgba(0,0,0,.3)');
     
-    // Reinstate transitions
+    // Reinstate transition 
     $('.js-nav-shim').css('transition', 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)');
 
   }
@@ -123,7 +123,7 @@ function handleNavButtonClicks() {
   function hideNavDrawer() {
     // Triggers transitions to hide navDrawer and show toggleButtons
 
-    $('.js-nav-shim').css('background', 'rgba(0,0,0,.3');
+    $('.js-nav-shim').css('background', 'rgba(0,0,0,0');
     $('.js-nav-shim').css('left', '-9999px');
 
   }
