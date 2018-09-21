@@ -27,6 +27,8 @@ may not reflect real-world results, nor be internally consistent._
 
 #### Landing page
 
+<img src="screenshots/Mobile_LandingPage.png" alt="Mobile landing page screenshot" style="border: 1px solid #ccc;">
+
 > ![Mobile landing page screenshot](screenshots/Mobile_LandingPage.png "Mobile landing page")
 
 #### Comparison page
