@@ -74,10 +74,7 @@ function generateLogoDisplayCard(team1, team2, season) {
   // Get the team names & cities
     const team1Name = getTeamInfo(team1, "City") + " " + getTeamInfo(team1, "Name");
     const team2Name = getTeamInfo(team2, "City") + " " + getTeamInfo(team2, "Name");
-  
-    console.log(team1Name);
-    console.log(team2Name);
-  
+
   // Build the HTML content string
     const contentHTML = `
       <div class="flexrow logo-display-row">
@@ -229,7 +226,7 @@ function generateHeadtoHeadSummaryCard(team1, team2, season) {
 
   // Put it all together and build the full card
     const cardID = 'HeadtoHead';
-    const cardHeader = '<h2>Series summary</h2>';
+    const cardHeader = `<h2>${season} Series summary</h2>`;
       
     // Create the card
     generateMatchupComparisonCard(cardID);
