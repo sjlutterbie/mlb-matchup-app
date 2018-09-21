@@ -1,4 +1,4 @@
-<style type="text/css">
+<style>
 
 img {
   border: 1px solid #ccc;
@@ -27,26 +27,26 @@ may not reflect real-world results, nor be internally consistent._
 
 #### Landing page
 
-![Mobile landing page screenshot](screenshots/Mobile_LandingPage.png "Mobile landing page")
+> ![Mobile landing page screenshot](screenshots/Mobile_LandingPage.png "Mobile landing page")
 
 #### Comparison page
 
-![Mobile comparison page screenshot](screenshots/Mobile_ComparisonPage.png "Mobile comparison page")
+> ![Mobile comparison page screenshot](screenshots/Mobile_ComparisonPage.png "Mobile comparison page")
 
 #### Comparison page w/ Nav
 
-![Mobile comparison page, with navigation bar screenshot](screenshots/Mobile_LandingPage.png "Mobile comparison page w/ Nav")
+> ![Mobile comparison page, with navigation bar screenshot](screenshots/Mobile_LandingPage.png "Mobile comparison page w/ Nav")
 
 ### Desktop screenshots
 
 
 #### Landing page
 
-![Desktop landing page screenshot](screenshots/Desktop_LandingPage.png "Desktop landing page")
+> ![Desktop landing page screenshot](screenshots/Desktop_LandingPage.png "Desktop landing page")
 
 #### Comparison Page
 
-![Desktop comparison page screenshot](screenshots/Desktop_ComparisonPage.png "Desktop comparison page")
+> ![Desktop comparison page screenshot](screenshots/Desktop_ComparisonPage.png "Desktop comparison page")
 
 
 ## Technology Used
