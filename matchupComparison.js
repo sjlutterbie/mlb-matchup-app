@@ -25,9 +25,6 @@ function generateMatchupComparison(team1, team2, season) {
     $('main').addClass('landing-page-dismissed');
   }
 
-  // Update page header
-  generatePageHeader(team1, team2, season);
-  
   // On narrow screens, load nav buttons
   if (window.innerWidth < screenThresholdGlobal) {
     showNavButtons();
@@ -49,17 +46,6 @@ function generateMatchupComparison(team1, team2, season) {
 /* ====================================
    = MATCHUP CARD GENERATOR FUNCTIONS =
    ==================================== */
-
-/* === UPDATE HEADER === */
-
-function generatePageHeader(team1, team2, season) {
-  // Update the page header to reflect the current matchup comparison
-  
-  const headerHTML = `${team1} vs ${team2}, ${season} season`;
-  
-  $('header h1').html(headerHTML);
-  
-}
 
 /* === LOGO DISPLAY CARD === */
 
