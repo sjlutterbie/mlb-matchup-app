@@ -16,7 +16,7 @@ function renderMatchupForm() {
     
     $(`.matchup-form-container-${val}`).html(
     `<form class="js-matchup-form" aria-describedby="matchup-form-title-${val}">
-        <h2 id="matchup-form-title-${val}">Matchup Comparison Form</h2>
+        <h2 id="matchup-form-title-${val}">Compare MLB Teams</h2>
           <label>Team 1:
             <select name="team1" class="js-team-select" required>
               <option value="">Select One</option>
