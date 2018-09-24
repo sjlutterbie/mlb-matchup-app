@@ -466,7 +466,8 @@ main {
     input[type="submit"] {
       display: block;
       margin: 4px auto;
-      padding: 8px;
+      font-size: 22px;
+      padding: 8px 16px;
       border-radius: 2px;
       border: none;
       
